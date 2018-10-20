@@ -29,6 +29,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
@@ -96,6 +97,12 @@ public class RegistrationActivity extends AppCompatActivity {
                 phoneNumber = editTextPhoneNum.getText().toString();
                 firstName = editTextFirstName.getText().toString();
                 lastName = editTextLastName.getText().toString();
+
+                progressBar.setVisibility(View.VISIBLE);
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+
                 if (TextUtils.isEmpty(phoneNumber)) {
                     Toast.makeText(RegistrationActivity.this, "Kérem adja meg a telefonszámát!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -158,50 +165,28 @@ public class RegistrationActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(verificationCode)) {
                     Toast.makeText(RegistrationActivity.this, "Adja meg a kódot", Toast.LENGTH_SHORT);
                 } else {
+                    dbPhoneNumbers = db.collection("users");
+                    User newUser = new User(
+                            firstName,
+                            lastName,
+                            phoneNumber
+                    );
 
-//                    loadingBar.setTitle("Sapientia Advertiser");
-//                    loadingBar.setMessage("Kérem várjon, az ön által beírt kulcsot ellenőrizzük...");
-//                    loadingBar.setCanceledOnTouchOutside(false);
-//                    loadingBar.show();
+                    dbPhoneNumbers.add(newUser)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Toast.makeText(RegistrationActivity.this, "Új felhasználó hozzáadva!", Toast.LENGTH_LONG).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(RegistrationActivity.this, e.getMessage(), Toast.LENGTH_LONG);
+                        }
+                    });
 
-//                    dbPhoneNumbers = db.collection("users");
-//                    User newUser = new User(
-//                            firstName,
-//                            lastName,
-//                            phoneNumber
-//                    );
-//
-//                    dbPhoneNumbers.add(newUser)
-//                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                                @Override
-//                                public void onSuccess(DocumentReference documentReference) {
-//                                    Toast.makeText(RegistrationActivity.this, "Új felhasználó hozzáadva!", Toast.LENGTH_LONG);
-//                                }
-//                            }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Toast.makeText(RegistrationActivity.this, e.getMessage(), Toast.LENGTH_LONG);
-//                        }
-//                    });
-
-                    // TBD
-
-//                    Map<String, Object> map = new HashMap<>();
-//                    map.put("firstName", firstName);
-//                    map.put("lastName", lastName);
-//                    map.put("phoneNumber", phoneNumber);
-//
-//                    db.collection("users").document().set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if (task.isSuccessful()) {
-//                                Toast.makeText(getApplicationContext(), "successfull", Toast.LENGTH_LONG).show();
-//                            }
-//                        }
-//                    });
-
-                    //PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, verificationCode);
-                    //signInWithPhoneAuthCredential(credential);
+                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, verificationCode);
+                    signInWithPhoneAuthCredential(credential);
                 }
             }
         });
@@ -290,7 +275,6 @@ public class RegistrationActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-//                            loadingBar.dismiss();
                             Toast.makeText(RegistrationActivity.this, "Sikeresen belépett!", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegistrationActivity.this, AdvertsActivity.class));
                             finish();

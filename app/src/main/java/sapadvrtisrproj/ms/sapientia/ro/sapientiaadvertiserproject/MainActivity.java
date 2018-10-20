@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextLoginPhoneNumber, editTextCode;
     private Button buttonGetCode, buttonLogin;
 
-    private TextView redirect;
+    private Button redirect;
 
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private FirebaseAuth mAuth;
@@ -86,6 +86,12 @@ public class MainActivity extends AppCompatActivity {
 
 //        phoneNumber = editTextLoginPhoneNumber.getText().toString().trim();
 
+
+        /**
+         *   Átirányítás a regisztrációs Activity-re, ha nincs
+         *   még fiókja a felhasználónak.
+         */
+
         redirect = findViewById(R.id.login_redirect);
         redirect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +131,8 @@ public class MainActivity extends AppCompatActivity {
                                 Log.d("Belépés", "-------- phoneNum doesn't exist -----------");
                                 Log.d("Belépés", "-------- calling registration -----------");
                                 Toast.makeText(MainActivity.this, "Nincs ez a szám regisztrálva!", Toast.LENGTH_SHORT).show();
+                                progressBarGetCode.setVisibility(View.GONE);
+                                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
                             } else {
                                 Log.d("Belépés", "-------- phoneNum exists -----------");
@@ -147,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
-
 
 
 //                    loadingBar.setTitle("Sapientia Advertiser");
