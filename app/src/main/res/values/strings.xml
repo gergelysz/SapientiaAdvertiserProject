@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Sapientia Advertiser</string>
+    <string name="login_phonenum_text">Adja meg a telefonszámát:</string>
+    <string name="login_button_text">Bejelentkezés</string>
+    <string name="getcodebutton_text">Kulcs lekérése</string>
+    <string name="login_redirect_to_register">Nincs fiókja? Regisztráljon itt</string>
+    <string name="register_name_text">Adja meg a vezetéknevét:</string>
+    <string name="register_name2_text">Adja meg a keresztnevét:</string>
+    <string name="register_phone_text">Adja meg a telefonszámát:</string>
+    <string name="register_button_text">Regisztrálás</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_adverts">AdvertsActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+</resources>
