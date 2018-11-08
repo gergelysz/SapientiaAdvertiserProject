@@ -107,6 +107,7 @@
                 android:background="@drawable/custom_sapientia_login_bg"
                 android:hint="@string/register_phone_text"
                 android:textColor="@color/white"
+                android:inputType="number"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />
 

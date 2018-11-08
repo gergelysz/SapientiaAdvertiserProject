@@ -31,6 +31,14 @@
           }
         },
         {
+          "client_id": "880158220111-micg3rjms111pu2nrjqo61j2osjg6spi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject",
+            "certificate_hash": "66e94233d937da16c06185df16ea7c7335760069"
+          }
+        },
+        {
           "client_id": "880158220111-1gmt3ghei10snmn9du8u3viki80rn60i.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -108,6 +108,7 @@
             android:background="@drawable/custom_sapientia_login_bg"
             android:drawableLeft="@drawable/custom_sapientia_login_code"
             android:textColor="@color/white"
+            android:inputType="number"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/login_redirect" />
