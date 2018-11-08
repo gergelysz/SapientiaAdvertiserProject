@@ -19,7 +19,7 @@ import org.w3c.dom.Text;
 
 public class AdvertsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    //Valami valtoztatast teszek
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
