@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:background="@color/darkgreen"
+    android:layout_margin="12dp">
+
+    <TextView
+        android:id="@+id/ad_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="textviewTitle"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/ad_shortDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:text="textviewShortDesc"
+        android:layout_below="@id/ad_title"/>
+
+    <TextView
+        android:id="@+id/ad_LongDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:text="textviewLongDesc"
+        android:layout_below="@id/ad_shortDesc"/>
+
+    <TextView
+        android:id="@+id/ad_phoneNum"
+        android:layout_width="match_parent"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:layout_height="wrap_content"
+        android:text="textviewPhoneNum"
+        android:layout_below="@id/ad_LongDesc"/>
+
+    <TextView
+        android:id="@+id/ad_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="textviewLocation"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:layout_below="@id/ad_phoneNum"/>
+</RelativeLayout>

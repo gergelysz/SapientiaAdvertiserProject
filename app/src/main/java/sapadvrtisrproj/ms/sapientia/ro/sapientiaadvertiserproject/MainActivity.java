@@ -24,11 +24,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.concurrent.TimeUnit;
+
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBarGetCode;
 
     private boolean phoneNumberExists = true;
+
+    private String passFirstName, passLastName, passPhoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +140,21 @@ public class MainActivity extends AppCompatActivity {
                                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
                             } else {
+
+                                /**
+                                 *  Megkeressük a telefonszámot, majd a tulajdonosának nevét
+                                 */
+
+                                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                                    if (documentSnapshot.getString("phoneNumber").equals(phoneNumber)) {
+                                        passPhoneNumber = documentSnapshot.getString("phoneNumber");
+                                        passFirstName = documentSnapshot.getString("firstName");
+                                        passLastName = documentSnapshot.getString("lastName");
+                                        break;
+                                    }
+                                }
+
+
                                 Log.d("Belépés", "-------- phoneNum exists -----------");
                                 Log.d("Belépés", "-------- sending login sms -----------");
 
@@ -237,7 +257,19 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             loadingBar.dismiss();
                             Toast.makeText(MainActivity.this, "Sikeresen belépett!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(MainActivity.this, AdvertsActivity.class));
+
+                            /**
+                             *   Továbbadni a felhasználó nevét, telefonszámát
+                             */
+
+                            Intent intent = new Intent(MainActivity.this, AdsActivity.class);
+                            intent.putExtra("USER_FIRSTNAME", passFirstName);
+                            intent.putExtra("USER_LASTNAME", passLastName);
+                            intent.putExtra("USER_PHONENUMBER", passPhoneNumber);
+                            startActivity(intent);
+
+                            // Régi átirányítás
+                            //startActivity(new Intent(MainActivity.this, AdsActivity.class));
                             finish();
                         } else {
                             // Sign in failed, display a message and update the UI

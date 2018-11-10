@@ -276,7 +276,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(RegistrationActivity.this, "Sikeresen belépett!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegistrationActivity.this, AdvertsActivity.class));
+                            startActivity(new Intent(RegistrationActivity.this, AdsActivity.class));
                             finish();
                         } else {
                             // Sign in failed, display a message and update the UI

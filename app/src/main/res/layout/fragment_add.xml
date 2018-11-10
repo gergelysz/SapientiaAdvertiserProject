@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darkgreen"
+    android:padding="20dp"
+    tools:context=".NavigationBarFragments.AddFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:text="@string/hello_blank_fragment" />-->
+
+    <EditText
+        android:id="@+id/edittext_addfragment_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/darkergreen"
+        android:hint="@string/cim"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <EditText
+        android:id="@+id/edittext_addfragment_short_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/darkergreen"
+        android:hint="@string/rovidleiras"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/edittext_addfragment_title" />
+
+    <EditText
+        android:id="@+id/edittext_addfragment_long_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/darkergreen"
+        android:hint="@string/hosszuleiras"
+        android:inputType="textMultiLine"
+        android:lines="6"
+        android:maxLines="6"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/edittext_addfragment_short_desc" />
+
+    <EditText
+        android:id="@+id/edittext_addfragment_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/darkergreen"
+        android:hint="@string/telefonszam"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/edittext_addfragment_long_desc" />
+
+    <EditText
+        android:id="@+id/edittext_addfragment_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/darkergreen"
+        android:hint="@string/hely"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/edittext_addfragment_phone_number" />
+
+    <Button
+        android:id="@+id/button_addfragment_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/feltoltes"
+        android:background="@color/darkergreen"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/edittext_addfragment_location"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="12dp"/>
+
+</android.support.constraint.ConstraintLayout>
