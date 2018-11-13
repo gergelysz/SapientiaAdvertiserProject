@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonGetCode, buttonLogin;
 
     private Button redirect;
-
+    //keta itt jart
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private FirebaseAuth mAuth;
 
