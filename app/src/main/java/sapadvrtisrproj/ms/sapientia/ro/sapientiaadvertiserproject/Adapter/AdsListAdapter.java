@@ -1,15 +1,20 @@
 package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.Ad;
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBarFragments.HomeFragment;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
 
 public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHolder> {
@@ -34,6 +39,9 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
         viewHolder.longDesc.setText(adsList.get(i).getLongDesc());
         viewHolder.phoneNum.setText(adsList.get(i).getPhoneNumber());
         viewHolder.location.setText(adsList.get(i).getLocation());
+        viewHolder.image = adsList.get(i).getImage();
+        Glide.with(viewHolder.mView).load(viewHolder.image).into(viewHolder.imageAd);
+//        viewHolder.image;
     }
 
     @Override
@@ -50,6 +58,8 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
         public TextView longDesc;
         public TextView phoneNum;
         public TextView location;
+        public String image;
+        public ImageView imageAd;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -61,6 +71,7 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
             longDesc = mView.findViewById(R.id.ad_LongDesc);
             phoneNum = mView.findViewById(R.id.ad_phoneNum);
             location = mView.findViewById(R.id.ad_location);
+            imageAd = mView.findViewById(R.id.ad_image);
         }
     }
 }

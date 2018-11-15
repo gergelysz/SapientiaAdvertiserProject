@@ -2,12 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:background="@color/darkgreen"
-    android:layout_margin="12dp">
+    android:layout_margin="12dp"
+    android:padding="12dp">
+
+    <ImageView
+        android:id="@+id/ad_image"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="20dp"/>
 
     <TextView
         android:id="@+id/ad_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ad_image"
         android:text="textviewTitle"
         android:textSize="24sp"
         android:textColor="@color/white"
@@ -20,7 +29,7 @@
         android:textSize="20sp"
         android:textColor="@color/white"
         android:text="textviewShortDesc"
-        android:layout_below="@id/ad_title"/>
+        android:layout_below="@id/ad_image"/>
 
     <TextView
         android:id="@+id/ad_LongDesc"

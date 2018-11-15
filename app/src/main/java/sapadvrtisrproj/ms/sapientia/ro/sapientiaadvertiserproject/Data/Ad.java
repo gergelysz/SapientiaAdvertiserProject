@@ -7,16 +7,18 @@ public class Ad {
     private String longDesc;
     private String phoneNumber;
     private String location;
+    private String image;
 
     public Ad() {
     }
 
-    public Ad(String title, String shortDesc, String longDesc, String phoneNumber, String location) {
+    public Ad(String title, String shortDesc, String longDesc, String phoneNumber, String location, String image) {
         this.title = title;
         this.shortDesc = shortDesc;
         this.longDesc = longDesc;
         this.phoneNumber = phoneNumber;
         this.location = location;
+        this.image = image;
     }
 
     public String getTitle() {
@@ -57,5 +59,13 @@ public class Ad {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
