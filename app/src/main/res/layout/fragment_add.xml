@@ -14,6 +14,25 @@
     <!--android:layout_height="match_parent"-->
     <!--android:text="@string/hello_blank_fragment" />-->
 
+    <Button
+        android:id="@+id/btnUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/darkergreen"
+        android:text="@string/upload"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/imgView"
+        app:layout_constraintEnd_toStartOf="@+id/btnChoose"
+        app:layout_constraintHorizontal_bias="0.078"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_addfragment_location" />
+
+
     <EditText
         android:id="@+id/edittext_addfragment_title"
         android:layout_width="match_parent"
@@ -74,12 +93,45 @@
         android:id="@+id/button_addfragment_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/feltoltes"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="@color/darkergreen"
+        android:text="@string/feltoltes"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/edittext_addfragment_location"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="12dp"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgView"
+        android:layout_width="117dp"
+        android:layout_height="106dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/ImageUpload"
+        app:layout_constraintBottom_toTopOf="@+id/button_addfragment_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnChoose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/darkergreen"
+        android:text="@string/choose"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/imgView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_addfragment_location"
+        app:layout_constraintVertical_bias="0.388" />
+
 
 </android.support.constraint.ConstraintLayout>

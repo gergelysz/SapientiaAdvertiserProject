@@ -24,4 +24,7 @@
     <string name="telefonszam">Telefonszám</string>
     <string name="hely">Hely</string>
     <string name="feltoltes">Feltöltés</string>
+    <string name="choose">Choose</string>
+    <string name="upload">Upload</string>
+    <string name="ImageUpload">imgUpload</string>
 </resources>
