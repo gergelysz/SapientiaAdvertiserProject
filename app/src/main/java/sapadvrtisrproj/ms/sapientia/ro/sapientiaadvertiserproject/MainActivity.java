@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonGetCode, buttonLogin;
 
     private Button redirect;
-    //keta itt jart
+
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private FirebaseAuth mAuth;
 
@@ -52,16 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
 
-    private String checkPhoneDatabase;
-
     private ProgressDialog loadingBar;
-
-    private CollectionReference checkBeforeLogin;
-    private Query checkForExistingPhoneNumber;
-
     private ProgressBar progressBarGetCode;
-
-    private boolean phoneNumberExists = true;
 
     private String passFirstName, passLastName, passPhoneNumber;
 
@@ -70,7 +62,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /**
+         *   Ideiglenes megoldás nem Androidosoknak
+         */
+
         startActivity(new Intent(MainActivity.this, AdsActivity.class));
+
+
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();

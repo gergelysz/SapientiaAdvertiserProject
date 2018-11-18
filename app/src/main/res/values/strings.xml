@@ -24,10 +24,10 @@
     <string name="telefonszam">Telefonszám</string>
     <string name="hely">Hely</string>
     <string name="feltoltes">Feltöltés</string>
-    <string name="choose">Choose</string>
-    <string name="upload">Upload</string>
-    <string name="ImageUpload">imgUpload</string>
-    <string name="add_image">add_image</string>
+    <string name="choose">Kép kiválasztása</string>
+    <string name="upload">Kép feltöltése</string>
+    <string name="ImageUpload">kép</string>
+    <string name="add_image">Kép hozzáadása</string>
     <string name="textviewtitle">textviewTitle</string>
     <string name="textviewshortdesc">textviewShortDesc</string>
     <string name="textviewlongdesc">textviewLongDesc</string>

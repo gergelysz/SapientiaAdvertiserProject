@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,9 +64,9 @@ public class AddFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
 
         //Initialize Views
-        btnChoose = (Button) view.findViewById(R.id.btnChoose);
-        btnUpload = (Button) view.findViewById(R.id.btnUpload);
-        imageView = (ImageView) view.findViewById(R.id.imgView);
+        btnChoose = view.findViewById(R.id.btnChoose);
+        btnUpload = view.findViewById(R.id.btnUpload);
+        imageView = view.findViewById(R.id.imgView);
         editTextTitle = view.findViewById(R.id.edittext_addfragment_title);
         editTextShortDesc = view.findViewById(R.id.edittext_addfragment_short_desc);
         editTextLongDesc = view.findViewById(R.id.edittext_addfragment_long_desc);
@@ -94,8 +95,19 @@ public class AddFragment extends Fragment {
                         Toast.makeText(getActivity(), "Advertisement feltöltve", Toast.LENGTH_LONG).show();
                     }
                 });
+
+                /**
+                 *   HomeFragment megnyitása, az Advert feltöltése után
+                 */
+
+                Fragment homeFragment = new HomeFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, homeFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
+
         btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,38 +128,52 @@ public class AddFragment extends Fragment {
 
     private void uploadImage() {
 
-        if(filePath != null)
-        {
+        if (filePath != null) {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("Uploading...");
+            progressDialog.setTitle("Feltöltés...");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+            /**
+             *   Random ID a képnek
+             */
+
+            String imageId = UUID.randomUUID().toString();
+
+            final StorageReference ref = storageReference.child("images/" + imageId);
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
-                            Toast.makeText(getActivity(), "Uploaded", Toast.LENGTH_SHORT).show();
-                            image=filePath.toString();
+                            Toast.makeText(getActivity(), "Feltöltve!", Toast.LENGTH_SHORT).show();
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+
+                                    /** a feltöltött kép letöltési linkjének tárolása az 'image'
+                                     * változóba, amelyet az 'Advert' feltöltésével tárolunk az adatbázisban
+                                     */
+
+                                    image = uri.toString();
+                                }
+                            });
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(getActivity(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Feltöltés sikertelen:  " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                                     .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                            progressDialog.setMessage("Feltöltve " + (int) progress + "%");
                         }
                     });
-
         }
     }
 
@@ -155,22 +181,19 @@ public class AddFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Válassz képet"), PICK_IMAGE_REQUEST);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null )
-        {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
