@@ -27,4 +27,10 @@
     <string name="choose">Choose</string>
     <string name="upload">Upload</string>
     <string name="ImageUpload">imgUpload</string>
+    <string name="add_image">add_image</string>
+    <string name="textviewtitle">textviewTitle</string>
+    <string name="textviewshortdesc">textviewShortDesc</string>
+    <string name="textviewlongdesc">textviewLongDesc</string>
+    <string name="textviewphonenum">textviewPhoneNum</string>
+    <string name="textviewlocation">textviewLocation</string>
 </resources>

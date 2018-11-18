@@ -1,6 +1,5 @@
 package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.Ad;
-import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBarFragments.HomeFragment;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
 
 public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHolder> {
@@ -66,12 +64,12 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
             super(itemView);
             mView = itemView;
 
-            title = mView.findViewById(R.id.ad_title);
-            shortDesc = mView.findViewById(R.id.ad_shortDesc);
+            title = mView.findViewById(R.id.detail_title);
+            shortDesc = mView.findViewById(R.id.detail_shortDesc);
             longDesc = mView.findViewById(R.id.ad_LongDesc);
-            phoneNum = mView.findViewById(R.id.ad_phoneNum);
-            location = mView.findViewById(R.id.ad_location);
-            imageAd = mView.findViewById(R.id.ad_image);
+            phoneNum = mView.findViewById(R.id.detail_phoneNum);
+            location = mView.findViewById(R.id.detail_location);
+            imageAd = mView.findViewById(R.id.detail_image);
         }
     }
 }
