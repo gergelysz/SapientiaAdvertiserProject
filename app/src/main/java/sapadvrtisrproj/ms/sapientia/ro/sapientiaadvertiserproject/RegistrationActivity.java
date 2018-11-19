@@ -95,6 +95,8 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 phoneNumber = editTextPhoneNum.getText().toString();
+                // registration number corrected
+                phoneNumber="+40"+phoneNumber;
                 firstName = editTextFirstName.getText().toString();
                 lastName = editTextLastName.getText().toString();
 
