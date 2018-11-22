@@ -25,6 +25,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter.AdsListAdapter;
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter.IAdClickListener;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.Ad;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
 
@@ -40,8 +41,13 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        adsListAdapter = new AdsListAdapter(adsList, new IAdClickListener() {
+            @Override
+            public void onItemClickAction(Ad data) {
+                DetailsFragment detail= new DetailsFragment(data);
 
-        adsListAdapter = new AdsListAdapter(adsList);
+            }
+        });
 
         recyclerView = view.findViewById(R.id.home_list_ads);
         recyclerView.setHasFixedSize(true);

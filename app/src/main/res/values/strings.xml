@@ -33,4 +33,8 @@
     <string name="textviewlongdesc">textviewLongDesc</string>
     <string name="textviewphonenum">textviewPhoneNum</string>
     <string name="textviewlocation">textviewLocation</string>
+    <string name="phone_number">Phone number</string>
+    <string name="email">Email</string>
+    <string name="last_name">Last name</string>
+    <string name="first_name">First name</string>
 </resources>

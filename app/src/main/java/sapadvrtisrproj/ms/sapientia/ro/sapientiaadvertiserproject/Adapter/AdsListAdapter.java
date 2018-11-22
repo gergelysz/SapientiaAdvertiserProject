@@ -18,9 +18,11 @@ import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
 public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHolder> {
 
     public List<Ad> adsList;
+    private IAdClickListener adClickListener;
 
-    public AdsListAdapter(List<Ad> adsList) {
+    public AdsListAdapter(List<Ad> adsList, IAdClickListener adClickListener) {
         this.adsList = adsList;
+        this.adClickListener = adClickListener;
     }
 
     @NonNull
@@ -31,7 +33,7 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         viewHolder.title.setText(adsList.get(i).getTitle());
         viewHolder.shortDesc.setText(adsList.get(i).getShortDesc());
         viewHolder.longDesc.setText(adsList.get(i).getLongDesc());
@@ -40,6 +42,15 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
         viewHolder.image = adsList.get(i).getImage();
         Glide.with(viewHolder.mView).load(viewHolder.image).into(viewHolder.imageAd);
 //        viewHolder.image;
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(adClickListener!=null){
+                    adClickListener.onItemClickAction(adsList.get(viewHolder.getAdapterPosition()));
+                }
+            }
+        });
     }
 
     @Override
