@@ -11,7 +11,7 @@ public class Ad {
     private String phoneNumber;
     private String location;
     private int visitorsNumber;
-    private ImageView image;
+//    private ImageView image;
 
     public Ad() {
 
