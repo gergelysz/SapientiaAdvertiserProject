@@ -26,6 +26,7 @@ import javax.annotation.Nullable;
 
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter.AdsListAdapter;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter.IAdClickListener;
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.AdsActivity;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.Ad;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
 
@@ -44,8 +45,12 @@ public class HomeFragment extends Fragment {
         adsListAdapter = new AdsListAdapter(adsList, new IAdClickListener() {
             @Override
             public void onItemClickAction(Ad data) {
+                Log.d(TAG,"before detail");
                 DetailsFragment detail= new DetailsFragment(data);
-
+                Log.d(TAG,"after detail");
+                AdsActivity ref=(AdsActivity)HomeFragment.this.getActivity();
+                ref.loadFragment(detail);
+                Log.d(TAG,"after load fragment");
             }
         });
 

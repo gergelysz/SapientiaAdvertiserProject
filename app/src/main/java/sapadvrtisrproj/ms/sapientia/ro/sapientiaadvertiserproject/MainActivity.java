@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     private PhoneAuthProvider.ForceResendingToken mResendToken;
 
     private FirebaseFirestore db;
-
     private ProgressDialog loadingBar;
     private ProgressBar progressBarGetCode;
 

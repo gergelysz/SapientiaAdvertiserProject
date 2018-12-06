@@ -1,7 +1,11 @@
 package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +16,13 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.AdsActivity;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.Ad;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
 
 public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHolder> {
 
+    private static final String TAG = "AdsListAdapter";
     public List<Ad> adsList;
     private IAdClickListener adClickListener;
 
@@ -39,15 +45,19 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
         viewHolder.longDesc.setText(adsList.get(i).getLongDesc());
         viewHolder.phoneNum.setText(adsList.get(i).getPhoneNumber());
         viewHolder.location.setText(adsList.get(i).getLocation());
-        viewHolder.image = adsList.get(i).getImage();
+        //viewHolder.imageAd=adsList.get(i).getImage();
         Glide.with(viewHolder.mView).load(viewHolder.image).into(viewHolder.imageAd);
 //        viewHolder.image;
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG,"onclick");
                 if(adClickListener!=null){
-                    adClickListener.onItemClickAction(adsList.get(viewHolder.getAdapterPosition()));
+                    Ad ad=adsList.get(viewHolder.getAdapterPosition());
+                    Log.d(TAG, ad.toString());
+                    adClickListener.onItemClickAction(ad);
+
                 }
             }
         });
@@ -83,4 +93,7 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
             imageAd = mView.findViewById(R.id.detail_image);
         }
     }
+
+
+
 }
