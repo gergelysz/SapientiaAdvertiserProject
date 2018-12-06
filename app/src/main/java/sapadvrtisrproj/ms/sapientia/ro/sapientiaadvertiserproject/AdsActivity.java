@@ -10,27 +10,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBarFragments.AccountFragment;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBarFragments.AddFragment;
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBarFragments.DetailsFragment;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBarFragments.HomeFragment;
 
 public class AdsActivity extends AppCompatActivity {
 
     private String userFirstName = null, userLastName = null, userPhoneNumber = null;
     private static final String TAG = "AdsActivity";
-
+    private Button detailsBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ads);
 
         loadFragment(new HomeFragment());
-
         /**
          *   Adatok lekérése a felhasználóról a bejelentkeztetés során
          *   (MainActivity) - putExtra
          */
+
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -40,7 +43,13 @@ public class AdsActivity extends AppCompatActivity {
             userPhoneNumber = (String)bundle.get("USER_PHONENUMBER");
             Log.d(TAG, "User data: " + userFirstName + " " + userLastName + " " + userPhoneNumber);
         }
-
+        /*detailsBtn=findViewById(R.id.detail_btn);
+        detailsBtn.setOnClickListener((v)->{
+            @Override
+            public void onClick() {
+                loadFragment(new DetailsFragment());
+            }
+        });*/
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_bar);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -65,7 +74,7 @@ public class AdsActivity extends AppCompatActivity {
         });
     }
 
-    private boolean loadFragment(Fragment fragment) {
+    public boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()

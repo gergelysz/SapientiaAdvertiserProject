@@ -1,5 +1,7 @@
 package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data;
 
+import android.widget.ImageView;
+
 public class Ad {
 
     private String title;
@@ -7,18 +9,18 @@ public class Ad {
     private String longDesc;
     private String phoneNumber;
     private String location;
-    private String image;
+    //private ImageView image;
 
     public Ad() {
     }
 
-    public Ad(String title, String shortDesc, String longDesc, String phoneNumber, String location, String image) {
+    public Ad(String title, String shortDesc, String longDesc, String phoneNumber, String location, ImageView image) {
         this.title = title;
         this.shortDesc = shortDesc;
         this.longDesc = longDesc;
         this.phoneNumber = phoneNumber;
         this.location = location;
-        this.image = image;
+        //this.image = image;
     }
 
     public String getTitle() {
@@ -61,11 +63,12 @@ public class Ad {
         this.location = location;
     }
 
-    public String getImage() {
+   /* public ImageView getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(ImageView image) {
         this.image = image;
     }
+    */
 }
