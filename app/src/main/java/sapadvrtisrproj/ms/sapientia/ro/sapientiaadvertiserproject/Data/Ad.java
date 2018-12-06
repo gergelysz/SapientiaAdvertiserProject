@@ -4,23 +4,35 @@ import android.widget.ImageView;
 
 public class Ad {
 
+    private String id;
     private String title;
     private String shortDesc;
     private String longDesc;
     private String phoneNumber;
     private String location;
-    //private ImageView image;
+    private int visitorsNumber;
+    private ImageView image;
 
     public Ad() {
+
     }
 
-    public Ad(String title, String shortDesc, String longDesc, String phoneNumber, String location, ImageView image) {
+    public Ad(String title, String shortDesc, String longDesc, String phoneNumber, String location, ImageView image, int visitorsNumber) {
         this.title = title;
         this.shortDesc = shortDesc;
         this.longDesc = longDesc;
         this.phoneNumber = phoneNumber;
         this.location = location;
+        this.visitorsNumber=visitorsNumber;
         //this.image = image;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -63,7 +75,16 @@ public class Ad {
         this.location = location;
     }
 
-   /* public ImageView getImage() {
+    public int getVisitorsNumber() {
+        return visitorsNumber;
+    }
+
+    public  void setVisitorsNumber(int visitorsNumber)
+    {
+        this.visitorsNumber=visitorsNumber;
+    }
+
+    /* public ImageView getImage() {
         return image;
     }
 
