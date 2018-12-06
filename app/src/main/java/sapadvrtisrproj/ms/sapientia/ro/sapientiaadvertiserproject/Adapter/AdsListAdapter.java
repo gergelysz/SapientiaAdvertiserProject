@@ -40,21 +40,22 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
+
         viewHolder.title.setText(adsList.get(i).getTitle());
         viewHolder.shortDesc.setText(adsList.get(i).getShortDesc());
         viewHolder.longDesc.setText(adsList.get(i).getLongDesc());
         viewHolder.phoneNum.setText(adsList.get(i).getPhoneNumber());
         viewHolder.location.setText(adsList.get(i).getLocation());
-        //viewHolder.imageAd=adsList.get(i).getImage();
-        Glide.with(viewHolder.mView).load(viewHolder.image).into(viewHolder.imageAd);
+//        viewHolder.imageAd = adsList.get(i).getImage();
+//        Glide.with(viewHolder.mView).load(viewHolder.image).into(viewHolder.imageAd);
 //        viewHolder.image;
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG,"onclick");
-                if(adClickListener!=null){
-                    Ad ad=adsList.get(viewHolder.getAdapterPosition());
+                Log.d(TAG, "onclick");
+                if (adClickListener != null) {
+                    Ad ad = adsList.get(viewHolder.getAdapterPosition());
                     Log.d(TAG, ad.toString());
                     adClickListener.onItemClickAction(ad);
 
@@ -78,7 +79,7 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
         public TextView phoneNum;
         public TextView location;
         public String image;
-        public ImageView imageAd;
+//        public ImageView imageAd;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -90,10 +91,9 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
             longDesc = mView.findViewById(R.id.ad_LongDesc);
             phoneNum = mView.findViewById(R.id.detail_phoneNum);
             location = mView.findViewById(R.id.detail_location);
-            imageAd = mView.findViewById(R.id.detail_image);
+//            imageAd = mView.findViewById(R.id.detail_image);
         }
     }
-
 
 
 }

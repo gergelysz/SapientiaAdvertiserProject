@@ -16,13 +16,21 @@
         android:layout_marginEnd="20dp" />
 
     <TextView
+        android:id="@+id/detail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="asdasd"
+        android:layout_below="@id/detail_image"
+        android:textColor="@color/white"/>
+
+    <TextView
         android:id="@+id/detail_shortDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:text="@string/textviewshortdesc"
-        android:layout_below="@id/detail_image"/>
+        android:layout_below="@id/detail_title"/>
 
     <TextView
         android:id="@+id/detail_LongDesc"
@@ -37,7 +45,7 @@
         android:id="@+id/detail_phoneNum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ad_LongDesc"
+        android:layout_below="@id/detail_LongDesc"
         android:text="@string/textviewphonenum"
         android:textColor="@color/white"
         android:textSize="16sp" />
@@ -46,10 +54,7 @@
         android:id="@+id/detail_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/detail_btn"
         android:layout_below="@id/detail_phoneNum"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="12dp"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="227dp"
         android:text="@string/textviewlocation"

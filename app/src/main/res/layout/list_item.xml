@@ -53,22 +53,10 @@
         android:id="@+id/detail_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/detail_btn"
         android:layout_below="@id/detail_phoneNum"
         android:layout_marginBottom="227dp"
         android:text="textviewLocation"
         android:textColor="@color/white"
         android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/detail_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="18dp"
-        android:layout_marginRight="18dp"
-        android:layout_marginBottom="238dp"
-        android:text="More" />
 </RelativeLayout>

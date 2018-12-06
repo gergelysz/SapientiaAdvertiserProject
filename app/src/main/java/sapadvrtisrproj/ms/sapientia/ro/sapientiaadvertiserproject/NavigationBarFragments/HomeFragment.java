@@ -41,16 +41,22 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Log.d(TAG, "before loading view");
+
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        Log.d(TAG, "after loading view");
+
         adsListAdapter = new AdsListAdapter(adsList, new IAdClickListener() {
             @Override
             public void onItemClickAction(Ad data) {
-                Log.d(TAG,"before detail");
-                DetailsFragment detail= new DetailsFragment(data);
-                Log.d(TAG,"after detail");
-                AdsActivity ref=(AdsActivity)HomeFragment.this.getActivity();
+                Log.d(TAG, "before detail");
+                DetailsFragment detail = new DetailsFragment(data);
+                Log.d(TAG, "after detail");
+                AdsActivity ref = (AdsActivity) HomeFragment.this.getActivity();
                 ref.loadFragment(detail);
-                Log.d(TAG,"after load fragment");
+                Log.d(TAG, "after load fragment");
             }
         });
 
@@ -64,7 +70,7 @@ public class HomeFragment extends Fragment {
         db.collection("ads").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                for(DocumentSnapshot documentSnapshot: queryDocumentSnapshots) {
+                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                     Ad ad = documentSnapshot.toObject(Ad.class);
                     adsList.add(ad);
                     adsListAdapter.notifyDataSetChanged();

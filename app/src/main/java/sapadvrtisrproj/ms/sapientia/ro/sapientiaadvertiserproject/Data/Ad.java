@@ -9,7 +9,7 @@ public class Ad {
     private String longDesc;
     private String phoneNumber;
     private String location;
-    //private ImageView image;
+//    private ImageView image;
 
     public Ad() {
     }
@@ -20,7 +20,7 @@ public class Ad {
         this.longDesc = longDesc;
         this.phoneNumber = phoneNumber;
         this.location = location;
-        //this.image = image;
+//        this.image = image;
     }
 
     public String getTitle() {
@@ -62,13 +62,12 @@ public class Ad {
     public void setLocation(String location) {
         this.location = location;
     }
-
-   /* public ImageView getImage() {
-        return image;
-    }
-
-    public void setImage(ImageView image) {
-        this.image = image;
-    }
-    */
+//
+//    public ImageView getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(ImageView image) {
+//        this.image = image;
+//    }
 }
