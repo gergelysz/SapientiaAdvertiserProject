@@ -66,7 +66,13 @@ public class MainActivity extends AppCompatActivity {
          *   Ideiglenes megoldás nem Androidosoknak
          */
 
-        startActivity(new Intent(MainActivity.this, AdsActivity.class));
+        User tempUser = new User("Asd", "Asd2", "+4007000000");
+        Intent intent = new Intent(MainActivity.this, AdsActivity.class);
+//        startActivity(new Intent(MainActivity.this, AdsActivity.class));
+        intent.putExtra("USER_FIRSTNAME", tempUser.getFirstName());
+        intent.putExtra("USER_LASTNAME", tempUser.getLastName());
+        intent.putExtra("USER_PHONENUMBER", tempUser.getPhoneNumber());
+        startActivity(intent);
 
 
 
