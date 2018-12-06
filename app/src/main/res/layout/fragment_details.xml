@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:background="@color/darkgreen"
+    android:layout_margin="12dp"
+    android:padding="12dp">
+
+    <ImageView
+        android:id="@+id/detail_image"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="20dp"
+        android:contentDescription="@string/add_image"
+        android:layout_marginEnd="20dp" />
+
+    <TextView
+        android:id="@+id/detail_shortDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:text="@string/textviewshortdesc"
+        android:layout_below="@id/detail_image"/>
+
+    <TextView
+        android:id="@+id/detail_LongDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:text="@string/textviewlongdesc"
+        android:layout_below="@id/detail_shortDesc"/>
+
+    <TextView
+        android:id="@+id/detail_phoneNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ad_LongDesc"
+        android:text="@string/textviewphonenum"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/detail_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/detail_btn"
+        android:layout_below="@id/detail_phoneNum"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="227dp"
+        android:text="@string/textviewlocation"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        tools:ignore="UnknownIdInLayout" />
+
+
+</RelativeLayout>
