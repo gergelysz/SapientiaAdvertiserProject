@@ -41,7 +41,6 @@ public class AddFragment extends Fragment {
     FirebaseStorage storage;
     StorageReference storageReference;
     private Button buttonAdd;
-
     private EditText editTextTitle;
     private EditText editTextShortDesc;
     private EditText editTextLongDesc;
@@ -49,9 +48,8 @@ public class AddFragment extends Fragment {
     private EditText editTextLocation;
     private Button btnChoose, btnUpload;
     private ImageView imageView;
-
     private Uri filePath;
-
+    private int visitorsNumber;
     private final int PICK_IMAGE_REQUEST = 71;
     private String title, shortDesc, longDesc, phoneNum, location, image = "";
 
@@ -87,8 +85,8 @@ public class AddFragment extends Fragment {
                 longDesc = editTextLongDesc.getText().toString();
                 phoneNum = editTextPhoneNumber.getText().toString();
                 location = editTextLocation.getText().toString();
-
-                Ad ad = new Ad(title, shortDesc, longDesc, phoneNum, location, imageView);
+                visitorsNumber=0;
+                Ad ad = new Ad(title, shortDesc, longDesc, phoneNum, location, imageView, visitorsNumber);
                 db.collection("ads").add(ad).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {

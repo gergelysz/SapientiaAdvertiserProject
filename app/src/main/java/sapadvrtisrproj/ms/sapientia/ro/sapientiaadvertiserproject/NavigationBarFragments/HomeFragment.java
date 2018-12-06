@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -45,6 +46,10 @@ public class HomeFragment extends Fragment {
         adsListAdapter = new AdsListAdapter(adsList, new IAdClickListener() {
             @Override
             public void onItemClickAction(Ad data) {
+                FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+                data.setVisitorsNumber(data.getVisitorsNumber()+1);
+                mDatabase.getReference().child("ads").child(data.getId()).setValue(data);
+                //db.collection("ads").
                 Log.d(TAG,"before detail");
                 DetailsFragment detail= new DetailsFragment(data);
                 Log.d(TAG,"after detail");
@@ -66,6 +71,7 @@ public class HomeFragment extends Fragment {
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 for(DocumentSnapshot documentSnapshot: queryDocumentSnapshots) {
                     Ad ad = documentSnapshot.toObject(Ad.class);
+                    ad.setId(documentSnapshot.getId());
                     adsList.add(ad);
                     adsListAdapter.notifyDataSetChanged();
                 }
