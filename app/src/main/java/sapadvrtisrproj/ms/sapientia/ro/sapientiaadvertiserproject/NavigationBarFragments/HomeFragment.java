@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,20 +41,22 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Log.d(TAG, "before loading view");
+
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        Log.d(TAG, "after loading view");
+
         adsListAdapter = new AdsListAdapter(adsList, new IAdClickListener() {
             @Override
             public void onItemClickAction(Ad data) {
-                FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-                data.setVisitorsNumber(data.getVisitorsNumber()+1);
-                mDatabase.getReference().child("ads").child(data.getId()).setValue(data);
-                //db.collection("ads").
-                Log.d(TAG,"before detail");
-                DetailsFragment detail= new DetailsFragment(data);
-                Log.d(TAG,"after detail");
-                AdsActivity ref=(AdsActivity)HomeFragment.this.getActivity();
+                Log.d(TAG, "before detail");
+                DetailsFragment detail = new DetailsFragment(data);
+                Log.d(TAG, "after detail");
+                AdsActivity ref = (AdsActivity) HomeFragment.this.getActivity();
                 ref.loadFragment(detail);
-                Log.d(TAG,"after load fragment");
+                Log.d(TAG, "after load fragment");
             }
         });
 
@@ -69,9 +70,8 @@ public class HomeFragment extends Fragment {
         db.collection("ads").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                for(DocumentSnapshot documentSnapshot: queryDocumentSnapshots) {
+                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                     Ad ad = documentSnapshot.toObject(Ad.class);
-                    ad.setId(documentSnapshot.getId());
                     adsList.add(ad);
                     adsListAdapter.notifyDataSetChanged();
                 }

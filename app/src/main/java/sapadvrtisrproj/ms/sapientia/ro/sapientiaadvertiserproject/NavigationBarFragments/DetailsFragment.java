@@ -22,7 +22,7 @@ import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.Ad;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
 
 
-public class DetailsFragment  extends Fragment {
+public class DetailsFragment extends Fragment {
 
     private static final String TAG = "DetailsFragment";
     private TextView detailTextTitle;
@@ -30,38 +30,42 @@ public class DetailsFragment  extends Fragment {
     private TextView detailTextLongDesc;
     private TextView detailTextPhoneNumber;
     private TextView detailTextLocation;
-    //private ImageView imageView;
+//    private ImageView imageView;
     //private List<Ad> adsList = new ArrayList<>();
     private AdsListAdapter adsListAdapter;
     private Ad adItem;
 
-    public DetailsFragment(){
+    public DetailsFragment() {
 
     }
 
     @SuppressLint("ValidFragment")
-    public DetailsFragment(Ad adItem)
-    {
-        this.adItem=adItem;
+    public DetailsFragment(Ad adItem) {
+        this.adItem = adItem;
     }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_details, container, false);
-
 
         detailTextTitle = view.findViewById(R.id.detail_title);
         detailTextShortDesc = view.findViewById(R.id.detail_shortDesc);
         detailTextLongDesc = view.findViewById(R.id.detail_LongDesc);
         detailTextPhoneNumber = view.findViewById(R.id.detail_phoneNum);
         detailTextLocation = view.findViewById(R.id.detail_location);
-        //imageView = (ImageView) view.findViewById(R.id.detail_image);
-        Log.d(TAG,"before set");
+//        imageView = view.findViewById(R.id.detail_image);
+
+        Log.d(TAG, "details ad: " + adItem.getTitle());
+
+        Log.d(TAG, "before set");
+
         detailTextTitle.setText(adItem.getTitle());
-      detailTextShortDesc.setText(adItem.getShortDesc());
+        Log.d(TAG, "after setTitle");
+        detailTextShortDesc.setText(adItem.getShortDesc());
       /*  detailTextLongDesc.setText(adItem.getLongDesc());
         detailTextLocation.setText(adItem.getLocation());*/
-        //imageView.setImageDrawable(adItem.getImage().getDrawable());
+//        imageView.setImageDrawable(adItem.getImage().getDrawable());
         Log.d(TAG, "after set");
 
         return view;

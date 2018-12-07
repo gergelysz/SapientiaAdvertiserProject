@@ -22,7 +22,7 @@ public class AdsActivity extends AppCompatActivity {
 
     private String userFirstName = null, userLastName = null, userPhoneNumber = null;
     private static final String TAG = "AdsActivity";
-    private Button detailsBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,19 +37,13 @@ public class AdsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        if(bundle != null) {
-            userFirstName = (String)bundle.get("USER_FIRSTNAME");
-            userLastName = (String)bundle.get("USER_LASTNAME");
-            userPhoneNumber = (String)bundle.get("USER_PHONENUMBER");
+        if (bundle != null) {
+            userFirstName = (String) bundle.get("USER_FIRSTNAME");
+            userLastName = (String) bundle.get("USER_LASTNAME");
+            userPhoneNumber = (String) bundle.get("USER_PHONENUMBER");
             Log.d(TAG, "User data: " + userFirstName + " " + userLastName + " " + userPhoneNumber);
         }
-        /*detailsBtn=findViewById(R.id.detail_btn);
-        detailsBtn.setOnClickListener((v)->{
-            @Override
-            public void onClick() {
-                loadFragment(new DetailsFragment());
-            }
-        });*/
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_bar);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
