@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/ad_image"
-        android:layout_width="52dp"
-        android:layout_height="52dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_marginRight="20dp"
         android:scaleType="centerCrop" />
 
@@ -27,26 +27,9 @@
         android:id="@+id/ad_shortDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ad_image"
+        android:layout_below="@id/ad_title"
+        android:layout_toRightOf="@id/ad_image"
         android:text="textviewShortDesc"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/ad_LongDesc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ad_shortDesc"
-        android:text="textviewLongDesc"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/ad_phoneNum"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ad_LongDesc"
-        android:text="textviewPhoneNum"
         android:textColor="@color/white"
         android:textSize="16sp" />
 
@@ -54,10 +37,33 @@
         android:id="@+id/ad_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ad_phoneNum"
-        android:layout_marginBottom="227dp"
+        android:layout_below="@id/ad_shortDesc"
+        android:layout_toRightOf="@id/ad_image"
         android:text="textviewLocation"
         android:textColor="@color/white"
         android:textSize="16sp" />
+
+
+    <!--<TextView-->
+        <!--android:id="@+id/ad_longDesc"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/ad_location"-->
+        <!--android:layout_marginTop="12dp"-->
+        <!--android:layout_marginBottom="12dp"-->
+        <!--android:text="textviewLongDesc"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="16sp" />-->
+
+    <TextView
+        android:id="@+id/ad_phoneNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ad_location"
+        android:text="textviewPhoneNum"
+        android:layout_toRightOf="@id/ad_image"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
 
 </RelativeLayout>

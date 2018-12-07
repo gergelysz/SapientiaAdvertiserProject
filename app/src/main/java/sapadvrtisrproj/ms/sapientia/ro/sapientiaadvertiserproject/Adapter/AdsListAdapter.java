@@ -42,7 +42,7 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
 
         viewHolder.title.setText(adsList.get(i).getTitle());
         viewHolder.shortDesc.setText(adsList.get(i).getShortDesc());
-        viewHolder.longDesc.setText(adsList.get(i).getLongDesc());
+//        viewHolder.longDesc.setText(adsList.get(i).getLongDesc());
         viewHolder.phoneNum.setText(adsList.get(i).getPhoneNumber());
         viewHolder.location.setText(adsList.get(i).getLocation());
 //        viewHolder.imageAd = adsList.get(i).getImage();
@@ -73,7 +73,7 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
 
         public TextView title;
         public TextView shortDesc;
-        public TextView longDesc;
+//        public TextView longDesc;
         public TextView phoneNum;
         public TextView location;
 //        public String image;
@@ -86,7 +86,7 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
 
             title = mView.findViewById(R.id.ad_title);
             shortDesc = mView.findViewById(R.id.ad_shortDesc);
-            longDesc = mView.findViewById(R.id.ad_LongDesc);
+//            longDesc = mView.findViewById(R.id.ad_longDesc);
             phoneNum = mView.findViewById(R.id.ad_phoneNum);
             location = mView.findViewById(R.id.ad_location);
             imageAd = mView.findViewById(R.id.ad_image);

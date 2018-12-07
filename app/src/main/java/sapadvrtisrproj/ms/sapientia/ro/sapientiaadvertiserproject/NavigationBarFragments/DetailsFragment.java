@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +33,7 @@ public class DetailsFragment extends Fragment {
     private TextView detailTextLongDesc;
     private TextView detailTextPhoneNumber;
     private TextView detailTextLocation;
-//    private ImageView imageView;
+    private ImageView imageView;
     //private List<Ad> adsList = new ArrayList<>();
     private AdsListAdapter adsListAdapter;
     private Ad adItem;
@@ -54,7 +57,7 @@ public class DetailsFragment extends Fragment {
         detailTextLongDesc = view.findViewById(R.id.detail_LongDesc);
         detailTextPhoneNumber = view.findViewById(R.id.detail_phoneNum);
         detailTextLocation = view.findViewById(R.id.detail_location);
-//        imageView = view.findViewById(R.id.detail_image);
+        imageView = view.findViewById(R.id.detail_image);
 
         Log.d(TAG, "details ad: " + adItem.getTitle());
 
@@ -63,15 +66,15 @@ public class DetailsFragment extends Fragment {
         detailTextTitle.setText(adItem.getTitle());
         Log.d(TAG, "after setTitle");
         detailTextShortDesc.setText(adItem.getShortDesc());
-      /*  detailTextLongDesc.setText(adItem.getLongDesc());
-        detailTextLocation.setText(adItem.getLocation());*/
+        detailTextLongDesc.setText(adItem.getLongDesc());
+        detailTextLocation.setText(adItem.getLocation());
+        detailTextPhoneNumber.setText(adItem.getPhoneNumber());
+        Glide.with(view).load(adItem.getImage()).into(imageView);
 //        imageView.setImageDrawable(adItem.getImage().getDrawable());
         Log.d(TAG, "after set");
 
         return view;
     }
-
-
 
 
 }

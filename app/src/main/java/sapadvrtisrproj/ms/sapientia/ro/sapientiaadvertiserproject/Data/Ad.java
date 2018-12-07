@@ -8,7 +8,7 @@ public class Ad {
     private String longDesc;
     private String phoneNumber;
     private String location;
-    private int visitedNumber;
+    private String visitedNumber;
 //    private ImageView image;
     private String image;
 
@@ -16,7 +16,7 @@ public class Ad {
 
     }
 
-    public Ad(String title, String shortDesc, String longDesc, String phoneNumber, String location, int visitedNumber, String imageLink) {
+    public Ad(String title, String shortDesc, String longDesc, String phoneNumber, String location, String visitedNumber, String imageLink) {
         this.title = title;
         this.shortDesc = shortDesc;
         this.longDesc = longDesc;
@@ -103,11 +103,11 @@ public class Ad {
         this.location = location;
     }
 
-    public int getVisitedNumber() {
+    public String getVisitedNumber() {
         return visitedNumber;
     }
 
-    public void setVisitedNumber(int visitedNumber) {
+    public void setVisitedNumber(String visitedNumber) {
         this.visitedNumber = visitedNumber;
     }
 

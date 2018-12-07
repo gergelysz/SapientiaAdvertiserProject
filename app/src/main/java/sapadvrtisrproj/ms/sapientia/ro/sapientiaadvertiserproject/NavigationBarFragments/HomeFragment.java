@@ -51,12 +51,22 @@ public class HomeFragment extends Fragment {
         adsListAdapter = new AdsListAdapter(adsList, new IAdClickListener() {
             @Override
             public void onItemClickAction(Ad data) {
+
                 Log.d(TAG, "before detail");
                 DetailsFragment detail = new DetailsFragment(data);
                 Log.d(TAG, "after detail");
                 AdsActivity ref = (AdsActivity) HomeFragment.this.getActivity();
                 ref.loadFragment(detail);
                 Log.d(TAG, "after load fragment");
+
+                /**
+                 *   Updating the number of visitors
+                 */
+
+                int visitors = Integer.parseInt(data.getVisitedNumber());
+                ++visitors;
+                Log.d(TAG, "Updating visitedNumber in database, new value: " + String.valueOf(visitors) + ", title: " + data.getTitle() + ", ID: " + data.getId());
+                db.collection("ads").document(data.getId()).update("visitedNumber", String.valueOf(visitors));
             }
         });
 
@@ -76,6 +86,7 @@ public class HomeFragment extends Fragment {
 
                     Log.d(TAG, "getting ad data...");
                     Ad ad = documentSnapshot.toObject(Ad.class);
+                    ad.setId(documentSnapshot.getId());
                     adsList.add(ad);
                     adsListAdapter.notifyDataSetChanged();
                     Log.d(TAG, ad.getTitle() + " added to list and adapter notifydatasetchanged");
