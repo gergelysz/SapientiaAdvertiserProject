@@ -1,9 +1,6 @@
 package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +13,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.AdsActivity;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.Ad;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
 
@@ -34,12 +30,15 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        Log.d(TAG, "create viewholder");
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
+
+        Log.d(TAG, "Set ad: " + adsList.get(i).getTitle() + " linkImage: " + adsList.get(i).getImage());
 
         viewHolder.title.setText(adsList.get(i).getTitle());
         viewHolder.shortDesc.setText(adsList.get(i).getShortDesc());
@@ -48,7 +47,7 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
         viewHolder.location.setText(adsList.get(i).getLocation());
 //        viewHolder.imageAd = adsList.get(i).getImage();
 //        Glide.with(viewHolder.mView).load(viewHolder.image).into(viewHolder.imageAd);
-//        viewHolder.image;
+        Glide.with(viewHolder.mView).load(adsList.get(i).getImage()).into(viewHolder.imageAd);
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +57,6 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
                     Ad ad = adsList.get(viewHolder.getAdapterPosition());
                     Log.d(TAG, ad.toString());
                     adClickListener.onItemClickAction(ad);
-
                 }
             }
         });
@@ -78,20 +76,20 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
         public TextView longDesc;
         public TextView phoneNum;
         public TextView location;
-        public String image;
-//        public ImageView imageAd;
+//        public String image;
+        public ImageView imageAd;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mView = itemView;
 
-            title = mView.findViewById(R.id.detail_title);
-            shortDesc = mView.findViewById(R.id.detail_shortDesc);
+            title = mView.findViewById(R.id.ad_title);
+            shortDesc = mView.findViewById(R.id.ad_shortDesc);
             longDesc = mView.findViewById(R.id.ad_LongDesc);
-            phoneNum = mView.findViewById(R.id.detail_phoneNum);
-            location = mView.findViewById(R.id.detail_location);
-//            imageAd = mView.findViewById(R.id.detail_image);
+            phoneNum = mView.findViewById(R.id.ad_phoneNum);
+            location = mView.findViewById(R.id.ad_location);
+            imageAd = mView.findViewById(R.id.ad_image);
         }
     }
 

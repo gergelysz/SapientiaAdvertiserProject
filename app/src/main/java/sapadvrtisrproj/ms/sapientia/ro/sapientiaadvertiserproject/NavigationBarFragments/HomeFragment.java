@@ -64,17 +64,24 @@ public class HomeFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adsListAdapter);
+        Log.d(TAG, "recyclerview set");
 
         db = FirebaseFirestore.getInstance();
 
         db.collection("ads").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+
+                    Log.d(TAG, "getting ad data...");
                     Ad ad = documentSnapshot.toObject(Ad.class);
                     adsList.add(ad);
                     adsListAdapter.notifyDataSetChanged();
+                    Log.d(TAG, ad.getTitle() + " added to list and adapter notifydatasetchanged");
+
                 }
+
                 //ArrayAdapter<Ad> adapter = new ArrayAdapter<>(getContext(), R.layout.list_item, adsList);
                 //adapter.notifyDataSetChanged();
                 //recyclerView.setAdapter(adapter);
