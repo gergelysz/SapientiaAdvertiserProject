@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("USER_LASTNAME", tempUser.getLastName());
         intent.putExtra("USER_PHONENUMBER", tempUser.getPhoneNumber());
         startActivity(intent);
+        finish();
 
 
 

@@ -1,7 +1,5 @@
 package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data;
 
-import android.widget.ImageView;
-
 public class Ad {
 
     private String id;
@@ -10,21 +8,51 @@ public class Ad {
     private String longDesc;
     private String phoneNumber;
     private String location;
-    private int visitorsNumber;
-    private ImageView image;
+    private int visitedNumber;
+//    private ImageView image;
+    private String image;
 
     public Ad() {
 
     }
 
-    public Ad(String title, String shortDesc, String longDesc, String phoneNumber, String location, ImageView image, int visitorsNumber) {
+    public Ad(String title, String shortDesc, String longDesc, String phoneNumber, String location, int visitedNumber, String imageLink) {
         this.title = title;
         this.shortDesc = shortDesc;
         this.longDesc = longDesc;
         this.phoneNumber = phoneNumber;
         this.location = location;
-        this.visitorsNumber=visitorsNumber;
-        //this.image = image;
+        this.visitedNumber = visitedNumber;
+        this.image = imageLink;
+    }
+
+//    public Ad(String id, String title, String shortDesc, String longDesc, String phoneNumber, String location, int visitedNumber, String image) {
+//        this.id = id;
+//        this.title = title;
+//        this.shortDesc = shortDesc;
+//        this.longDesc = longDesc;
+//        this.phoneNumber = phoneNumber;
+//        this.location = location;
+//        this.visitedNumber = visitedNumber;
+//        this.image = image;
+//    }
+
+//    public Ad(String title, String shortDesc, String longDesc, String phoneNumber, String location, ImageView image, int visitedNumber) {
+//        this.title = title;
+//        this.shortDesc = shortDesc;
+//        this.longDesc = longDesc;
+//        this.phoneNumber = phoneNumber;
+//        this.location = location;
+//        this.visitedNumber = visitedNumber;
+////        this.image = image;
+//    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getId() {
@@ -75,21 +103,20 @@ public class Ad {
         this.location = location;
     }
 
-    public int getVisitorsNumber() {
-        return visitorsNumber;
+    public int getVisitedNumber() {
+        return visitedNumber;
     }
 
-    public  void setVisitorsNumber(int visitorsNumber)
-    {
-        this.visitorsNumber=visitorsNumber;
+    public void setVisitedNumber(int visitedNumber) {
+        this.visitedNumber = visitedNumber;
     }
 
-    /* public ImageView getImage() {
-        return image;
-    }
+//    public ImageView getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(ImageView image) {
+//        this.image = image;
+//    }
 
-    public void setImage(ImageView image) {
-        this.image = image;
-    }
-    */
 }

@@ -1,59 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:background="@color/darkgreen"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="12dp"
+    android:background="@color/darkgreen"
     android:padding="12dp">
 
     <ImageView
-        android:id="@+id/detail_image"
+        android:id="@+id/ad_image"
         android:layout_width="52dp"
         android:layout_height="52dp"
-        android:scaleType="centerCrop"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        android:scaleType="centerCrop" />
 
     <TextView
-        android:id="@+id/detail_title"
+        android:id="@+id/ad_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/detail_image"
+        android:layout_toRightOf="@id/ad_image"
         android:text="textviewTitle"
-        android:textSize="24sp"
         android:textColor="@color/white"
-        android:textStyle="bold"/>
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/detail_shortDesc"
+        android:id="@+id/ad_shortDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textColor="@color/white"
+        android:layout_below="@id/ad_image"
         android:text="textviewShortDesc"
-        android:layout_below="@id/detail_image"/>
+        android:textColor="@color/white"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/ad_LongDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="@color/white"
+        android:layout_below="@id/ad_shortDesc"
         android:text="textviewLongDesc"
-        android:layout_below="@id/detail_shortDesc"/>
-
-    <TextView
-        android:id="@+id/detail_phoneNum"
-        android:layout_width="match_parent"
-        android:textSize="16sp"
         android:textColor="@color/white"
-        android:layout_height="wrap_content"
-        android:text="textviewPhoneNum"
-        android:layout_below="@id/ad_LongDesc"/>
+        android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/detail_location"
+        android:id="@+id/ad_phoneNum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/detail_phoneNum"
+        android:layout_below="@id/ad_LongDesc"
+        android:text="textviewPhoneNum"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/ad_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ad_phoneNum"
         android:layout_marginBottom="227dp"
         android:text="textviewLocation"
         android:textColor="@color/white"
