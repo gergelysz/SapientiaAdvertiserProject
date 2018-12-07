@@ -20,11 +20,12 @@ import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBarF
 
 public class AdsActivity extends AppCompatActivity {
 
-    private String userFirstName = null, userLastName = null, userPhoneNumber = null;
+    private String userFirstName = null, userLastName = null, userPhoneNumber = null, userid = null;
     private static final String TAG = "AdsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ads);
 
@@ -41,8 +42,10 @@ public class AdsActivity extends AppCompatActivity {
             userFirstName = (String) bundle.get("USER_FIRSTNAME");
             userLastName = (String) bundle.get("USER_LASTNAME");
             userPhoneNumber = (String) bundle.get("USER_PHONENUMBER");
-            Log.d(TAG, "User data: " + userFirstName + " " + userLastName + " " + userPhoneNumber);
+            userid = (String) bundle.get("USER_ID");
+            Log.d(TAG, "User data: " + userFirstName + " " + userLastName + " " + userPhoneNumber + " " +userid);
         }
+
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_bar);
 
@@ -51,7 +54,6 @@ public class AdsActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 Fragment fragment = null;
-
                 switch (menuItem.getItemId()) {
                     case R.id.bottom_navigation_bar_add:
                         fragment = new AddFragment();

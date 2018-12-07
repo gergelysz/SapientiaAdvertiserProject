@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBarGetCode;
 
     private String passFirstName, passLastName, passPhoneNumber;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +69,15 @@ public class MainActivity extends AppCompatActivity {
         User tempUser = new User("Asd", "Asd2", "+400700000000");
         Intent intent = new Intent(MainActivity.this, AdsActivity.class);
 //        startActivity(new Intent(MainActivity.this, AdsActivity.class));
+        //
+        // /szandekosan kimasoltam az userid-t firebasebol,
+        // hogy tudjam emulatoroon, ezzel az ideiglenes modszerrel tesztelni
+
+        userId = "lGfJnXym7eTh9JnR19JW";
         intent.putExtra("USER_FIRSTNAME", tempUser.getFirstName());
         intent.putExtra("USER_LASTNAME", tempUser.getLastName());
         intent.putExtra("USER_PHONENUMBER", tempUser.getPhoneNumber());
+        intent.putExtra("USER_ID", userId);
         startActivity(intent);
         finish();
 
@@ -156,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
                                         passPhoneNumber = documentSnapshot.getString("phoneNumber");
                                         passFirstName = documentSnapshot.getString("firstName");
                                         passLastName = documentSnapshot.getString("lastName");
+                                        userId = documentSnapshot.getId();
                                         break;
                                     }
                                 }
@@ -272,6 +280,7 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra("USER_FIRSTNAME", passFirstName);
                             intent.putExtra("USER_LASTNAME", passLastName);
                             intent.putExtra("USER_PHONENUMBER", passPhoneNumber);
+                            intent.putExtra("USER_ID", userId);
                             startActivity(intent);
 
                             // Régi átirányítás
