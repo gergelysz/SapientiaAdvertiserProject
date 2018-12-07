@@ -57,7 +57,19 @@
         android:layout_below="@id/detail_phoneNum"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="227dp"
-        android:text="@string/textviewlocation"
+        android:text="@string/detail_location"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        tools:ignore="UnknownIdInLayout" />
+
+    <TextView
+        android:id="@+id/visitors_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/visitors_number"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="227dp"
+        android:text="@string/visitors_number"
         android:textColor="@color/white"
         android:textSize="16sp"
         tools:ignore="UnknownIdInLayout" />

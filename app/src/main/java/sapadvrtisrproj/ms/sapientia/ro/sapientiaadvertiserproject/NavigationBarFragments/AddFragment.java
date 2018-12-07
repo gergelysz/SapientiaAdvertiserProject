@@ -49,7 +49,7 @@ public class AddFragment extends Fragment {
     private EditText editTextLocation;
     private Button btnChoose, btnUpload;
     private ImageView imageView;
-
+    private String adId;
     private Uri filePath;
 
     private final int PICK_IMAGE_REQUEST = 71;
@@ -89,6 +89,7 @@ public class AddFragment extends Fragment {
                 location = editTextLocation.getText().toString();
 
                 Ad ad = new Ad(title, shortDesc, longDesc, phoneNum, location, 0, image);
+
                 db.collection("ads").add(ad).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
