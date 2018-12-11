@@ -88,21 +88,25 @@ public class AddFragment extends Fragment {
                 longDesc = editTextLongDesc.getText().toString();
                 phoneNum = editTextPhoneNumber.getText().toString();
                 location = editTextLocation.getText().toString();
-
-                Ad ad = new Ad(title, shortDesc, longDesc, phoneNum, location, "0", image);
-                db.collection("ads").add(ad).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getActivity(), "Advertisement feltöltve", Toast.LENGTH_LONG).show();
-                    }
-                });
-
-                //  reload ads list
-                Fragment homeFragment = new HomeFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, homeFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                if (!title.equals("")) {
+                    Ad ad = new Ad(title, shortDesc, longDesc, phoneNum, location, "0", image);
+                    db.collection("ads").add(ad).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Toast.makeText(getActivity(), "Advertisement feltöltve", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    //  reload ads list
+                    Fragment homeFragment = new HomeFragment();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_container, homeFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+                else {
+                    editTextTitle.setError("A cím kitöltése kötelező");
+                    editTextTitle.setHint("Töltse ki a cím mezőt");
+                }
             }
         });
         // onclick listener to uploading image
