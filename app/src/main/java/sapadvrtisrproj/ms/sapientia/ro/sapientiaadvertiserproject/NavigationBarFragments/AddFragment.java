@@ -41,15 +41,13 @@ public class AddFragment extends Fragment {
     FirebaseStorage storage;
     StorageReference storageReference;
     private Button buttonAdd;
-
     private EditText editTextTitle;
     private EditText editTextShortDesc;
     private EditText editTextLongDesc;
     private EditText editTextPhoneNumber;
     private EditText editTextLocation;
-    private Button btnChoose, btnUpload;
+    private Button btnChoose;
     private ImageView imageView;
-
     private Uri filePath;
 
     private final int PICK_IMAGE_REQUEST = 71;
@@ -65,21 +63,24 @@ public class AddFragment extends Fragment {
 
         //Initialize Views
         btnChoose = view.findViewById(R.id.btnChoose);
-        btnUpload = view.findViewById(R.id.btnUpload);
+        buttonAdd = view.findViewById(R.id.button_addfragment_add);
+
         imageView = view.findViewById(R.id.imgView);
+
         editTextTitle = view.findViewById(R.id.edittext_addfragment_title);
         editTextShortDesc = view.findViewById(R.id.edittext_addfragment_short_desc);
         editTextLongDesc = view.findViewById(R.id.edittext_addfragment_long_desc);
         editTextPhoneNumber = view.findViewById(R.id.edittext_addfragment_phone_number);
         editTextLocation = view.findViewById(R.id.edittext_addfragment_location);
-
+        // get storage
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
 
-        buttonAdd = view.findViewById(R.id.button_addfragment_add);
+        // onclick listener
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
+            // saving the ad's information
             public void onClick(View v) {
 
                 title = editTextTitle.getText().toString();
@@ -96,10 +97,7 @@ public class AddFragment extends Fragment {
                     }
                 });
 
-                /**
-                 *   HomeFragment megnyitása, az Advert feltöltése után
-                 */
-
+                //  reload ads list
                 Fragment homeFragment = new HomeFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, homeFragment);
@@ -107,21 +105,14 @@ public class AddFragment extends Fragment {
                 transaction.commit();
             }
         });
-
+        // onclick listener to uploading image
         btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 chooseImage();
-            }
-        });
-
-        btnUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 uploadImage();
             }
         });
-
         return view;
 
     }
