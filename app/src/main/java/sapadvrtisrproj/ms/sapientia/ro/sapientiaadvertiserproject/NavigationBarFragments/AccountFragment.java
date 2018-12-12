@@ -2,6 +2,7 @@ package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBar
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,11 +18,15 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.IOException;
+
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.AdsActivity;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.User;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.MainActivity;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.RegistrationActivity;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class AccountFragment extends Fragment {
@@ -84,9 +89,16 @@ public class AccountFragment extends Fragment {
         changePicture.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-               startActivityForResult(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+               //startActivityForResult(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), GET_FROM_GALLERY);
+
             }
+
         });
+
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,5 +121,22 @@ public class AccountFragment extends Fragment {
         // TODO ...
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GET_FROM_GALLERY && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            Uri uri = data.getData();
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), uri);
+                changePicture.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data;
 public class User {
 
     private String firstName, lastName, phoneNumber, email, address;
+    private String imageURL;
 
     public User() {
 
@@ -46,6 +47,15 @@ public class User {
 
     public String getAddress() {
         return address;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+
     }
 
     public void setEmail(String email) {
