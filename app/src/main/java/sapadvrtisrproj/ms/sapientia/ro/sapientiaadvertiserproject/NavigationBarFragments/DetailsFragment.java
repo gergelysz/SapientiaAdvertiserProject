@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
 public class DetailsFragment extends Fragment {
 
     private static final String TAG = "DetailsFragment";
+    private FirebaseFirestore db;
     private TextView detailTextTitle;
     private TextView detailTextShortDesc;
     private TextView detailTextLongDesc;
@@ -35,6 +37,8 @@ public class DetailsFragment extends Fragment {
     private TextView detailTextLocation;
     private TextView visitors_number;
     private ImageView imageView;
+    private Button hideBtn;
+    private Button deleteBtn;
     //private List<Ad> adsList = new ArrayList<>();
     private AdsListAdapter adsListAdapter;
     private Ad adItem;
@@ -52,6 +56,7 @@ public class DetailsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_details, container, false);
+        db = FirebaseFirestore.getInstance();
 
         detailTextTitle = view.findViewById(R.id.detail_title);
         detailTextShortDesc = view.findViewById(R.id.detail_shortDesc);
@@ -60,6 +65,8 @@ public class DetailsFragment extends Fragment {
         detailTextLocation = view.findViewById(R.id.detail_location);
         imageView = view.findViewById(R.id.detail_image);
         visitors_number=view.findViewById(R.id.visitors_number);
+        hideBtn=view.findViewById(R.id.hideBtn);
+        deleteBtn=view.findViewById(R.id.deleteBtn);
 
         Log.d(TAG, "details ad: " + adItem.getTitle());
 
@@ -76,6 +83,21 @@ public class DetailsFragment extends Fragment {
 //        imageView.setImageDrawable(adItem.getImage().getDrawable());
         Log.d(TAG, "after set");
 
+        //delete and hide functionality
+
+        hideBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick (View v){
+                db.collection("ads").document(adItem.getId()).update("visibilityRight", "-1");
+            }
+        });
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.collection("ads").document(adItem.getId()).update("visibilityRight", "-2");
+            }
+        });
         return view;
     }
 

@@ -88,8 +88,11 @@ public class HomeFragment extends Fragment {
                     Log.d(TAG, "getting ad data...");
                     Ad ad = documentSnapshot.toObject(Ad.class);
                     ad.setId(documentSnapshot.getId());
-                    adsList.add(ad);
-                    adsListAdapter.notifyDataSetChanged();
+                    ad.setVisibilityRight("0");
+                    if (ad.getVisibilityRight().equals("0")) {
+                        adsList.add(ad);
+                        adsListAdapter.notifyDataSetChanged();
+                    }
                     Log.d(TAG, ad.getTitle() + " added to list and adapter notifydatasetchanged");
 
                 }

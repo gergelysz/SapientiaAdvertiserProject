@@ -89,7 +89,7 @@ public class AddFragment extends Fragment {
                 phoneNum = editTextPhoneNumber.getText().toString();
                 location = editTextLocation.getText().toString();
                 if (!title.equals("")) {
-                    Ad ad = new Ad(title, shortDesc, longDesc, phoneNum, location, "0", image);
+                    Ad ad = new Ad(title, shortDesc, longDesc, phoneNum, location, "0", image, "0");
                     db.collection("ads").add(ad).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
