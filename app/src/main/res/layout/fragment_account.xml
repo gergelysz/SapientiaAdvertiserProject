@@ -13,9 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/save"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_acc_edit_fname"
+        app:layout_constraintBottom_toTopOf="@+id/frag_input_fname"
         app:layout_constraintLeft_toRightOf="@+id/fragment_acc_picture"
-
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,67 +25,104 @@
         android:padding="16dp"
         android:src="@drawable/profile_picture_sample"
         app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintRight_toLeftOf="parent" />
+        app:layout_constraintRight_toLeftOf="parent"/>
+
 
     <ImageView
         android:id="@+id/fragment_acc_logout_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/log_out_button"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_acc_edit_fname"
+        app:layout_constraintBottom_toTopOf="@+id/frag_input_fname"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/fragment_acc_picture"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/fragment_acc_edit_fname"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/frag_input_fname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_acc_picture" />
+        android:hint="First Name"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_acc_picture">
 
-    <EditText
-        android:id="@+id/fragment_acc_edit_lname"
+        <EditText
+            android:id="@+id/fragment_acc_edit_fname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="John"
+            android:paddingBottom="16dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/frag_input_lname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/last_name"
-        android:paddingBottom="16dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_acc_edit_fname" />
+        android:hint="Last Name"
+        app:layout_constraintTop_toBottomOf="@id/frag_input_fname">
 
-    <EditText
-        android:id="@+id/fragment_acc_edit_email"
+        <EditText
+            android:id="@+id/fragment_acc_edit_lname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ripper"
+            android:paddingBottom="16dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/frag_input_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/email"
-        android:paddingBottom="16dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_acc_edit_lname" />
+        android:hint="Email"
+        app:layout_constraintTop_toBottomOf="@id/frag_input_lname">
 
-    <EditText
-        android:id="@+id/fragment_acc_edit_phone"
+        <EditText
+            android:id="@+id/fragment_acc_edit_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="sample@email.com"
+            android:paddingBottom="16dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/frag_input_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/phone_number"
-        android:paddingBottom="16dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_acc_edit_email"
-        android:inputType="phone"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/frag_input_email"
+        android:hint="Phone">
 
-    <EditText
-        android:id="@+id/fragment_acc_edit_address"
+        <EditText
+            android:id="@+id/fragment_acc_edit_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="07xxxxx666"
+            android:inputType="phone"
+            android:paddingBottom="16dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/frag_input_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Address"
-        android:paddingBottom="16dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_acc_edit_phone" />
+        app:layout_constraintTop_toBottomOf="@+id/frag_input_phone">
+
+        <EditText
+            android:id="@+id/fragment_acc_edit_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Targu Mures, Str. Bolyai, nr. 42"
+            android:paddingBottom="16dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_acc_edit_phone" />
+    </android.support.design.widget.TextInputLayout>
 
 </android.support.constraint.ConstraintLayout>

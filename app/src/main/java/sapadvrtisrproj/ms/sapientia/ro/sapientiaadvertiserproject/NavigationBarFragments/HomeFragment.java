@@ -65,6 +65,7 @@ public class HomeFragment extends Fragment {
 
                 int visitors = Integer.parseInt(data.getVisitedNumber());
                 ++visitors;
+                data.setVisitedNumber(String.valueOf(visitors));
                 Log.d(TAG, "Updating visitedNumber in database, new value: " + String.valueOf(visitors) + ", title: " + data.getTitle() + ", ID: " + data.getId());
                 db.collection("ads").document(data.getId()).update("visitedNumber", String.valueOf(visitors));
             }

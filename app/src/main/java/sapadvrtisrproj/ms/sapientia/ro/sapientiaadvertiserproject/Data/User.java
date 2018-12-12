@@ -2,7 +2,7 @@ package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data;
 
 public class User {
 
-    private String firstName, lastName, phoneNumber;
+    private String firstName, lastName, phoneNumber, email, address;
 
     public User() {
 
@@ -12,6 +12,8 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
+        this.email = null;
+        this.address = null;
     }
 
     public String getFirstName() {
@@ -36,5 +38,21 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

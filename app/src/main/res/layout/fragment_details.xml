@@ -29,9 +29,10 @@
         android:id="@+id/detail_shortDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/detail_shortDesc"
+
+        android:layout_below="@id/detail_title"
         android:layout_marginTop="12dp"
-        android:text="@string/textxviewshortdesc"
+        android:text="@string/textviewshortdesc"
         android:textColor="@color/white"
         android:textSize="20sp" />
 

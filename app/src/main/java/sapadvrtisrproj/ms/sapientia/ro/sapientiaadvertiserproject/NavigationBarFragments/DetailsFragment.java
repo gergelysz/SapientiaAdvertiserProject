@@ -33,6 +33,7 @@ public class DetailsFragment extends Fragment {
     private TextView detailTextLongDesc;
     private TextView detailTextPhoneNumber;
     private TextView detailTextLocation;
+    private TextView visitors_number;
     private ImageView imageView;
     //private List<Ad> adsList = new ArrayList<>();
     private AdsListAdapter adsListAdapter;
@@ -58,6 +59,7 @@ public class DetailsFragment extends Fragment {
         detailTextPhoneNumber = view.findViewById(R.id.detail_phoneNum);
         detailTextLocation = view.findViewById(R.id.detail_location);
         imageView = view.findViewById(R.id.detail_image);
+        visitors_number=view.findViewById(R.id.visitors_number);
 
         Log.d(TAG, "details ad: " + adItem.getTitle());
 
@@ -69,6 +71,7 @@ public class DetailsFragment extends Fragment {
         detailTextLongDesc.setText(adItem.getLongDesc());
         detailTextLocation.setText(adItem.getLocation());
         detailTextPhoneNumber.setText(adItem.getPhoneNumber());
+        visitors_number.setText(adItem.getVisitedNumber());
         Glide.with(view).load(adItem.getImage()).into(imageView);
 //        imageView.setImageDrawable(adItem.getImage().getDrawable());
         Log.d(TAG, "after set");
