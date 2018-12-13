@@ -1,6 +1,7 @@
 package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBarFragments;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ import java.util.List;
 
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter.AdsListAdapter;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter.IAdClickListener;
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.AdsActivity;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.Ad;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
 
@@ -89,6 +91,8 @@ public class DetailsFragment extends Fragment {
             @Override
             public void onClick (View v){
                 db.collection("ads").document(adItem.getId()).update("visibilityRight", "-1");
+                Intent intent=new Intent(getActivity(), AdsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -96,6 +100,7 @@ public class DetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 db.collection("ads").document(adItem.getId()).update("visibilityRight", "-2");
+
             }
         });
         return view;

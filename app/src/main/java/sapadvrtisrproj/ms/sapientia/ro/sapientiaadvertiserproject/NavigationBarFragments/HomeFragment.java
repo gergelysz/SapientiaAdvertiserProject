@@ -85,15 +85,18 @@ public class HomeFragment extends Fragment {
 
                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
 
+
                     Log.d(TAG, "getting ad data...");
                     Ad ad = documentSnapshot.toObject(Ad.class);
                     ad.setId(documentSnapshot.getId());
-                    ad.setVisibilityRight("0");
-                    if (ad.getVisibilityRight().equals("0")) {
+                    //ad.setVisibilityRight("0");
+                    if (ad.getVisibilityRight()==null || ad.getVisibilityRight().equals("0")) {
                         adsList.add(ad);
                         adsListAdapter.notifyDataSetChanged();
                     }
                     Log.d(TAG, ad.getTitle() + " added to list and adapter notifydatasetchanged");
+
+
 
                 }
 
