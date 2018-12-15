@@ -114,9 +114,16 @@ public class AddFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 chooseImage();
+            }
+        });
+
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 uploadImage();
             }
         });
+
         return view;
 
     }
