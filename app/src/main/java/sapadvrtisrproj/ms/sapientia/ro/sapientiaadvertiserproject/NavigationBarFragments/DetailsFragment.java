@@ -1,6 +1,8 @@
 package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBarFragments;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -91,8 +94,19 @@ public class DetailsFragment extends Fragment {
             @Override
             public void onClick (View v){
                 db.collection("ads").document(adItem.getId()).update("visibilityRight", "-1");
-                Intent intent=new Intent(getActivity(), AdsActivity.class);
-                startActivity(intent);
+                new AlertDialog.Builder(v.getContext())
+                        .setTitle("Title")
+                        .setMessage("Do you really want to hide this add?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                Intent intent=new Intent(getActivity(), AdsActivity.class);
+                                startActivity(intent);
+                            }})
+                        .setNegativeButton("No", null).show();
+
+
             }
         });
 
@@ -104,6 +118,21 @@ public class DetailsFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void popUpDelete(View v)
+    {
+        new AlertDialog.Builder(v.getContext())
+                .setTitle("Title")
+                .setMessage("Do you really want to whatever?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Intent intent=new Intent(getActivity(), AdsActivity.class);
+                        startActivity(intent);
+                    }})
+                .setNegativeButton("No", null).show();
     }
 
 
