@@ -47,6 +47,7 @@ public class AddFragment extends Fragment {
     private EditText editTextPhoneNumber;
     private EditText editTextLocation;
     private Button btnChoose;
+    private Button btnUpload;
     private ImageView imageView;
     private Uri filePath;
 
@@ -62,6 +63,7 @@ public class AddFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
 
         //Initialize Views
+        btnUpload=view.findViewById(R.id.btnUpload);
         btnChoose = view.findViewById(R.id.btnChoose);
         buttonAdd = view.findViewById(R.id.button_addfragment_add);
 

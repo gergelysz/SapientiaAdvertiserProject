@@ -77,30 +77,40 @@
             android:textColorHint="@color/white"
             app:layout_constraintTop_toBottomOf="@id/edittext_addfragment_phone_number" />
 
+        <Button
+            android:id="@+id/btnUpload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@color/darkergreen"
+            android:text="@string/upload"
+            android:textColor="@color/white"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/btnChoose"
+            app:layout_constraintTop_toBottomOf="@+id/edittext_addfragment_location" />
+
 
         <Button
             android:id="@+id/btnChoose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_marginTop="12dp"
             android:background="@color/darkergreen"
             android:text="@string/choose"
             android:textColor="@color/white"
+            app:layout_constraintLeft_toRightOf="@id/btnUpload"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edittext_addfragment_location" />
 
         <ImageView
             android:id="@+id/imgView"
             android:layout_width="100dp"
-            android:layout_height="104dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="12dp"
             android:contentDescription="@string/ImageUpload"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnChoose" />
+            app:layout_constraintTop_toBottomOf="@id/btnUpload" />
 
         <Button
             android:id="@+id/button_addfragment_add"
