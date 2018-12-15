@@ -87,7 +87,6 @@ public class DetailsFragment extends Fragment {
         Glide.with(view).load(adItem.getImage()).into(imageView);
 //        imageView.setImageDrawable(adItem.getImage().getDrawable());
         Log.d(TAG, "after set");
-
         //delete and hide functionality
 
         hideBtn.setOnClickListener(new View.OnClickListener(){

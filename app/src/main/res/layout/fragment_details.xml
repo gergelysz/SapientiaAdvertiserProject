@@ -85,7 +85,8 @@
         android:layout_marginTop="70dp"
         android:layout_marginEnd="34dp"
         android:layout_marginRight="34dp"
-        android:text="Törlés" />
+        android:text="Törlés"
+        android:visibility="invisible"/>
 
     <Button
         android:id="@+id/hideBtn"
@@ -98,7 +99,9 @@
         android:layout_marginBottom="48dp"
         android:layout_toStartOf="@+id/deleteBtn"
         android:layout_toLeftOf="@+id/deleteBtn"
-        android:text="Elrejtés" />
+        android:text="Elrejtés"
+        android:layout_alignParentLeft="true"
+        android:visibility="invisible"/>
 
 
 </RelativeLayout>

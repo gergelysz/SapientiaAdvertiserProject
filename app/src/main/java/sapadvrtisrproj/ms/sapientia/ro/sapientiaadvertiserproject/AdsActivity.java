@@ -80,4 +80,8 @@ public class AdsActivity extends AppCompatActivity {
         }
         return false;
     }
+
+    public String getUserId(){
+        return userid;
+    }
 }

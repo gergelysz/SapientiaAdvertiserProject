@@ -37,6 +37,7 @@ public class HomeFragment extends Fragment {
     private FirebaseFirestore db;
     private List<Ad> adsList = new ArrayList<>();
     private AdsListAdapter adsListAdapter;
+    private String userId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +48,8 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         Log.d(TAG, "after loading view");
+
+
 
         adsListAdapter = new AdsListAdapter(adsList, new IAdClickListener() {
             @Override

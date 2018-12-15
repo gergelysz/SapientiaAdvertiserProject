@@ -29,6 +29,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.util.UUID;
 
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.AdsActivity;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.Ad;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
 
@@ -90,8 +91,10 @@ public class AddFragment extends Fragment {
                 longDesc = editTextLongDesc.getText().toString();
                 phoneNum = editTextPhoneNumber.getText().toString();
                 location = editTextLocation.getText().toString();
+                AdsActivity ref = (AdsActivity) AddFragment.this.getActivity();
+                String userId=ref.getUserId();
                 if (!title.equals("")) {
-                    Ad ad = new Ad(title, shortDesc, longDesc, phoneNum, location, "0", image, "0");
+                    Ad ad = new Ad(userId, title, shortDesc, longDesc, phoneNum, location, "0", image, "0");
                     db.collection("ads").add(ad).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
