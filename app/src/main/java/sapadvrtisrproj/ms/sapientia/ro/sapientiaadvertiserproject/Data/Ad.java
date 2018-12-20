@@ -2,7 +2,8 @@ package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data;
 
 public class Ad {
 
-    private String id; // userID
+    private String id;
+    private String userId;
     private String title;
     private String shortDesc;
     private String longDesc;
@@ -17,8 +18,8 @@ public class Ad {
 
     }
 
-    public Ad(String id, String title, String shortDesc, String longDesc, String phoneNumber, String location, String visitedNumber, String imageLink, String visibilityRight) {
-        this.id=id;
+    public Ad(String userId, String title, String shortDesc, String longDesc, String phoneNumber, String location, String visitedNumber, String imageLink, String visibilityRight) {
+        this.userId=userId;
         this.title = title;
         this.shortDesc = shortDesc;
         this.longDesc = longDesc;
@@ -122,6 +123,13 @@ public class Ad {
         this.visibilityRight = visibilityRight;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
     //    public ImageView getImage() {
 //        return image;
 //    }

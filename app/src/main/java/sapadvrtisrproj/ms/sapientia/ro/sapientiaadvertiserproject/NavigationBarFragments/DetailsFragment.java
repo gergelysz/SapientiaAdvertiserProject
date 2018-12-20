@@ -19,7 +19,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +96,21 @@ public class DetailsFragment extends Fragment {
 //        imageView.setImageDrawable(adItem.getImage().getDrawable());
         Log.d(TAG, "after set");
         //delete and hide functionality
+
+// Create a reference to the cities collection
+        DocumentReference ads = db.collection("ads").document(adItem.getId());
+        ads.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Ad ad = documentSnapshot.toObject(Ad.class);
+                if (ad.getUserId().equals(adItem.getUserId()))
+                {
+                    hideBtn.setVisibility(View.VISIBLE);
+                    deleteBtn.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
 
         hideBtn.setOnClickListener(new View.OnClickListener(){
             @Override
