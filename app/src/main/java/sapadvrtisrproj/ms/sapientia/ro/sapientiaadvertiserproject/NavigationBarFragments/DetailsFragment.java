@@ -93,11 +93,10 @@ public class DetailsFragment extends Fragment {
         detailTextPhoneNumber.setText(adItem.getPhoneNumber());
         visitors_number.setText(adItem.getVisitedNumber());
         Glide.with(view).load(adItem.getImage()).into(imageView);
-//        imageView.setImageDrawable(adItem.getImage().getDrawable());
         Log.d(TAG, "after set");
         //delete and hide functionality
 
-// Create a reference to the cities collection
+        // if my userId is equal with the ad's user id I can delete or hide the ad, if not, the hide and delete buttons don't even appear
         DocumentReference ads = db.collection("ads").document(adItem.getId());
         ads.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -115,46 +114,38 @@ public class DetailsFragment extends Fragment {
         hideBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick (View v){
-                db.collection("ads").document(adItem.getId()).update("visibilityRight", "-1");
-                new AlertDialog.Builder(v.getContext())
-                        .setTitle("Title")
-                        .setMessage("Do you really want to hide this add?")
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                Intent intent=new Intent(getActivity(), AdsActivity.class);
-                                startActivity(intent);
-                            }})
-                        .setNegativeButton("No", null).show();
-
-
+                // -1 means that I only want to hide the ad
+                popUpCreate(v, "Do you really want to hide this ad?", "-1");
             }
         });
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.collection("ads").document(adItem.getId()).update("visibilityRight", "-2");
+                // -2 means that I want to delete the ad
+                popUpCreate(v, "Do you really want to hide this ad?", "-2");
 
             }
         });
         return view;
     }
 
-    private void popUpDelete(View v)
+    private void popUpCreate(View v, String question, String hideOrDelete)
     {
-        new AlertDialog.Builder(v.getContext())
+        new AlertDialog.Builder(v.getContext(), R.style.MyDialogTheme)
                 .setTitle("Title")
-                .setMessage("Do you really want to whatever?")
+                .setMessage(question)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        db.collection("ads").document(adItem.getId()).update("visibilityRight", hideOrDelete);
                         Intent intent=new Intent(getActivity(), AdsActivity.class);
                         startActivity(intent);
                     }})
-                .setNegativeButton("No", null).show();
+                .setNegativeButton(android.R.string.no, null).show()
+                .show();
+
+
     }
 
 

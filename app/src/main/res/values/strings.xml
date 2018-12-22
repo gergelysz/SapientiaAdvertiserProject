@@ -39,4 +39,6 @@
     <string name="first_name">First name</string>
     <string name="textxviewshortdesc">detail_shortDesc</string>
     <string name="visitors_number">visitors_number</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
