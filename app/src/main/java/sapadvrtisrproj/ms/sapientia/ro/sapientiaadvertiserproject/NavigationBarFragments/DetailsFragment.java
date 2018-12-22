@@ -102,29 +102,29 @@ public class DetailsFragment extends Fragment {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Ad ad = documentSnapshot.toObject(Ad.class);
-                if (ad.getUserId().equals(adItem.getUserId()))
-                {
-                    hideBtn.setVisibility(View.VISIBLE);
-                    deleteBtn.setVisibility(View.VISIBLE);
+                if (ad.getUserId()!=null && adItem.getUserId()!=null){
+                    if (ad.getUserId().equals(adItem.getUserId()))
+                    {
+                        hideBtn.setVisibility(View.VISIBLE);
+                        deleteBtn.setVisibility(View.VISIBLE);
+                        hideBtn.setOnClickListener(new View.OnClickListener(){
+                            @Override
+                            public void onClick (View v){
+                                // -1 means that I only want to hide the ad
+                                popUpCreate(v, "Do you really want to hide this ad?", "-1");
+                            }
+                        });
+
+                        deleteBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // -2 means that I want to delete the ad
+                                popUpCreate(v, "Do you really want to hide this ad?", "-2");
+
+                            }
+                        });
+                    }
                 }
-            }
-        });
-
-
-        hideBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick (View v){
-                // -1 means that I only want to hide the ad
-                popUpCreate(v, "Do you really want to hide this ad?", "-1");
-            }
-        });
-
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // -2 means that I want to delete the ad
-                popUpCreate(v, "Do you really want to hide this ad?", "-2");
-
             }
         });
         return view;
