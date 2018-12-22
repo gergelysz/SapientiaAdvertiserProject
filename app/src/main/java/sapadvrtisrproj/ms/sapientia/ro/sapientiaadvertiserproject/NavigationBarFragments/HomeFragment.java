@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -92,20 +94,46 @@ public class HomeFragment extends Fragment {
                     Log.d(TAG, "getting ad data...");
                     Ad ad = documentSnapshot.toObject(Ad.class);
                     ad.setId(documentSnapshot.getId());
-                    //ad.setVisibilityRight("0");
+                    // Here I will test if the ad is available for the actual user
+
+                    // if we didn't set up anything for the visibility right, it means that it is available
+                    // if we set up 0, it means that it is available
                     if (ad.getVisibilityRight()==null || ad.getVisibilityRight().equals("0")) {
                         adsList.add(ad);
                         adsListAdapter.notifyDataSetChanged();
                     }
+                    else {
+                        // if visibility right is 0, it means that it is available just for that user, which created that ad
+                        if (ad.getVisibilityRight().equals("-1")) {
+                            AdsActivity ref = (AdsActivity) HomeFragment.this.getActivity();
+                            String userId=ref.getUserId();
+                            if (userId!=null) {
+                                try {
+                                    // if the ad's user id is equal with user which is logged in, it means that the user can see the ad
+                                    if (ad.getUserId().equals(userId)) {
+                                        adsList.add(ad);
+                                        adsListAdapter.notifyDataSetChanged();
+                                    }
+                                }
+                                catch (NullPointerException exc){
+                                    // if we get a null exception error, it means that at userId in database we didn't set up anything
+                                    // I implemented that in that case the user can see the ad, but we can modify this
+                                    adsList.add(ad);
+                                    adsListAdapter.notifyDataSetChanged();
+
+                                }
+
+                            }
+
+                        }
+
+                        }
+
                     Log.d(TAG, ad.getTitle() + " added to list and adapter notifydatasetchanged");
 
 
 
                 }
-
-                //ArrayAdapter<Ad> adapter = new ArrayAdapter<>(getContext(), R.layout.list_item, adsList);
-                //adapter.notifyDataSetChanged();
-                //recyclerView.setAdapter(adapter);
             }
         });
 
