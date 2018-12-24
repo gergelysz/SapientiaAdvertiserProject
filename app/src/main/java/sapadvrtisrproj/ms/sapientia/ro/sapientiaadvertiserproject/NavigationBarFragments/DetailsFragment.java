@@ -50,8 +50,10 @@ public class DetailsFragment extends Fragment {
     private TextView detailTextLocation;
     private TextView visitors_number;
     private ImageView imageView;
+    private String adId;
     private Button hideBtn;
     private Button deleteBtn;
+    private Button appearBtn;
     //private List<Ad> adsList = new ArrayList<>();
     private AdsListAdapter adsListAdapter;
     private Ad adItem;
@@ -80,6 +82,7 @@ public class DetailsFragment extends Fragment {
         visitors_number=view.findViewById(R.id.visitors_number);
         hideBtn=view.findViewById(R.id.hideBtn);
         deleteBtn=view.findViewById(R.id.deleteBtn);
+        appearBtn=view.findViewById(R.id.appearBtn);
 
         Log.d(TAG, "details ad: " + adItem.getTitle());
 
@@ -105,13 +108,21 @@ public class DetailsFragment extends Fragment {
                 if (ad.getUserId()!=null && adItem.getUserId()!=null){
                     if (ad.getUserId().equals(adItem.getUserId()))
                     {
-                        hideBtn.setVisibility(View.VISIBLE);
+                        if (ad.getVisibilityRight().equals("0")) {
+                            hideBtn.setVisibility(View.VISIBLE);
+                        }
+                        if (ad.getVisibilityRight().equals("-1")){
+                            appearBtn.setVisibility(View.VISIBLE);
+                        }
                         deleteBtn.setVisibility(View.VISIBLE);
                         hideBtn.setOnClickListener(new View.OnClickListener(){
                             @Override
                             public void onClick (View v){
                                 // -1 means that I only want to hide the ad
-                                popUpCreate(v, "Do you really want to hide this ad?", "-1");
+                                hideBtn.setVisibility(View.INVISIBLE);
+                                appearBtn.setVisibility(View.VISIBLE);
+                                    popUpCreate(v, "Do you want to hide the ad?", "-1");
+
                             }
                         });
 
@@ -119,7 +130,18 @@ public class DetailsFragment extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 // -2 means that I want to delete the ad
-                                popUpCreate(v, "Do you really want to hide this ad?", "-2");
+
+                                    popUpCreate(v, "Do you want to delete the ad?", "-2");
+
+                            }
+                        });
+                        appearBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                hideBtn.setVisibility(View.VISIBLE);
+                                appearBtn.setVisibility(View.INVISIBLE);
+
+                                    popUpCreate(v, "Do you want to appear the ad?", "0");
 
                             }
                         });
@@ -138,7 +160,16 @@ public class DetailsFragment extends Fragment {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        db.collection("ads").document(adItem.getId()).update("visibilityRight", hideOrDelete);
+                        if (adItem.getId()!=null) {
+                            db.collection("ads").document(adItem.getId()).update("visibilityRight", hideOrDelete)
+
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                        }
+                                    });
+                        }
                         Intent intent=new Intent(getActivity(), AdsActivity.class);
                         startActivity(intent);
                     }})

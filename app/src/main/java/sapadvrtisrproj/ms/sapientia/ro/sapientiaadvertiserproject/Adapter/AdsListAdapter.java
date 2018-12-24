@@ -10,6 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -21,7 +25,7 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
     private static final String TAG = "AdsListAdapter";
     public List<Ad> adsList;
     private IAdClickListener adClickListener;
-
+    private FirebaseFirestore db;
     public AdsListAdapter(List<Ad> adsList, IAdClickListener adClickListener) {
         this.adsList = adsList;
         this.adClickListener = adClickListener;
@@ -39,7 +43,20 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
 
         Log.d(TAG, "Set ad: " + adsList.get(i).getTitle() + " linkImage: " + adsList.get(i).getImage());
+        db = FirebaseFirestore.getInstance();
+        /*DocumentReference ads = db.collection("ads").document(adsList.get(i).getId());
+        ads.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+             @Override
+              public void onSuccess(DocumentSnapshot documentSnapshot) {
+                 Ad ad = documentSnapshot.toObject(Ad.class);
+                 if (ad.getUserId()!=null && adsList.get(i).getUserId()!=null) {
+                     if (ad.getUserId().equals(adsList.get(i).getUserId())) {
+                         // actualUser = viewHolder.mView.findViewById(actualUser);
+                     }
+                 }
+             }
 
+        });*/
         viewHolder.title.setText(adsList.get(i).getTitle());
         viewHolder.shortDesc.setText(adsList.get(i).getShortDesc());
 //        viewHolder.longDesc.setText(adsList.get(i).getLongDesc());
