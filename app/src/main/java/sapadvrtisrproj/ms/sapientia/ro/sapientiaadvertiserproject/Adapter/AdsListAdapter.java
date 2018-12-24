@@ -1,11 +1,15 @@
 package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.AdsActivity;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.Ad;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
 
@@ -30,18 +35,19 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
         this.adsList = adsList;
         this.adClickListener = adClickListener;
     }
-
+    public int itemNumber;
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         Log.d(TAG, "create viewholder");
+        itemNumber=i;
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
-
+        itemNumber=i;
         Log.d(TAG, "Set ad: " + adsList.get(i).getTitle() + " linkImage: " + adsList.get(i).getImage());
         db = FirebaseFirestore.getInstance();
         /*DocumentReference ads = db.collection("ads").document(adsList.get(i).getId());
@@ -95,7 +101,7 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
         public TextView location;
 //        public String image;
         public ImageView imageAd;
-
+        public Button reportBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -107,6 +113,44 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
             phoneNum = mView.findViewById(R.id.ad_phoneNum);
             location = mView.findViewById(R.id.ad_location);
             imageAd = mView.findViewById(R.id.ad_image);
+            reportBtn=mView.findViewById(R.id.reportBtn);
+            reportBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    popUpCreate(v, "Do you want to appear the ad?", "-3");
+
+                }
+            });
+        }
+
+        private void popUpCreate(View v, String question, String hideOrDelete)
+        {
+            db = FirebaseFirestore.getInstance();
+            DocumentReference adItem = db.collection("ads").document(adsList.get(itemNumber-1).getId());
+            new AlertDialog.Builder(v.getContext(), R.style.MyDialogTheme)
+                    .setTitle("Title")
+                    .setMessage(question)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            if (adItem.getId()!=null) {
+                                db.collection("ads").document(adItem.getId()).update("visibilityRight", hideOrDelete)
+
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+
+                                            }
+                                        });
+                            }
+
+
+                        }})
+                    .setNegativeButton(android.R.string.no, null).show()
+                    .show();
+
+
         }
     }
 

@@ -65,23 +65,18 @@
         android:textColor="@color/white"
         android:textSize="12sp" />
 
-    <TextView
-        android:id="@+id/actualUser"
-        android:layout_width="143dp"
-        android:layout_height="23dp"
-        android:layout_below="@+id/ad_image"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginRight="9dp"
-        android:layout_toStartOf="@+id/ad_phoneNum"
-        android:layout_toLeftOf="@+id/ad_phoneNum"
-        android:text="Ez az Ön hírdetése"
-        android:visibility="invisible"/>
-
+    <Button
+        android:id="@+id/reportBtn"
+        android:layout_width="121dp"
+        android:layout_height="38dp"
+        android:layout_below="@+id/ad_phoneNum"
+        android:layout_alignEnd="@+id/ad_title"
+        android:layout_marginStart="31dp"
+        android:layout_marginLeft="31dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/ad_image"
+        android:layout_toRightOf="@+id/ad_image"
+        android:text="Jelentés" />
 
 
 </RelativeLayout>

@@ -65,13 +65,14 @@ public class HomeFragment extends Fragment {
         });
 
 
-        AdsActivity ref= (AdsActivity) HomeFragment.this.getActivity();;
+        AdsActivity ref=(AdsActivity) HomeFragment.this.getActivity();
         recyclerView = view.findViewById(R.id.home_list_ads);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adsListAdapter);
         Log.d(TAG, "recyclerview set");
         db = FirebaseFirestore.getInstance();
+        Ad ad1;
         db.collection("ads").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -90,6 +91,7 @@ public class HomeFragment extends Fragment {
                     else {
                         // if visibility right is 0, it means that it is available just for that user, which created that ad
                         if (ad.getVisibilityRight().equals("-1")) {
+
                             try {
                                 userId="";
                                 userId += ref.getUserId();
@@ -119,7 +121,7 @@ public class HomeFragment extends Fragment {
             }
 
         });
-
+        int n= adsList.size();
         return view;
 
     }
