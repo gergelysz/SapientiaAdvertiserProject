@@ -71,9 +71,6 @@ public class HomeFragment extends Fragment {
         AdsActivity ref=(AdsActivity) HomeFragment.this.getActivity();
         userId="";
         userId += ref.getUserId();
-        UserHelper helper = null;
-        helper=new UserHelper(userId);
-        userId=helper.getUserId();
         UserHelper userHelper=new UserHelper(userId);
         userId=userHelper.getUserId();
         recyclerView = view.findViewById(R.id.home_list_ads);
@@ -103,13 +100,6 @@ public class HomeFragment extends Fragment {
                     else {
                         // if visibility right is 0, it means that it is available just for that user, which created that ad
                         if (ad.getVisibilityRight().equals("-1")) {
-
-                            try {
-
-                            }
-                            catch (Exception exc){
-
-                            }
                             if (userId!=null) {
                                 try {
                                     // if the ad's user id is equal with user which is logged in, it means that the user can see the ad

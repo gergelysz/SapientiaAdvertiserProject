@@ -17,13 +17,21 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.AdsActivity;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.Ad;
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.HomeFragmentLoadingNumber;
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBarFragments.HomeFragment;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.UserHelper;
 
 public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHolder> {
 
@@ -101,6 +109,7 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
         public TextView location;
 //        public String image;
         public ImageView imageAd;
+        public TextView usersAd;
         public Button reportBtn;
 
         public ViewHolder(@NonNull View itemView) {
@@ -114,11 +123,37 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
             location = mView.findViewById(R.id.ad_location);
             imageAd = mView.findViewById(R.id.ad_image);
             reportBtn=mView.findViewById(R.id.reportBtn);
+            usersAd=mView.findViewById(R.id.usersAd);
+            String userId=HomeFragmentLoadingNumber.getUserId();
+            db = FirebaseFirestore.getInstance();
+            db.collection("ads").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                        Ad ad = documentSnapshot.toObject(Ad.class);
+                        try{
+                            if (userId.equals(ad.getUserId()))
+                            {
+                                usersAd.setVisibility(View.VISIBLE);
+                            }
+
+                        }
+                        catch (NullPointerException exc){
+
+                        }
+                    }
+
+                }
+
+            });
+
+
+
             reportBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    popUpCreate(v, "Do you want to appear the ad?", "-3");
+                    popUpCreate(v, "Do you want to report this ad?", "-3");
 
                 }
             });
