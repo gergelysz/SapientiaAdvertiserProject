@@ -37,6 +37,9 @@
     <string name="email">Email</string>
     <string name="last_name">Last name</string>
     <string name="first_name">First name</string>
+    <string name="textxviewshortdesc">detail_shortDesc</string>
     <string name="visitors_number">visitors_number</string>
     <string name="detail_location">detail_location</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

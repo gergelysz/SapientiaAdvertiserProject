@@ -13,15 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegistrationActivity" />
-        <activity android:name=".AdsActivity" />
+        <activity android:name=".RegistrationActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".AdsActivity"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

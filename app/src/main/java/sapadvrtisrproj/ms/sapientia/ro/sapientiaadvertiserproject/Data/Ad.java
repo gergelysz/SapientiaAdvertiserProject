@@ -3,12 +3,14 @@ package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data;
 public class Ad {
 
     private String id;
+    private String userId;
     private String title;
     private String shortDesc;
     private String longDesc;
     private String phoneNumber;
     private String location;
-    private int visitedNumber;
+    private String visitedNumber;
+    private String visibilityRight;
 //    private ImageView image;
     private String image;
 
@@ -16,7 +18,8 @@ public class Ad {
 
     }
 
-    public Ad(String title, String shortDesc, String longDesc, String phoneNumber, String location, int visitedNumber, String imageLink) {
+    public Ad(String userId, String title, String shortDesc, String longDesc, String phoneNumber, String location, String visitedNumber, String imageLink, String visibilityRight) {
+        this.userId=userId;
         this.title = title;
         this.shortDesc = shortDesc;
         this.longDesc = longDesc;
@@ -24,6 +27,7 @@ public class Ad {
         this.location = location;
         this.visitedNumber = visitedNumber;
         this.image = imageLink;
+        this.visibilityRight=visibilityRight;
     }
 
 //    public Ad(String id, String title, String shortDesc, String longDesc, String phoneNumber, String location, int visitedNumber, String image) {
@@ -103,15 +107,30 @@ public class Ad {
         this.location = location;
     }
 
-    public int getVisitedNumber() {
+    public String getVisitedNumber() {
         return visitedNumber;
     }
 
-    public void setVisitedNumber(int visitedNumber) {
+    public void setVisitedNumber(String visitedNumber) {
         this.visitedNumber = visitedNumber;
     }
 
-//    public ImageView getImage() {
+    public String getVisibilityRight() {
+        return visibilityRight;
+    }
+
+    public void setVisibilityRight(String visibilityRight) {
+        this.visibilityRight = visibilityRight;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+    //    public ImageView getImage() {
 //        return image;
 //    }
 //

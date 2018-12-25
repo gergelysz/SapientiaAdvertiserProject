@@ -29,6 +29,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.util.UUID;
 
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.AdsActivity;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.Ad;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
 
@@ -41,13 +42,13 @@ public class AddFragment extends Fragment {
     FirebaseStorage storage;
     StorageReference storageReference;
     private Button buttonAdd;
-
     private EditText editTextTitle;
     private EditText editTextShortDesc;
     private EditText editTextLongDesc;
     private EditText editTextPhoneNumber;
     private EditText editTextLocation;
-    private Button btnChoose, btnUpload;
+    private Button btnChoose;
+    private Button btnUpload;
     private ImageView imageView;
     private String adId;
     private Uri filePath;
@@ -64,15 +65,18 @@ public class AddFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
 
         //Initialize Views
+        btnUpload=view.findViewById(R.id.btnUpload);
         btnChoose = view.findViewById(R.id.btnChoose);
-        btnUpload = view.findViewById(R.id.btnUpload);
+        buttonAdd = view.findViewById(R.id.button_addfragment_add);
+
         imageView = view.findViewById(R.id.imgView);
+
         editTextTitle = view.findViewById(R.id.edittext_addfragment_title);
         editTextShortDesc = view.findViewById(R.id.edittext_addfragment_short_desc);
         editTextLongDesc = view.findViewById(R.id.edittext_addfragment_long_desc);
         editTextPhoneNumber = view.findViewById(R.id.edittext_addfragment_phone_number);
         editTextLocation = view.findViewById(R.id.edittext_addfragment_location);
-
+        // get storage
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
@@ -80,6 +84,7 @@ public class AddFragment extends Fragment {
         buttonAdd = view.findViewById(R.id.button_addfragment_add);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
+            // saving the ad's information
             public void onClick(View v) {
 
                 title = editTextTitle.getText().toString();
@@ -87,28 +92,30 @@ public class AddFragment extends Fragment {
                 longDesc = editTextLongDesc.getText().toString();
                 phoneNum = editTextPhoneNumber.getText().toString();
                 location = editTextLocation.getText().toString();
-
-                Ad ad = new Ad(title, shortDesc, longDesc, phoneNum, location, 0, image);
-
-                db.collection("ads").add(ad).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getActivity(), "Advertisement feltöltve", Toast.LENGTH_LONG).show();
-                    }
-                });
-
-                /**
-                 *   HomeFragment megnyitása, az Advert feltöltése után
-                 */
-
-                Fragment homeFragment = new HomeFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, homeFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                AdsActivity ref = (AdsActivity) AddFragment.this.getActivity();
+                String userId=ref.getUserId();
+                if (!title.equals("")) {
+                    Ad ad = new Ad(userId, title, shortDesc, longDesc, phoneNum, location, "0", image, "0");
+                    db.collection("ads").add(ad).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Toast.makeText(getActivity(), "Advertisement feltöltve", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    //  reload ads list
+                    Fragment homeFragment = new HomeFragment();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_container, homeFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+                else {
+                    editTextTitle.setError("A cím kitöltése kötelező");
+                    editTextTitle.setHint("Töltse ki a cím mezőt");
+                }
             }
         });
-
+        // onclick listener to uploading image
         btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
