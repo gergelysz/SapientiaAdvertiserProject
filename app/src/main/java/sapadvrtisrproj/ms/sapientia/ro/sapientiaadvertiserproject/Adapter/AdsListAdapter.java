@@ -58,19 +58,7 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
         itemNumber=i;
         Log.d(TAG, "Set ad: " + adsList.get(i).getTitle() + " linkImage: " + adsList.get(i).getImage());
         db = FirebaseFirestore.getInstance();
-        /*DocumentReference ads = db.collection("ads").document(adsList.get(i).getId());
-        ads.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-             @Override
-              public void onSuccess(DocumentSnapshot documentSnapshot) {
-                 Ad ad = documentSnapshot.toObject(Ad.class);
-                 if (ad.getUserId()!=null && adsList.get(i).getUserId()!=null) {
-                     if (ad.getUserId().equals(adsList.get(i).getUserId())) {
-                         // actualUser = viewHolder.mView.findViewById(actualUser);
-                     }
-                 }
-             }
 
-        });*/
         viewHolder.title.setText(adsList.get(i).getTitle());
         viewHolder.shortDesc.setText(adsList.get(i).getShortDesc());
 //        viewHolder.longDesc.setText(adsList.get(i).getLongDesc());
@@ -79,7 +67,23 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
 //        viewHolder.imageAd = adsList.get(i).getImage();
 //        Glide.with(viewHolder.mView).load(viewHolder.image).into(viewHolder.imageAd);
         Glide.with(viewHolder.mView).load(adsList.get(i).getImage()).into(viewHolder.imageAd);
+        String userId=HomeFragmentLoadingNumber.getUserId();
+        db = FirebaseFirestore.getInstance();
+        DocumentReference ads = db.collection("ads").document(adsList.get(i).getId());
+        ads.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Ad ad = documentSnapshot.toObject(Ad.class);
+                try{
+                    if (ad.getUserId().equals(userId)){
+                        viewHolder.usersAd.setVisibility(View.VISIBLE);
+                    }
+                }
+                catch (NullPointerException exc){
 
+                }
+            }
+        });
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,27 +129,7 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
             reportBtn=mView.findViewById(R.id.reportBtn);
             usersAd=mView.findViewById(R.id.usersAd);
             String userId=HomeFragmentLoadingNumber.getUserId();
-            db = FirebaseFirestore.getInstance();
-            db.collection("ads").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                        Ad ad = documentSnapshot.toObject(Ad.class);
-                        try{
-                            if (userId.equals(ad.getUserId()))
-                            {
-                                usersAd.setVisibility(View.VISIBLE);
-                            }
 
-                        }
-                        catch (NullPointerException exc){
-
-                        }
-                    }
-
-                }
-
-            });
 
 
 
