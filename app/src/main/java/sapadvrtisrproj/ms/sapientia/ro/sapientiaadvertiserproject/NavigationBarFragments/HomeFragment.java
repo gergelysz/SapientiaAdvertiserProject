@@ -27,7 +27,9 @@ import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter.AdsLis
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter.IAdClickListener;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.AdsActivity;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.Ad;
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.HomeFragmentLoadingNumber;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.UserHelper;
 
 public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
@@ -36,6 +38,7 @@ public class HomeFragment extends Fragment {
     private List<Ad> adsList = new ArrayList<>();
     private AdsListAdapter adsListAdapter;
     private String userId;
+    private boolean firstLoading=true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,6 +69,13 @@ public class HomeFragment extends Fragment {
 
 
         AdsActivity ref=(AdsActivity) HomeFragment.this.getActivity();
+        userId="";
+        userId += ref.getUserId();
+        UserHelper helper = null;
+        helper=new UserHelper(userId);
+        userId=helper.getUserId();
+        UserHelper userHelper=new UserHelper(userId);
+        userId=userHelper.getUserId();
         recyclerView = view.findViewById(R.id.home_list_ads);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -73,9 +83,11 @@ public class HomeFragment extends Fragment {
         Log.d(TAG, "recyclerview set");
         db = FirebaseFirestore.getInstance();
         Ad ad1;
+
         db.collection("ads").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                adsList.clear();
                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                     Log.d(TAG, "getting ad data...");
 
@@ -93,8 +105,7 @@ public class HomeFragment extends Fragment {
                         if (ad.getVisibilityRight().equals("-1")) {
 
                             try {
-                                userId="";
-                                userId += ref.getUserId();
+
                             }
                             catch (Exception exc){
 
@@ -116,12 +127,17 @@ public class HomeFragment extends Fragment {
                          }
                         }
                   }
+
                     Log.d(TAG, ad.getTitle() + " added to list and adapter notifydatasetchanged");
+                }
+                for (Ad ad : adsList){
+
+
                 }
             }
 
         });
-        int n= adsList.size();
+
         return view;
 
     }
