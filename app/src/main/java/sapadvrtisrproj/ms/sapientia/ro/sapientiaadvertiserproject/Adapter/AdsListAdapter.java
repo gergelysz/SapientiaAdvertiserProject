@@ -2,7 +2,6 @@ package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,21 +16,13 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
-
-import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.AdsActivity;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.Ad;
-import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.HomeFragmentLoadingNumber;
-import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBarFragments.HomeFragment;
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.HomeFragmentLoadingNumber;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
-import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.UserHelper;
 
 public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHolder> {
 

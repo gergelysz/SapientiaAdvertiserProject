@@ -1,4 +1,4 @@
-package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject;
+package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data;
 
 import android.text.TextUtils;
 

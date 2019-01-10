@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -54,6 +55,7 @@ public class DetailsFragment extends Fragment {
     private Button hideBtn;
     private Button deleteBtn;
     private Button appearBtn;
+    private Button shareBtn;
     //private List<Ad> adsList = new ArrayList<>();
     private AdsListAdapter adsListAdapter;
     private Ad adItem;
@@ -83,6 +85,7 @@ public class DetailsFragment extends Fragment {
         hideBtn=view.findViewById(R.id.hideBtn);
         deleteBtn=view.findViewById(R.id.deleteBtn);
         appearBtn=view.findViewById(R.id.appearBtn);
+        shareBtn=view.findViewById(R.id.shareBtn);
 
         Log.d(TAG, "details ad: " + adItem.getTitle());
 
@@ -97,6 +100,28 @@ public class DetailsFragment extends Fragment {
         visitors_number.setText(adItem.getVisitedNumber());
         Glide.with(view).load(adItem.getImage()).into(imageView);
         Log.d(TAG, "after set");
+
+        shareBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                String urlToShare = "https://play.google.com/store/apps/details?id=com.facebook.katana&hl=en";
+                try {
+                    Intent mIntentFacebook = new Intent();
+                    mIntentFacebook.setClassName("com.facebook.katana", "com.facebook.composer.shareintent.ImplicitShareIntentHandlerDefaultAlias");
+                    mIntentFacebook.setAction("android.intent.action.SEND");
+                    mIntentFacebook.setType("text/plain");
+                    mIntentFacebook.putExtra("android.intent.extra.TEXT", urlToShare);
+                    startActivity(mIntentFacebook);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Intent mIntentFacebookBrowser = new Intent(Intent.ACTION_SEND);
+                    String mStringURL = "https://www.facebook.com/sharer/sharer.php?u=" + urlToShare;
+                    mIntentFacebookBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(mStringURL));
+                    startActivity(mIntentFacebookBrowser);
+                }
+            }
+        });
+
         //delete and hide functionality
 
         // if my userId is equal with the ad's user id I can delete or hide the ad, if not, the hide and delete buttons don't even appear

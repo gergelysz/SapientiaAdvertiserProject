@@ -1,4 +1,4 @@
-package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject;
+package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data;
 
 public class HomeFragmentLoadingNumber {
     static private int counter=0;
