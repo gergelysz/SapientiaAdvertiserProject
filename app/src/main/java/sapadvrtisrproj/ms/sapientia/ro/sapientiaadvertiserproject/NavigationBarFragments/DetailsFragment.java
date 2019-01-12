@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,30 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter.AdsListAdapter;
-import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter.IAdClickListener;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.AdsActivity;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.Ad;
-import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.PopUp;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
 
 
@@ -136,8 +123,7 @@ public class DetailsFragment extends Fragment {
                                 // -1 means that I only want to hide the ad
                                 hideBtn.setVisibility(View.INVISIBLE);
                                 appearBtn.setVisibility(View.VISIBLE);
-                                PopUp popUp=new PopUp(v, this);
-                                    popUpCreate(v, "Do you want to hide the ad?", "-1");
+                                popUpCreate(v, "Do you want to hide the ad?", "-1");
 
                             }
                         });
@@ -147,7 +133,7 @@ public class DetailsFragment extends Fragment {
                             public void onClick(View v) {
                                 // -2 means that I want to delete the ad
 
-                                    popUpCreate(v, "Do you want to delete the ad?", "-2");
+                                popUpCreate(v, "Do you want to delete the ad?", "-2");
 
                             }
                         });
@@ -157,7 +143,7 @@ public class DetailsFragment extends Fragment {
                                 hideBtn.setVisibility(View.VISIBLE);
                                 appearBtn.setVisibility(View.INVISIBLE);
 
-                                    popUpCreate(v, "Do you want to appear the ad?", "0");
+                                popUpCreate(v, "Do you want to appear the ad?", "0");
 
                             }
                         });
@@ -167,6 +153,36 @@ public class DetailsFragment extends Fragment {
         });
         return view;
     }
+
+    private void popUpCreate(View v, String question, String hideOrDelete)
+    {
+        new AlertDialog.Builder(v.getContext(), R.style.MyDialogTheme)
+                .setTitle("Title")
+                .setMessage(question)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        if (adItem.getId()!=null) {
+                            db.collection("ads").document(adItem.getId()).update("visibilityRight", hideOrDelete)
+
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                        }
+                                    });
+                        }
+                        Intent intent=new Intent(getActivity(), AdsActivity.class);
+                        startActivity(intent);
+                    }})
+                .setNegativeButton(android.R.string.no, null).show()
+                .show();
+
+
+    }
+
+
+
 
 
 
@@ -188,34 +204,7 @@ public class DetailsFragment extends Fragment {
         }
     }
 
-    private void popUpCreate(View v, String question, String hideOrDelete)
-    {
-        db = FirebaseFirestore.getInstance();
-        DocumentReference adItem = db.collection("ads").document(adsList.get(itemNumber-1).getId());
-        new AlertDialog.Builder(v.getContext(), R.style.MyDialogTheme)
-                .setTitle("Title")
-                .setMessage(question)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        if (adItem.getId()!=null) {
-                            db.collection("ads").document(adItem.getId()).update("visibilityRight", hideOrDelete)
 
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-
-                                        }
-                                    });
-                        }
-
-
-                    }})
-                .setNegativeButton(android.R.string.no, null).show()
-                .show();
-
-
-    }
 
 }
 
