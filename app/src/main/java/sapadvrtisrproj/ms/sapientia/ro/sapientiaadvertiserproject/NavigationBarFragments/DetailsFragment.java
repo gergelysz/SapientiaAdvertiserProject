@@ -37,6 +37,7 @@ import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter.AdsLis
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter.IAdClickListener;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.AdsActivity;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.Ad;
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.PopUp;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
 
 
@@ -101,29 +102,18 @@ public class DetailsFragment extends Fragment {
         Glide.with(view).load(adItem.getImage()).into(imageView);
         Log.d(TAG, "after set");
 
+
+        // facebook share funcionality
+
+
         shareBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                String urlToShare = "https://play.google.com/store/apps/details?id=com.facebook.katana&hl=en";
-                try {
-                    Intent mIntentFacebook = new Intent();
-                    mIntentFacebook.setClassName("com.facebook.katana", "com.facebook.composer.shareintent.ImplicitShareIntentHandlerDefaultAlias");
-                    mIntentFacebook.setAction("android.intent.action.SEND");
-                    mIntentFacebook.setType("text/plain");
-                    mIntentFacebook.putExtra("android.intent.extra.TEXT", urlToShare);
-                    startActivity(mIntentFacebook);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Intent mIntentFacebookBrowser = new Intent(Intent.ACTION_SEND);
-                    String mStringURL = "https://www.facebook.com/sharer/sharer.php?u=" + urlToShare;
-                    mIntentFacebookBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(mStringURL));
-                    startActivity(mIntentFacebookBrowser);
-                }
+                facebookShare();
             }
         });
 
         //delete and hide functionality
-
         // if my userId is equal with the ad's user id I can delete or hide the ad, if not, the hide and delete buttons don't even appear
         DocumentReference ads = db.collection("ads").document(adItem.getId());
         ads.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -146,6 +136,7 @@ public class DetailsFragment extends Fragment {
                                 // -1 means that I only want to hide the ad
                                 hideBtn.setVisibility(View.INVISIBLE);
                                 appearBtn.setVisibility(View.VISIBLE);
+                                PopUp popUp=new PopUp(v, this);
                                     popUpCreate(v, "Do you want to hide the ad?", "-1");
 
                             }
@@ -177,8 +168,30 @@ public class DetailsFragment extends Fragment {
         return view;
     }
 
+
+
+    private void facebookShare(){
+        String urlToShare = "https://play.google.com/store/apps/details?id=com.facebook.katana&hl=en";
+        try {
+            Intent mIntentFacebook = new Intent();
+            mIntentFacebook.setClassName("com.facebook.katana", "com.facebook.composer.shareintent.ImplicitShareIntentHandlerDefaultAlias");
+            mIntentFacebook.setAction("android.intent.action.SEND");
+            mIntentFacebook.setType("text/plain");
+            mIntentFacebook.putExtra("android.intent.extra.TEXT", urlToShare);
+            startActivity(mIntentFacebook);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Intent mIntentFacebookBrowser = new Intent(Intent.ACTION_SEND);
+            String mStringURL = "https://www.facebook.com/sharer/sharer.php?u=" + urlToShare;
+            mIntentFacebookBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(mStringURL));
+            startActivity(mIntentFacebookBrowser);
+        }
+    }
+
     private void popUpCreate(View v, String question, String hideOrDelete)
     {
+        db = FirebaseFirestore.getInstance();
+        DocumentReference adItem = db.collection("ads").document(adsList.get(itemNumber-1).getId());
         new AlertDialog.Builder(v.getContext(), R.style.MyDialogTheme)
                 .setTitle("Title")
                 .setMessage(question)
@@ -195,15 +208,14 @@ public class DetailsFragment extends Fragment {
                                         }
                                     });
                         }
-                        Intent intent=new Intent(getActivity(), AdsActivity.class);
-                        startActivity(intent);
+
+
                     }})
                 .setNegativeButton(android.R.string.no, null).show()
                 .show();
 
 
     }
-
 
 }
 
