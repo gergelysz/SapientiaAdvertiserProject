@@ -58,7 +58,7 @@
             android:id="@+id/fragment_acc_edit_fname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="John"
+            android:hint=""
             android:paddingBottom="16dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white" />
@@ -75,7 +75,7 @@
             android:id="@+id/fragment_acc_edit_lname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ripper"
+            android:hint=""
             android:paddingBottom="16dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white" />
@@ -92,7 +92,7 @@
             android:id="@+id/fragment_acc_edit_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="sample@email.com"
+            android:hint=""
             android:paddingBottom="16dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white" />
@@ -109,7 +109,7 @@
             android:id="@+id/fragment_acc_edit_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="07xxxxx666"
+            android:hint=""
             android:inputType="phone"
             android:paddingBottom="16dp"
             android:textColor="@color/white"

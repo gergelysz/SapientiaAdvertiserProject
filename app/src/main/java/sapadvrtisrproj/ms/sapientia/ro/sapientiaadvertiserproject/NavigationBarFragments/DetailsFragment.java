@@ -34,18 +34,10 @@ public class DetailsFragment extends Fragment {
 
     private static final String TAG = "DetailsFragment";
     private FirebaseFirestore db;
-    private TextView detailTextTitle;
-    private TextView detailTextShortDesc;
-    private TextView detailTextLongDesc;
-    private TextView detailTextPhoneNumber;
-    private TextView detailTextLocation;
-    private TextView visitors_number;
-    private ImageView imageView;
     private String adId;
     private ImageButton hideBtn;
     private ImageButton deleteBtn;
     private ImageButton appearBtn;
-    private ImageButton shareBtn;
     //private List<Ad> adsList = new ArrayList<>();
     private AdsListAdapter adsListAdapter;
     private Ad adItem;
@@ -65,17 +57,17 @@ public class DetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_details, container, false);
         db = FirebaseFirestore.getInstance();
 
-        detailTextTitle = view.findViewById(R.id.detail_title);
-        detailTextShortDesc = view.findViewById(R.id.detail_shortDesc);
-        detailTextLongDesc = view.findViewById(R.id.detail_LongDesc);
-        detailTextPhoneNumber = view.findViewById(R.id.detail_phoneNum);
-        detailTextLocation = view.findViewById(R.id.detail_location);
-        imageView = view.findViewById(R.id.detail_image);
-        visitors_number=view.findViewById(R.id.visitors_number);
+        TextView detailTextTitle = view.findViewById(R.id.detail_title);
+        TextView detailTextShortDesc = view.findViewById(R.id.detail_shortDesc);
+        TextView detailTextLongDesc = view.findViewById(R.id.detail_LongDesc);
+        TextView detailTextPhoneNumber = view.findViewById(R.id.detail_phoneNum);
+        TextView detailTextLocation = view.findViewById(R.id.detail_location);
+        ImageView imageView = view.findViewById(R.id.detail_image);
+        TextView visitors_number = view.findViewById(R.id.visitors_number);
         hideBtn=view.findViewById(R.id.hideBtn);
         deleteBtn=view.findViewById(R.id.deleteBtn);
         appearBtn=view.findViewById(R.id.appearBtn);
-        shareBtn=view.findViewById(R.id.shareBtn);
+        ImageButton shareBtn = view.findViewById(R.id.shareBtn);
 
         Log.d(TAG, "details ad: " + adItem.getTitle());
 
@@ -100,61 +92,47 @@ public class DetailsFragment extends Fragment {
         // facebook share funcionality
 
 
-        shareBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                facebookShare();
-            }
-        });
+        shareBtn.setOnClickListener(v -> facebookShare());
 
         //delete and hide functionality
         // if my userId is equal with the ad's user id I can delete or hide the ad, if not, the hide and delete buttons don't even appear
         DocumentReference ads = db.collection("ads").document(adItem.getId());
-        ads.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Ad ad = documentSnapshot.toObject(Ad.class);
-                if (ad.getUserId()!=null){
-                    if (ad.getUserId().equals(userId))
-                    {
-                        if (ad.getVisibilityRight().equals("0")) {
-                            hideBtn.setVisibility(View.VISIBLE);
-                        }
-                        if (ad.getVisibilityRight().equals("-1")){
-                            appearBtn.setVisibility(View.VISIBLE);
-                        }
-                        deleteBtn.setVisibility(View.VISIBLE);
-                        hideBtn.setOnClickListener(new View.OnClickListener(){
-                            @Override
-                            public void onClick (View v){
-                                // -1 means that I only want to hide the ad
-                                hideBtn.setVisibility(View.INVISIBLE);
-                                appearBtn.setVisibility(View.VISIBLE);
-                                popUpCreate(v, "Do you want to hide the ad?", "-1");
-
-                            }
-                        });
-
-                        deleteBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                // -2 means that I want to delete the ad
-
-                                popUpCreate(v, "Do you want to delete the ad?", "-2");
-
-                            }
-                        });
-                        appearBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                hideBtn.setVisibility(View.VISIBLE);
-                                appearBtn.setVisibility(View.INVISIBLE);
-
-                                popUpCreate(v, "Do you want to appear the ad?", "0");
-
-                            }
-                        });
+        ads.get().addOnSuccessListener(documentSnapshot -> {
+            Ad ad = documentSnapshot.toObject(Ad.class);
+            if (ad.getUserId()!=null){
+                if (ad.getUserId().equals(userId))
+                {
+                    if (ad.getVisibilityRight().equals("0")) {
+                        hideBtn.setVisibility(View.VISIBLE);
                     }
+                    if (ad.getVisibilityRight().equals("-1")){
+                        appearBtn.setVisibility(View.VISIBLE);
+                    }
+                    deleteBtn.setVisibility(View.VISIBLE);
+                    hideBtn.setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick (View v){
+                            // -1 means that I only want to hide the ad
+                            hideBtn.setVisibility(View.INVISIBLE);
+                            appearBtn.setVisibility(View.VISIBLE);
+                            popUpCreate(v, "Do you want to hide the ad?", "-1");
+
+                        }
+                    });
+
+                    deleteBtn.setOnClickListener(v -> {
+                        // -2 means that I want to delete the ad
+
+                        popUpCreate(v, "Do you want to delete the ad?", "-2");
+
+                    });
+                    appearBtn.setOnClickListener(v -> {
+                        hideBtn.setVisibility(View.VISIBLE);
+                        appearBtn.setVisibility(View.INVISIBLE);
+
+                        popUpCreate(v, "Do you want to appear the ad?", "0");
+
+                    });
                 }
             }
         });
