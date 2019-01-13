@@ -47,8 +47,10 @@ public class HomeFragment extends Fragment {
             public void onItemClickAction(Ad data) {
                 Log.d(TAG, "before detail");
                 FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-                data.setVisitedNumber(data.getVisitedNumber()+1);
-                mDatabase.getReference().child("ads").child(data.getId()).setValue(data);
+              /*  int visitors = Integer.parseInt(data.getVisitedNumber());
+                ++visitors;
+                data.setVisitedNumber(String.valueOf(visitors));
+                mDatabase.getReference().child("ads").child(data.getId()).setValue(data);*/
                 AdsActivity ref = (AdsActivity) HomeFragment.this.getActivity();
                 DetailsFragment detail = new DetailsFragment(data);
                 Log.d(TAG, "after detail");
