@@ -1,9 +1,9 @@
 package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -13,30 +13,16 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-
-import javax.annotation.Nullable;
 
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.User;
 
@@ -47,7 +33,6 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText editTextPhoneNum;
     private EditText editTextCode;
 
-    private Button buttonGetCodeRegistration;
     private Button buttonSignUp;
 
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
@@ -55,18 +40,17 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private CollectionReference dbPhoneNumbers;
-    private DocumentReference documentReference;
 
     private String phoneNumber;
     private String mVerificationId;
     private String verificationCode;
-    private PhoneAuthProvider.ForceResendingToken mResendToken;
 
     private String firstName;
     private String lastName;
 
     private ProgressBar progressBar;
 
+    @SuppressLint("ShowToast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,107 +73,89 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextCode.setVisibility(View.INVISIBLE);
         buttonSignUp.setVisibility(View.INVISIBLE);
 
-        buttonGetCodeRegistration = findViewById(R.id.register_button_getcodebutton);
+        Button buttonGetCodeRegistration = findViewById(R.id.register_button_getcodebutton);
 
-        buttonGetCodeRegistration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                phoneNumber = editTextPhoneNum.getText().toString();
-                // registration number corrected
-                phoneNumber="+40"+phoneNumber;
-                firstName = editTextFirstName.getText().toString();
-                lastName = editTextLastName.getText().toString();
+        buttonGetCodeRegistration.setOnClickListener(v -> {
+            phoneNumber = editTextPhoneNum.getText().toString();
+            // registration number corrected
+            phoneNumber = "+40" + phoneNumber;
+            firstName = editTextFirstName.getText().toString();
+            lastName = editTextLastName.getText().toString();
 
-                progressBar.setVisibility(View.VISIBLE);
-                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            progressBar.setVisibility(View.VISIBLE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
 
-                if (TextUtils.isEmpty(phoneNumber)) {
-                    Toast.makeText(RegistrationActivity.this, "Kérem adja meg a telefonszámát!", Toast.LENGTH_SHORT).show();
-                } else {
+            if (TextUtils.isEmpty(phoneNumber)) {
+                Toast.makeText(RegistrationActivity.this, "Kérem adja meg a telefonszámát!", Toast.LENGTH_SHORT).show();
+            } else {
 //                    loadingBar.setTitle("Sapientia Advertiser");
 //                    loadingBar.setMessage("Kérem várjon, a telefonszámát ellenőrizzük...");
 //                    loadingBar.setCanceledOnTouchOutside(false);
 //                    loadingBar.show();
 
-                    /**
-                     *   Csatlakozás az adatbázis 'users' nevű collection-jára,
-                     *   azon belül egy lekérdezés, amelyben keresünk még ugyanolyan
-                     *   telefonszámokat az adatbázisban, majd regisztráljuk ha nincs vagy
-                     *   értesítjük a felhasználót, hogy az a telefonszám már regisztrálva van.
-                     */
+                /*
+                 *   Csatlakozás az adatbázis 'users' nevű collection-jára,
+                 *   azon belül egy lekérdezés, amelyben keresünk még ugyanolyan
+                 *   telefonszámokat az adatbázisban, majd regisztráljuk ha nincs vagy
+                 *   értesítjük a felhasználót, hogy az a telefonszám már regisztrálva van.
+                 */
 
-                    CollectionReference collectionReference = db.collection("users");
-                    Query query = collectionReference.whereEqualTo("phoneNumber", phoneNumber);
+                CollectionReference collectionReference = db.collection("users");
+                Query query = collectionReference.whereEqualTo("phoneNumber", phoneNumber);
 
-                    query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                        @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            if (queryDocumentSnapshots.isEmpty()) {
-                                Log.d("Regisztráció", "-------- phoneNum doesn't exist -----------");
-                                Log.d("Regisztráció", "-------- registering -----------");
+                query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (queryDocumentSnapshots.isEmpty()) {
+                        Log.d("Regisztráció", "-------- phoneNum doesn't exist -----------");
+                        Log.d("Regisztráció", "-------- registering -----------");
 
-                                /**
-                                 *   Ha még nincs regisztrálva a telefonszám,
-                                 *   akkor küldünk sms-ben egy ellenőrző kódot,
-                                 *   amivel a felhasználó véglegesítheti a
-                                 *   regisztrációját.
-                                 */
+                        /*
+                         *   Ha még nincs regisztrálva a telefonszám,
+                         *   akkor küldünk sms-ben egy ellenőrző kódot,
+                         *   amivel a felhasználó véglegesítheti a
+                         *   regisztrációját.
+                         */
 
-                                PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                                        phoneNumber,
-                                        60,
-                                        TimeUnit.SECONDS,
-                                        RegistrationActivity.this,
-                                        mCallbacks
-                                );
-                            } else {
-                                Toast.makeText(RegistrationActivity.this, "Ez a szám már regisztrálva van!", Toast.LENGTH_SHORT).show();
-                                Log.d("Regisztráció", "-------- phoneNum exists -----------");
-                                Log.d("Regisztráció", "-------- sending login sms -----------");
+                        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                                phoneNumber,
+                                60,
+                                TimeUnit.SECONDS,
+                                RegistrationActivity.this,
+                                mCallbacks
+                        );
+                    } else {
+                        Toast.makeText(RegistrationActivity.this, "Ez a szám már regisztrálva van!", Toast.LENGTH_SHORT).show();
+                        Log.d("Regisztráció", "-------- phoneNum exists -----------");
+                        Log.d("Regisztráció", "-------- sending login sms -----------");
 
 
-                            }
-                        }
-                    });
+                    }
+                });
 
 
-                }
             }
         });
 
-        buttonSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                verificationCode = editTextCode.getText().toString();
+        buttonSignUp.setOnClickListener(v -> {
+            verificationCode = editTextCode.getText().toString();
 
-                if (TextUtils.isEmpty(verificationCode)) {
-                    Toast.makeText(RegistrationActivity.this, "Adja meg a kódot", Toast.LENGTH_SHORT);
-                } else {
-                    dbPhoneNumbers = db.collection("users");
-                    User newUser = new User(
-                            firstName,
-                            lastName,
-                            phoneNumber
-                    );
+            if (TextUtils.isEmpty(verificationCode)) {
+                Toast.makeText(RegistrationActivity.this, "Adja meg a kódot", Toast.LENGTH_SHORT);
+            } else {
+                dbPhoneNumbers = db.collection("users");
+                User newUser = new User(
+                        firstName,
+                        lastName,
+                        phoneNumber
+                );
 
-                    dbPhoneNumbers.add(newUser)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Toast.makeText(RegistrationActivity.this, "Új felhasználó hozzáadva!", Toast.LENGTH_LONG).show();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(RegistrationActivity.this, e.getMessage(), Toast.LENGTH_LONG);
-                        }
-                    });
+                dbPhoneNumbers.add(newUser)
+                        .addOnSuccessListener(documentReference -> Toast.makeText(RegistrationActivity.this, "Új felhasználó hozzáadva!", Toast.LENGTH_LONG).show())
+                        .addOnFailureListener(e -> Toast.makeText(RegistrationActivity.this, e.getMessage(), Toast.LENGTH_LONG));
 
-                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, verificationCode);
-                    signInWithPhoneAuthCredential(credential);
-                }
+                PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, verificationCode);
+                signInWithPhoneAuthCredential(credential);
             }
         });
 
@@ -201,22 +167,6 @@ public class RegistrationActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-                // Old
-//                Map<String, String> map = new HashMap<>();
-//                map.put("firstName", firstName);
-//                map.put("lastName", lastName);
-//                map.put("phoneNumber", phoneNumber);
-
-//                db.collection("users").document().set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        if (task.isSuccessful()) {
-////                            Toast.makeText(getApplicationContext(), "successfull", Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                });
-
-
                 // New
                 dbPhoneNumbers = db.collection("users");
                 User newUser = new User(
@@ -226,17 +176,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 );
 
                 dbPhoneNumbers.add(newUser)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(RegistrationActivity.this, "Új felhasználó hozzáadva!", Toast.LENGTH_LONG).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(RegistrationActivity.this, e.getMessage(), Toast.LENGTH_LONG);
-                    }
-                });
+                        .addOnSuccessListener(documentReference -> Toast.makeText(RegistrationActivity.this, "Új felhasználó hozzáadva!", Toast.LENGTH_LONG).show())
+                        .addOnFailureListener(e -> Toast.makeText(RegistrationActivity.this, e.getMessage(), Toast.LENGTH_LONG));
 
 
                 signInWithPhoneAuthCredential(credential);
@@ -260,7 +201,6 @@ public class RegistrationActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 mVerificationId = verificationId;
-                mResendToken = token;
 
                 Toast.makeText(RegistrationActivity.this, "A bejelentkezési kulcsot elküldtük...", Toast.LENGTH_SHORT).show();
 
@@ -273,22 +213,14 @@ public class RegistrationActivity extends AppCompatActivity {
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(RegistrationActivity.this, "Sikeresen belépett!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegistrationActivity.this, AdsActivity.class));
-                            finish();
-                        } else {
-                            // Sign in failed, display a message and update the UI
-//                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-//                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-//                                // The verification code entered was invalid
-//                            }
-                            String message = task.getException().toString();
-                            Toast.makeText(RegistrationActivity.this, "Error: " + message, Toast.LENGTH_LONG).show();
-                        }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(RegistrationActivity.this, "Sikeresen belépett!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(RegistrationActivity.this, AdsActivity.class));
+                        finish();
+                    } else {
+                        String message = Objects.requireNonNull(task.getException()).toString();
+                        Toast.makeText(RegistrationActivity.this, "Error: " + message, Toast.LENGTH_LONG).show();
                     }
                 });
     }
