@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -65,49 +66,60 @@ public class AccountFragment extends Fragment {
         final String userId = ref.getUserId();
         Log.d(TAG,"userid " + userId);
 
-        //adb lekerdezes
-//        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-//        Query query = databaseReference.child("users").equalTo(userId);
-//        query.ge
 
-        db.collection("users").document(userId).get().addOnSuccessListener(documentSnapshot -> {
-            user.setFirstName(documentSnapshot.getString("firstName"));
-            user.setLastName(documentSnapshot.getString("lastName"));
-            user.setAddress(documentSnapshot.getString("address"));
-            user.setEmail(documentSnapshot.getString("email"));
-            user.setImageURL(documentSnapshot.getString("imageURL"));
-            user.setPhoneNumber(documentSnapshot.getString("phoneNumber"));
+        db = FirebaseFirestore.getInstance();
+        DocumentReference documentReference = db.collection("users").document(userId);
+        documentReference.get().addOnSuccessListener(documentSnapshot -> {
+            user = documentSnapshot.toObject(User.class);
+            Log.d(TAG, "proba " + user.getLastName() + " " + user.getFirstName());
 
-            Log.d(TAG, "uclass" + user.getFirstName() + " " + user.getLastName());
+            /*
+                azert nezunk telefonszamot, mert egeszen biztosan kell legyen ilyen mezo
+             */
+
+            if(user.getPhoneNumber() != null){
+                editFname = view.findViewById(R.id.fragment_acc_edit_fname);
+                if(user.getFirstName() != null)
+                {
+                    editFname.setText(user.getFirstName());
+                }
+                editLname = view.findViewById(R.id.fragment_acc_edit_lname);
+                if(user.getLastName() != null)
+                {
+                    editLname.setText(user.getLastName());
+                }
+                editEmail = view.findViewById(R.id.fragment_acc_edit_email);
+                if(user.getEmail() != null)
+                {
+                    editEmail.setText(user.getEmail());
+                }
+                editPhone = view.findViewById(R.id.fragment_acc_edit_phone);
+                if(user.getPhoneNumber() != null)
+                {
+                    editPhone.setText(user.getPhoneNumber());
+                }
+                editAddress = view.findViewById(R.id.fragment_acc_edit_address);
+                if(user.getAddress() != null)
+                {
+                    editAddress.setText(user.getAddress());
+                }
+            }
         });
-        //Log.d(TAG, "teszt " + query);
-        Log.d(TAG, "uclass" + user.getFirstName() + " " + user.getLastName());
 
-        editFname = view.findViewById(R.id.fragment_acc_edit_fname);
-        if(user.getFirstName() != null)
-        {
-            editFname.setText(user.getFirstName());
-        }
-        editLname = view.findViewById(R.id.fragment_acc_edit_lname);
-        if(user.getLastName() != null)
-        {
-            editLname.setText(user.getLastName());
-        }
-        editEmail = view.findViewById(R.id.fragment_acc_edit_email);
-        if(user.getEmail() != null)
-        {
-            editEmail.setText(user.getEmail());
-        }
-        editPhone = view.findViewById(R.id.fragment_acc_edit_phone);
-        if(user.getPhoneNumber() != null)
-        {
-            editPhone.setText(user.getPhoneNumber());
-        }
-        editAddress = view.findViewById(R.id.fragment_acc_edit_address);
-        if(user.getAddress() != null)
-        {
-            editAddress.setText(user.getAddress());
-        }
+//        db.collection("users").document(userId).get().addOnSuccessListener(documentSnapshot -> {
+//
+//            user.setFirstName(documentSnapshot.getString("firstName"));
+//            user.setLastName(documentSnapshot.getString("lastName"));
+//            user.setAddress(documentSnapshot.getString("address"));
+//            user.setEmail(documentSnapshot.getString("email"));
+//            user.setImageURL(documentSnapshot.getString("imageURL"));
+//            user.setPhoneNumber(documentSnapshot.getString("phoneNumber"));
+//
+//            Log.d(TAG, "uclass1 " + user.getFirstName() + " " + user.getLastName());
+//        });
+
+
+
         saveBtn = view.findViewById(R.id.fragment_acc_save);
 
         logout = view.findViewById(R.id.fragment_acc_logout_icon);

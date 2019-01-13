@@ -25,6 +25,8 @@ import com.google.firebase.firestore.Query;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.User;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText editTextLoginPhoneNumber, editTextCode;
@@ -73,11 +75,29 @@ public class MainActivity extends AppCompatActivity {
          *   még fiókja a felhasználónak.
          */
 
+        User tempUser = new User("Asd", "Asd2", "+400700000000");
+        Intent intent = new Intent(MainActivity.this, AdsActivity.class);
+//        startActivity(new Intent(MainActivity.this, AdsActivity.class));
+        //
+        // /szandekosan kimasoltam az userid-t firebasebol,
+        // hogy tudjam emulatoroon, ezzel az ideiglenes modszerrel tesztelni
+//torol
+        userId = "lGfJnXym7eTh9JnR19JW";
+        intent.putExtra("USER_FIRSTNAME", tempUser.getFirstName());
+        intent.putExtra("USER_LASTNAME", tempUser.getLastName());
+        intent.putExtra("USER_PHONENUMBER", tempUser.getPhoneNumber());
+        intent.putExtra("USER_ID", userId);
+        startActivity(intent);
+        finish();
+
+        //torol
+
         Button redirect = findViewById(R.id.login_redirect);
         redirect.setOnClickListener(v -> {
             Intent register = new Intent(MainActivity.this, RegistrationActivity.class);
             startActivity(register);
         });
+
 
         buttonGetCode.setOnClickListener(v -> {
             phoneNumber = "+40" + editTextLoginPhoneNumber.getText().toString();
