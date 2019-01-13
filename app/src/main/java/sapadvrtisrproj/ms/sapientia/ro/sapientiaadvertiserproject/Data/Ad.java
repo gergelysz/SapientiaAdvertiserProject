@@ -11,7 +11,6 @@ public class Ad {
     private String location;
     private String visitedNumber;
     private String visibilityRight;
-//    private ImageView image;
     private String image;
 
     public Ad() {
@@ -19,7 +18,7 @@ public class Ad {
     }
 
     public Ad(String userId, String title, String shortDesc, String longDesc, String phoneNumber, String location, String visitedNumber, String imageLink, String visibilityRight) {
-        this.userId=userId;
+        this.userId = userId;
         this.title = title;
         this.shortDesc = shortDesc;
         this.longDesc = longDesc;
@@ -27,29 +26,8 @@ public class Ad {
         this.location = location;
         this.visitedNumber = visitedNumber;
         this.image = imageLink;
-        this.visibilityRight=visibilityRight;
+        this.visibilityRight = visibilityRight;
     }
-
-//    public Ad(String id, String title, String shortDesc, String longDesc, String phoneNumber, String location, int visitedNumber, String image) {
-//        this.id = id;
-//        this.title = title;
-//        this.shortDesc = shortDesc;
-//        this.longDesc = longDesc;
-//        this.phoneNumber = phoneNumber;
-//        this.location = location;
-//        this.visitedNumber = visitedNumber;
-//        this.image = image;
-//    }
-
-//    public Ad(String title, String shortDesc, String longDesc, String phoneNumber, String location, ImageView image, int visitedNumber) {
-//        this.title = title;
-//        this.shortDesc = shortDesc;
-//        this.longDesc = longDesc;
-//        this.phoneNumber = phoneNumber;
-//        this.location = location;
-//        this.visitedNumber = visitedNumber;
-////        this.image = image;
-//    }
 
     public String getImage() {
         return image;
@@ -130,12 +108,5 @@ public class Ad {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-    //    public ImageView getImage() {
-//        return image;
-//    }
-//
-//    public void setImage(ImageView image) {
-//        this.image = image;
-//    }
 
 }
