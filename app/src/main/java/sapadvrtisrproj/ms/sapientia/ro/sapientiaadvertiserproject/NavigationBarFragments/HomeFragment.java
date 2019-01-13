@@ -38,9 +38,12 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         Log.d(TAG, "after loading view");
+
+        db = FirebaseFirestore.getInstance();
+
         adsListAdapter = new AdsListAdapter(adsList, data -> {
             Log.d(TAG, "before detail");
-            FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+            //FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
           /*  int visitors = Integer.parseInt(data.getVisitedNumber());
             ++visitors;
             data.setVisitedNumber(String.valueOf(visitors));

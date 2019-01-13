@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="12dp"
     android:background="@color/darkgreen"
-    android:padding="12dp">
+    android:padding="12dp"
+    android:id="@+id/itemListed">
 
     <ImageView
         android:id="@+id/ad_image"
@@ -33,50 +34,35 @@
         android:textColor="@color/white"
         android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/ad_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ad_shortDesc"
-        android:layout_toRightOf="@id/ad_image"
-        android:text="textviewLocation"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
-
-
     <!--<TextView-->
-        <!--android:id="@+id/ad_longDesc"-->
+        <!--android:id="@+id/ad_location"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/ad_location"-->
-        <!--android:layout_marginTop="12dp"-->
-        <!--android:layout_marginBottom="12dp"-->
-        <!--android:text="textviewLongDesc"-->
+        <!--android:layout_below="@id/ad_shortDesc"-->
+        <!--android:layout_toRightOf="@id/ad_image"-->
+        <!--android:text="textviewLocation"-->
         <!--android:textColor="@color/white"-->
         <!--android:textSize="16sp" />-->
 
-    <TextView
-        android:id="@+id/ad_phoneNum"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ad_location"
-        android:text="textviewPhoneNum"
-        android:layout_toRightOf="@id/ad_image"
-        android:textColor="@color/white"
-        android:textSize="12sp" />
+    <!--<TextView-->
+        <!--android:id="@+id/ad_phoneNum"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/ad_location"-->
+        <!--android:text="textviewPhoneNum"-->
+        <!--android:layout_toRightOf="@id/ad_image"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="12sp" />-->
 
     <Button
         android:id="@+id/reportBtn"
-        android:layout_width="121dp"
+        android:textColor="@color/darkergreen"
+        android:layout_width="80dp"
         android:layout_height="38dp"
-        android:layout_below="@+id/ad_phoneNum"
-        android:layout_alignEnd="@+id/ad_title"
-        android:layout_marginStart="31dp"
-        android:layout_marginLeft="31dp"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/ad_image"
-        android:layout_toRightOf="@+id/ad_image"
-        android:text="Jelentés"
+        android:layout_below="@+id/ad_shortDesc"
+        android:layout_marginTop="8dp"
+        android:background="@color/lighterlighterdarkgreen"
+        android:text="@string/jelent_s"
         android:layout_alignRight="@+id/ad_title" />
 
     <TextView
@@ -91,8 +77,6 @@
         android:layout_marginTop="18dp"
         android:layout_marginEnd="7dp"
         android:layout_marginRight="7dp"
-        android:layout_toStartOf="@+id/ad_phoneNum"
-        android:layout_toLeftOf="@+id/ad_phoneNum"
         android:textColor="@color/white"
         android:text="Ez az ön hírdetése"
         android:visibility="invisible"/>

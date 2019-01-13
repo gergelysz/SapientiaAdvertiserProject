@@ -11,15 +11,15 @@
 
     <TextView
         android:id="@+id/detail_title"
-        android:textSize="30sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/detail_image"
+        android:text="TextView"
         android:textColor="@color/white"
-        android:text="TextView" />
+        android:textSize="30sp" />
 
     <ImageView
         android:id="@+id/detail_image"
@@ -38,8 +38,8 @@
         android:layout_below="@+id/detail_title"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:textColor="@color/white"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/detail_text"
@@ -47,9 +47,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/detail_shortDesc"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:text="Megtekintési szám"
-        android:textColor="@color/white"
-        android:layout_alignParentLeft="true" />
+        android:textColor="@color/white" />
 
 
     <TextView
@@ -58,9 +58,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/detail_text"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:text="Number"
-        android:textColor="@color/white"
-        android:layout_alignParentLeft="true" />
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/detail_phoneNum"
@@ -68,9 +68,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/visitors_number"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:text="phoneNumber"
-        android:textColor="@color/white"
-        android:layout_alignParentLeft="true" />
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/detail_location"
@@ -78,9 +78,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/detail_phoneNum"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:text="location"
-        android:textColor="@color/white"
-        android:layout_alignParentLeft="true" />
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/detail_LongDesc"
@@ -91,55 +91,56 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:autoSizeTextType="uniform"
         android:text="LongDesc"
-        android:textColor="@color/white"
-        android:autoSizeTextType="uniform" />
+        android:textColor="@color/white" />
 
     <ImageButton
         android:id="@+id/shareBtn"
         android:layout_width="wrap_content"
-        android:layout_height="29dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/detail_LongDesc"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        app:srcCompat="@android:drawable/ic_menu_share" />
+        android:background="@color/darkgreen"
+        android:src="@drawable/ic_menu_share" />
 
     <ImageButton
         android:id="@+id/deleteBtn"
         android:layout_width="wrap_content"
-        android:layout_height="31dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/detail_LongDesc"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:visibility="invisible"
-        app:srcCompat="@android:drawable/ic_delete" />
+        android:background="@color/darkgreen"
+        android:src="@drawable/ic_delete_icon"
+        android:visibility="invisible" />
 
     <ImageButton
         android:id="@+id/hideBtn"
-        android:layout_width="39dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/detail_LongDesc"
-
         android:layout_toStartOf="@+id/deleteBtn"
         android:layout_toLeftOf="@+id/deleteBtn"
         android:layout_toEndOf="@+id/shareBtn"
         android:layout_toRightOf="@+id/shareBtn"
-        android:visibility="invisible"
-        app:srcCompat="@android:drawable/button_onoff_indicator_off" />
+        android:background="@color/darkgreen"
+        android:src="@drawable/ic_visible"
+        android:visibility="invisible" />
 
     <ImageButton
         android:id="@+id/appearBtn"
-        android:layout_width="72dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/detail_LongDesc"
-
         android:layout_toStartOf="@+id/deleteBtn"
         android:layout_toLeftOf="@+id/deleteBtn"
         android:layout_toEndOf="@+id/shareBtn"
         android:layout_toRightOf="@+id/shareBtn"
-        android:visibility="invisible"
-        app:srcCompat="@android:drawable/button_onoff_indicator_on" />
-
+        android:background="@color/darkgreen"
+        android:src="@drawable/ic_invisible"
+        android:visibility="invisible" />
 
 
 </RelativeLayout>
