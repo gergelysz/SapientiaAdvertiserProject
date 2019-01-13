@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -59,8 +60,17 @@ public class AccountFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        
+
         final View view =  inflater.inflate(R.layout.fragment_account, container, false);
+
+        editFname = view.findViewById(R.id.fragment_acc_edit_fname);
+        editLname = view.findViewById(R.id.fragment_acc_edit_lname);
+        editEmail = view.findViewById(R.id.fragment_acc_edit_email);
+        editPhone = view.findViewById(R.id.fragment_acc_edit_phone);
+        editAddress = view.findViewById(R.id.fragment_acc_edit_address);
+        saveBtn = view.findViewById(R.id.fragment_acc_save);
+        logout = view.findViewById(R.id.fragment_acc_logout_icon);
+        changePicture = view.findViewById(R.id.fragment_acc_picture);
 
         AdsActivity ref = (AdsActivity) AccountFragment.this.getActivity();
         final String userId = ref.getUserId();
@@ -71,58 +81,38 @@ public class AccountFragment extends Fragment {
         DocumentReference documentReference = db.collection("users").document(userId);
         documentReference.get().addOnSuccessListener(documentSnapshot -> {
             user = documentSnapshot.toObject(User.class);
-            Log.d(TAG, "proba " + user.getLastName() + " " + user.getFirstName());
-
+            //Log.d(TAG, "proba " + user.getLastName() + " " + user.getFirstName());
             /*
                 azert nezunk telefonszamot, mert egeszen biztosan kell legyen ilyen mezo
              */
-
             if(user.getPhoneNumber() != null){
-                editFname = view.findViewById(R.id.fragment_acc_edit_fname);
                 if(user.getFirstName() != null)
                 {
                     editFname.setText(user.getFirstName());
                 }
-                editLname = view.findViewById(R.id.fragment_acc_edit_lname);
                 if(user.getLastName() != null)
                 {
                     editLname.setText(user.getLastName());
                 }
-                editEmail = view.findViewById(R.id.fragment_acc_edit_email);
                 if(user.getEmail() != null)
                 {
                     editEmail.setText(user.getEmail());
                 }
-                editPhone = view.findViewById(R.id.fragment_acc_edit_phone);
                 if(user.getPhoneNumber() != null)
                 {
                     editPhone.setText(user.getPhoneNumber());
                 }
-                editAddress = view.findViewById(R.id.fragment_acc_edit_address);
                 if(user.getAddress() != null)
                 {
                     editAddress.setText(user.getAddress());
                 }
+//                if(user.getImageURL() != null)
+//                {
+//                    Glide.with(view).load(user.getImageURL()).into(changePicture);
+//                }
             }
         });
 
-//        db.collection("users").document(userId).get().addOnSuccessListener(documentSnapshot -> {
-//
-//            user.setFirstName(documentSnapshot.getString("firstName"));
-//            user.setLastName(documentSnapshot.getString("lastName"));
-//            user.setAddress(documentSnapshot.getString("address"));
-//            user.setEmail(documentSnapshot.getString("email"));
-//            user.setImageURL(documentSnapshot.getString("imageURL"));
-//            user.setPhoneNumber(documentSnapshot.getString("phoneNumber"));
-//
-//            Log.d(TAG, "uclass1 " + user.getFirstName() + " " + user.getLastName());
-//        });
-
-
-
-        saveBtn = view.findViewById(R.id.fragment_acc_save);
-
-        logout = view.findViewById(R.id.fragment_acc_logout_icon);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,7 +121,6 @@ public class AccountFragment extends Fragment {
             }
         });
 
-        changePicture = view.findViewById(R.id.fragment_acc_picture);
         changePicture.setOnClickListener(v -> {
            //startActivityForResult(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
             Intent intent = new Intent();
@@ -141,14 +130,6 @@ public class AccountFragment extends Fragment {
 
         });
 
-//        changePicture = view.findViewById(R.id.fragment_acc_picture);
-//        changePicture.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v){
-//               startActivityForResult(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-//            }
-//        });
-
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,7 +137,8 @@ public class AccountFragment extends Fragment {
                 user.setLastName(editLname.getText().toString());
                 user.setPhoneNumber(editPhone.getText().toString());
                 user.setAddress(editAddress.getText().toString());
-                user.setAddress(editEmail.getText().toString());
+                user.setEmail(editEmail.getText().toString());
+//                user.setImageURL();
 
                 db.collection("users").document(userId).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -174,7 +156,6 @@ public class AccountFragment extends Fragment {
                 });
             }
         });
-        // TODO ...
 
         return view;
     }
@@ -190,6 +171,7 @@ public class AccountFragment extends Fragment {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), uri);
                 changePicture.setImageBitmap(bitmap);
+//                Log.d(TAG, "kep " + changePicture);
             } catch (IOException e) {
                 e.printStackTrace();
             }

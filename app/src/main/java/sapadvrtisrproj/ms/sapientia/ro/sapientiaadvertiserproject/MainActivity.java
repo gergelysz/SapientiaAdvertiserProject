@@ -75,14 +75,6 @@ public class MainActivity extends AppCompatActivity {
          *   még fiókja a felhasználónak.
          */
 
-        User tempUser = new User("Asd", "Asd2", "+400700000000");
-        Intent intent = new Intent(MainActivity.this, AdsActivity.class);
-//        startActivity(new Intent(MainActivity.this, AdsActivity.class));
-        //
-        // /szandekosan kimasoltam az userid-t firebasebol,
-        // hogy tudjam emulatoroon, ezzel az ideiglenes modszerrel tesztelni
-
-
         Button redirect = findViewById(R.id.login_redirect);
         redirect.setOnClickListener(v -> {
             Intent register = new Intent(MainActivity.this, RegistrationActivity.class);
