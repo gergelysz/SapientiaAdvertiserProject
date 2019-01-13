@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter.AdsListAdapter;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.AdsActivity;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.Ad;
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.UserHelper;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.R;
 
 
@@ -40,13 +42,14 @@ public class DetailsFragment extends Fragment {
     private TextView visitors_number;
     private ImageView imageView;
     private String adId;
-    private Button hideBtn;
-    private Button deleteBtn;
-    private Button appearBtn;
-    private Button shareBtn;
+    private ImageButton hideBtn;
+    private ImageButton deleteBtn;
+    private ImageButton appearBtn;
+    private ImageButton shareBtn;
     //private List<Ad> adsList = new ArrayList<>();
     private AdsListAdapter adsListAdapter;
     private Ad adItem;
+    private String userId="";
 
     public DetailsFragment() {
 
@@ -89,6 +92,11 @@ public class DetailsFragment extends Fragment {
         Glide.with(view).load(adItem.getImage()).into(imageView);
         Log.d(TAG, "after set");
 
+        AdsActivity ref=(AdsActivity) DetailsFragment.this.getActivity();
+
+        userId += ref.getUserId();
+        UserHelper userHelper=new UserHelper(userId);
+        userId=userHelper.getUserId();
 
         // facebook share funcionality
 
@@ -105,10 +113,11 @@ public class DetailsFragment extends Fragment {
         DocumentReference ads = db.collection("ads").document(adItem.getId());
         ads.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
+
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Ad ad = documentSnapshot.toObject(Ad.class);
-                if (ad.getUserId()!=null && adItem.getUserId()!=null){
-                    if (ad.getUserId().equals(adItem.getUserId()))
+                if (ad.getUserId()!=null && userId!=null){
+                    if (ad.getUserId().equals(userId))
                     {
                         if (ad.getVisibilityRight().equals("0")) {
                             hideBtn.setVisibility(View.VISIBLE);
