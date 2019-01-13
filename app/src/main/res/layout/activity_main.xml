@@ -11,7 +11,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:id="@+id/login_logo"
@@ -37,7 +37,8 @@
                 android:text="SAPIENTIA\nAdvertiser"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                android:layout_toEndOf="@+id/login_logo_image" />
 
         </RelativeLayout>
 
@@ -58,6 +59,7 @@
             android:background="@drawable/custom_sapientia_login_bg"
             android:drawableLeft="@drawable/custom_sapientia_login_phone"
             android:textColor="@color/white"
+            android:inputType="phone"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/login_text" />

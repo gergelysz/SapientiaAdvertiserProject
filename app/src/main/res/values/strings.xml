@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sapientia Advertiser</string>
+    <string name="app_name">Advertiser</string>
     <string name="login_phonenum_text">Adja meg a telefonszámát:</string>
     <string name="login_button_text">Bejelentkezés</string>
     <string name="getcodebutton_text">Kulcs lekérése</string>

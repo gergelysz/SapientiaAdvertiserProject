@@ -2,7 +2,6 @@ package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBar
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,15 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter.AdsListAdapter;
@@ -41,7 +37,8 @@ public class DetailsFragment extends Fragment {
     //private List<Ad> adsList = new ArrayList<>();
     private AdsListAdapter adsListAdapter;
     private Ad adItem;
-    private String userId="";
+    private String userId = "";
+
     public DetailsFragment() {
 
     }
@@ -64,9 +61,9 @@ public class DetailsFragment extends Fragment {
         TextView detailTextLocation = view.findViewById(R.id.detail_location);
         ImageView imageView = view.findViewById(R.id.detail_image);
         TextView visitors_number = view.findViewById(R.id.visitors_number);
-        hideBtn=view.findViewById(R.id.hideBtn);
-        deleteBtn=view.findViewById(R.id.deleteBtn);
-        appearBtn=view.findViewById(R.id.appearBtn);
+        hideBtn = view.findViewById(R.id.hideBtn);
+        deleteBtn = view.findViewById(R.id.deleteBtn);
+        appearBtn = view.findViewById(R.id.appearBtn);
         ImageButton shareBtn = view.findViewById(R.id.shareBtn);
 
         Log.d(TAG, "details ad: " + adItem.getTitle());
@@ -99,25 +96,21 @@ public class DetailsFragment extends Fragment {
         DocumentReference ads = db.collection("ads").document(adItem.getId());
         ads.get().addOnSuccessListener(documentSnapshot -> {
             Ad ad = documentSnapshot.toObject(Ad.class);
-            if (ad.getUserId()!=null){
-                if (ad.getUserId().equals(userId))
-                {
+            if (ad.getUserId() != null) {
+                if (ad.getUserId().equals(userId)) {
                     if (ad.getVisibilityRight().equals("0")) {
                         hideBtn.setVisibility(View.VISIBLE);
                     }
-                    if (ad.getVisibilityRight().equals("-1")){
+                    if (ad.getVisibilityRight().equals("-1")) {
                         appearBtn.setVisibility(View.VISIBLE);
                     }
                     deleteBtn.setVisibility(View.VISIBLE);
-                    hideBtn.setOnClickListener(new View.OnClickListener(){
-                        @Override
-                        public void onClick (View v){
-                            // -1 means that I only want to hide the ad
-                            hideBtn.setVisibility(View.INVISIBLE);
-                            appearBtn.setVisibility(View.VISIBLE);
-                            popUpCreate(v, "Do you want to hide the ad?", "-1");
+                    hideBtn.setOnClickListener(v -> {
+                        // -1 means that I only want to hide the ad
+                        hideBtn.setVisibility(View.INVISIBLE);
+                        appearBtn.setVisibility(View.VISIBLE);
+                        popUpCreate(v, "Do you want to hide the ad?", "-1");
 
-                        }
                     });
 
                     deleteBtn.setOnClickListener(v -> {
@@ -139,27 +132,22 @@ public class DetailsFragment extends Fragment {
         return view;
     }
 
-    private void popUpCreate(View v, String question, String hideOrDelete)
-    {
+    private void popUpCreate(View v, String question, String hideOrDelete) {
         new AlertDialog.Builder(v.getContext(), R.style.MyDialogTheme)
                 .setTitle("Title")
                 .setMessage(question)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        if (adItem.getId()!=null) {
-                            db.collection("ads").document(adItem.getId()).update("visibilityRight", hideOrDelete)
+                .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
+                    if (adItem.getId() != null) {
+                        db.collection("ads").document(adItem.getId()).update("visibilityRight", hideOrDelete)
 
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
+                                .addOnSuccessListener(aVoid -> {
 
-                                        }
-                                    });
-                        }
-                        Intent intent=new Intent(getActivity(), AdsActivity.class);
-                        startActivity(intent);
-                    }})
+                                });
+                    }
+                    Intent intent = new Intent(getActivity(), AdsActivity.class);
+                    startActivity(intent);
+                })
                 .setNegativeButton(android.R.string.no, null).show()
                 .show();
 
@@ -167,11 +155,7 @@ public class DetailsFragment extends Fragment {
     }
 
 
-
-
-
-
-    private void facebookShare(){
+    private void facebookShare() {
         String urlToShare = "https://play.google.com/store/apps/details?id=com.facebook.katana&hl=en";
         try {
             Intent mIntentFacebook = new Intent();
@@ -188,7 +172,6 @@ public class DetailsFragment extends Fragment {
             startActivity(mIntentFacebookBrowser);
         }
     }
-
 
 
 }
