@@ -2,6 +2,7 @@ package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBar
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,7 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Adapter.AdsListAdapter;
@@ -31,6 +34,13 @@ public class DetailsFragment extends Fragment {
 
     private static final String TAG = "DetailsFragment";
     private FirebaseFirestore db;
+    private TextView detailTextTitle;
+    private TextView detailTextShortDesc;
+    private TextView detailTextLongDesc;
+    private TextView detailTextPhoneNumber;
+    private TextView detailTextLocation;
+    private TextView visitors_number;
+    private ImageView imageView;
     private String adId;
     private ImageButton hideBtn;
     private ImageButton deleteBtn;
@@ -40,7 +50,6 @@ public class DetailsFragment extends Fragment {
     private AdsListAdapter adsListAdapter;
     private Ad adItem;
     private String userId="";
-
     public DetailsFragment() {
 
     }
@@ -56,17 +65,17 @@ public class DetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_details, container, false);
         db = FirebaseFirestore.getInstance();
 
-        TextView detailTextTitle = view.findViewById(R.id.detail_title);
-        TextView detailTextShortDesc = view.findViewById(R.id.detail_shortDesc);
-        TextView detailTextLongDesc = view.findViewById(R.id.detail_LongDesc);
-        TextView detailTextPhoneNumber = view.findViewById(R.id.detail_phoneNum);
-        TextView detailTextLocation = view.findViewById(R.id.detail_location);
-        ImageView imageView = view.findViewById(R.id.detail_image);
-        TextView visitors_number = view.findViewById(R.id.visitors_number);
-        hideBtn = view.findViewById(R.id.hideBtn);
-        deleteBtn = view.findViewById(R.id.deleteBtn);
-        appearBtn = view.findViewById(R.id.appearBtn);
-        shareBtn = view.findViewById(R.id.shareBtn);
+        detailTextTitle = view.findViewById(R.id.detail_title);
+        detailTextShortDesc = view.findViewById(R.id.detail_shortDesc);
+        detailTextLongDesc = view.findViewById(R.id.detail_LongDesc);
+        detailTextPhoneNumber = view.findViewById(R.id.detail_phoneNum);
+        detailTextLocation = view.findViewById(R.id.detail_location);
+        imageView = view.findViewById(R.id.detail_image);
+        visitors_number=view.findViewById(R.id.visitors_number);
+        hideBtn=view.findViewById(R.id.hideBtn);
+        deleteBtn=view.findViewById(R.id.deleteBtn);
+        appearBtn=view.findViewById(R.id.appearBtn);
+        shareBtn=view.findViewById(R.id.shareBtn);
 
         Log.d(TAG, "details ad: " + adItem.getTitle());
 
@@ -82,79 +91,109 @@ public class DetailsFragment extends Fragment {
         Glide.with(view).load(adItem.getImage()).into(imageView);
         Log.d(TAG, "after set");
 
-        AdsActivity ref=(AdsActivity) DetailsFragment.this.getActivity();
-
+        AdsActivity ref = (AdsActivity) DetailsFragment.this.getActivity();
+        userId = "";
+        assert ref != null;
         userId += ref.getUserId();
-        UserHelper userHelper=new UserHelper(userId);
-        userId=userHelper.getUserId();
-
+        UserHelper userHelper = new UserHelper(userId);
+        userId = userHelper.getUserId();
         // facebook share funcionality
 
-        shareBtn.setOnClickListener(v -> facebookShare());
+
+        shareBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                facebookShare();
+            }
+        });
 
         //delete and hide functionality
         // if my userId is equal with the ad's user id I can delete or hide the ad, if not, the hide and delete buttons don't even appear
         DocumentReference ads = db.collection("ads").document(adItem.getId());
-        ads.get().addOnSuccessListener(documentSnapshot -> {
-            Ad ad = documentSnapshot.toObject(Ad.class);
-            assert ad != null;
-            if (ad.getUserId() != null && userId != null) {
-                if (ad.getUserId().equals(userId)) {
-                    if (ad.getVisibilityRight().equals("0")) {
-                        hideBtn.setVisibility(View.VISIBLE);
+        ads.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Ad ad = documentSnapshot.toObject(Ad.class);
+                if (ad.getUserId()!=null){
+                    if (ad.getUserId().equals(userId))
+                    {
+                        if (ad.getVisibilityRight().equals("0")) {
+                            hideBtn.setVisibility(View.VISIBLE);
+                        }
+                        if (ad.getVisibilityRight().equals("-1")){
+                            appearBtn.setVisibility(View.VISIBLE);
+                        }
+                        deleteBtn.setVisibility(View.VISIBLE);
+                        hideBtn.setOnClickListener(new View.OnClickListener(){
+                            @Override
+                            public void onClick (View v){
+                                // -1 means that I only want to hide the ad
+                                hideBtn.setVisibility(View.INVISIBLE);
+                                appearBtn.setVisibility(View.VISIBLE);
+                                popUpCreate(v, "Do you want to hide the ad?", "-1");
+
+                            }
+                        });
+
+                        deleteBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // -2 means that I want to delete the ad
+
+                                popUpCreate(v, "Do you want to delete the ad?", "-2");
+
+                            }
+                        });
+                        appearBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                hideBtn.setVisibility(View.VISIBLE);
+                                appearBtn.setVisibility(View.INVISIBLE);
+
+                                popUpCreate(v, "Do you want to appear the ad?", "0");
+
+                            }
+                        });
                     }
-                    if (ad.getVisibilityRight().equals("-1")) {
-                        appearBtn.setVisibility(View.VISIBLE);
-                    }
-                    deleteBtn.setVisibility(View.VISIBLE);
-                    hideBtn.setOnClickListener(v -> {
-                        // -1 means that I only want to hide the ad
-                        hideBtn.setVisibility(View.INVISIBLE);
-                        appearBtn.setVisibility(View.VISIBLE);
-                        popUpCreate(v, "Do you want to hide the ad?", "-1");
-
-                    });
-
-                    deleteBtn.setOnClickListener(v -> {
-                        // -2 means that I want to delete the ad
-
-                        popUpCreate(v, "Do you want to delete the ad?", "-2");
-
-                    });
-                    appearBtn.setOnClickListener(v -> {
-                        hideBtn.setVisibility(View.VISIBLE);
-                        appearBtn.setVisibility(View.INVISIBLE);
-
-                        popUpCreate(v, "Do you want to appear the ad?", "0");
-
-                    });
                 }
             }
         });
         return view;
     }
 
-    private void popUpCreate(View v, String question, String hideOrDelete) {
+    private void popUpCreate(View v, String question, String hideOrDelete)
+    {
         new AlertDialog.Builder(v.getContext(), R.style.MyDialogTheme)
                 .setTitle("Title")
                 .setMessage(question)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
-                    if (adItem.getId() != null) {
-                        db.collection("ads").document(adItem.getId()).update("visibilityRight", hideOrDelete)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        if (adItem.getId()!=null) {
+                            db.collection("ads").document(adItem.getId()).update("visibilityRight", hideOrDelete)
 
-                                .addOnSuccessListener(aVoid -> {
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
 
-                                });
-                    }
-                    Intent intent = new Intent(getActivity(), AdsActivity.class);
-                    startActivity(intent);
-                })
+                                        }
+                                    });
+                        }
+                        Intent intent=new Intent(getActivity(), AdsActivity.class);
+                        startActivity(intent);
+                    }})
                 .setNegativeButton(android.R.string.no, null).show()
                 .show();
+
+
     }
 
-    private void facebookShare() {
+
+
+
+
+
+    private void facebookShare(){
         String urlToShare = "https://play.google.com/store/apps/details?id=com.facebook.katana&hl=en";
         try {
             Intent mIntentFacebook = new Intent();
