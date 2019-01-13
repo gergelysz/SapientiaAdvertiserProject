@@ -80,8 +80,6 @@ public class AddFragment extends Fragment {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
-
-        buttonAdd = view.findViewById(R.id.button_addfragment_add);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             // saving the ad's information
@@ -126,6 +124,7 @@ public class AddFragment extends Fragment {
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 uploadImage();
             }
         });
@@ -135,7 +134,6 @@ public class AddFragment extends Fragment {
     }
 
     private void uploadImage() {
-
         if (filePath != null) {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Feltöltés...");
