@@ -81,16 +81,7 @@ public class MainActivity extends AppCompatActivity {
         //
         // /szandekosan kimasoltam az userid-t firebasebol,
         // hogy tudjam emulatoroon, ezzel az ideiglenes modszerrel tesztelni
-//torol
-        userId = "lGfJnXym7eTh9JnR19JW";
-        intent.putExtra("USER_FIRSTNAME", tempUser.getFirstName());
-        intent.putExtra("USER_LASTNAME", tempUser.getLastName());
-        intent.putExtra("USER_PHONENUMBER", tempUser.getPhoneNumber());
-        intent.putExtra("USER_ID", userId);
-        startActivity(intent);
-        finish();
 
-        //torol
 
         Button redirect = findViewById(R.id.login_redirect);
         redirect.setOnClickListener(v -> {
