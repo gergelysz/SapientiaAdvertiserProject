@@ -3,7 +3,7 @@ package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data;
 public class User {
 
     private String firstName, lastName, phoneNumber, email, address;
-    private String imageURL;
+    private String imageURL = null;
 
     public User() {
 
