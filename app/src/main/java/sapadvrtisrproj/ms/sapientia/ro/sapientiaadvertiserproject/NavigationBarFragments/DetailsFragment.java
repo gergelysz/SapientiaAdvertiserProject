@@ -86,13 +86,16 @@ public class DetailsFragment extends Fragment {
         userId += ref.getUserId();
         UserHelper userHelper = new UserHelper(userId);
         userId = userHelper.getUserId();
-        // facebook share funcionality
-
+        /*
+        facebook share funcionality
+        */
 
         shareBtn.setOnClickListener(v -> facebookShare());
+        /*
+        delete and hide functionality
+        if my userId is equal with the ad's user id I can delete or hide the ad, if not, the hide and delete buttons don't even appear
+        */
 
-        //delete and hide functionality
-        // if my userId is equal with the ad's user id I can delete or hide the ad, if not, the hide and delete buttons don't even appear
         DocumentReference ads = db.collection("ads").document(adItem.getId());
         ads.get().addOnSuccessListener(documentSnapshot -> {
             Ad ad = documentSnapshot.toObject(Ad.class);

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -59,11 +60,6 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
 
         viewHolder.title.setText(adsList.get(i).getTitle());
         viewHolder.shortDesc.setText(adsList.get(i).getShortDesc());
-//        viewHolder.longDesc.setText(adsList.get(i).getLongDesc());
-//        viewHolder.phoneNum.setText(adsList.get(i).getPhoneNumber());
-//        viewHolder.location.setText(adsList.get(i).getLocation());
-//        viewHolder.imageAd = adsList.get(i).getImage();
-//        Glide.with(viewHolder.mView).load(viewHolder.image).into(viewHolder.imageAd);
         Glide.with(viewHolder.mView).load(adsList.get(i).getImage()).into(viewHolder.imageAd);
         String userId = HomeFragmentLoadingNumber.getUserId();
         db = FirebaseFirestore.getInstance();
@@ -72,7 +68,7 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
             Ad ad = documentSnapshot.toObject(Ad.class);
             try {
                 if (ad.getUserId().equals(userId)) {
-                    //viewHolder.usersAd.setVisibility(View.VISIBLE);
+                    viewHolder.usersAd.setVisibility(View.VISIBLE);
                     viewHolder.layout.setBackgroundColor(Color.WHITE);
                     viewHolder.title.setTextColor(Color.parseColor("#003300"));
                     viewHolder.shortDesc.setTextColor(Color.parseColor("#003300"));
@@ -104,24 +100,16 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
 
         public TextView title;
         public TextView shortDesc;
-        //        public TextView longDesc;
-        //public TextView phoneNum;
-        //public TextView location;
-        //        public String image;
         public ImageView imageAd;
         public TextView usersAd;
-        public Button reportBtn;
+        public ImageButton reportBtn;
         public RelativeLayout layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mView = itemView;
-
             title = mView.findViewById(R.id.ad_title);
             shortDesc = mView.findViewById(R.id.ad_shortDesc);
-//            longDesc = mView.findViewById(R.id.ad_longDesc);
-//            phoneNum = mView.findViewById(R.id.ad_phoneNum);
-//            location = mView.findViewById(R.id.ad_location);
             imageAd = mView.findViewById(R.id.ad_image);
             reportBtn = mView.findViewById(R.id.reportBtn);
             usersAd = mView.findViewById(R.id.usersAd);
@@ -148,13 +136,9 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
 
                                     });
                         }
-
-
                     })
                     .setNegativeButton(android.R.string.no, null).show()
                     .show();
-
-
         }
     }
 

@@ -113,12 +113,7 @@ public class AddFragment extends Fragment {
         // onclick listener to uploading image
         btnChoose.setOnClickListener(v -> chooseImage());
 
-     //   btnUpload.setOnClickListener(v -> uploadImage());
-
-        btnCamera.setOnClickListener(v->
-                {takePhoto();
-                }
-        );
+        btnCamera.setOnClickListener(v-> {takePhoto(); });
 
         return view;
     }
@@ -211,9 +206,6 @@ public class AddFragment extends Fragment {
                         "com.example.android.fileprovider",
                         photoFile);
                 filePath=photoURI;
-
-              //  takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-               // startActivityForResult(Intent.createChooser(takePictureIntent, "Válassz képet"), REQUEST_TAKE_PHOTO);
                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
         }
@@ -246,16 +238,4 @@ public class AddFragment extends Fragment {
         this.getActivity().sendBroadcast(mediaScanIntent);
     }
 
-
-    private Uri getImageUri(Context context, Bitmap inImage) {
-
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
-
-        return Uri.parse(path);
-
-    }
 }
