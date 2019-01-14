@@ -106,7 +106,11 @@ public class AccountFragment extends Fragment {
             }
         });
 
-        logout.setOnClickListener(v -> startActivity(new Intent(getActivity(), MainActivity.class)));
+        logout.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        });
 
         changePicture.setOnClickListener(v -> {
             chooseImage();
