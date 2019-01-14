@@ -1,20 +1,23 @@
 package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBarFragments.AccountFragment;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBarFragments.AddFragment;
+import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBarFragments.DetailsFragment;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBarFragments.HomeFragment;
 
 public class AdsActivity extends AppCompatActivity {
 
     private String userId = null;
     private static final String TAG = "AdsActivity";
+    private Fragment fragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,7 @@ public class AdsActivity extends AppCompatActivity {
 
         bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
 
-            Fragment fragment = null;
+
             switch (menuItem.getItemId()) {
                 case R.id.bottom_navigation_bar_add:
                     fragment = new AddFragment();
@@ -72,5 +75,24 @@ public class AdsActivity extends AppCompatActivity {
 
     public String getUserId() {
         return userId;
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        /*
+            Ha a felhasználó a DetailsFragment-ben van, visszalépéskor
+            nem lép ki az alkalmazásból, hanem vissza a HomeFragment-be
+         */
+
+        FragmentManager currentFragment = getSupportFragmentManager();
+        Fragment fm = currentFragment.findFragmentById(R.id.fragment_container);
+
+        if (fm instanceof DetailsFragment) {
+            fragment = new HomeFragment();
+            loadFragment(fragment);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

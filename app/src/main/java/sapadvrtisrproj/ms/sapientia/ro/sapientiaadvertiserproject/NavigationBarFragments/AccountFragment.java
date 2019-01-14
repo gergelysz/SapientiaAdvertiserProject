@@ -16,20 +16,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.util.Objects;
-import java.util.UUID;
-
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
+import java.util.Objects;
+import java.util.UUID;
 
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.AdsActivity;
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.User;
@@ -106,7 +101,7 @@ public class AccountFragment extends Fragment {
                     editAddress.setText(user.getAddress());
                 }
                 if (user.getImageURL() != null) {
-                   Glide.with(view).load(user.getImageURL()).into(changePicture);
+                    Glide.with(view).load(user.getImageURL()).into(changePicture);
                 }
             }
         });
@@ -156,6 +151,7 @@ public class AccountFragment extends Fragment {
         }
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
+            assert extras != null;
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             changePicture.setImageBitmap(imageBitmap);
         }

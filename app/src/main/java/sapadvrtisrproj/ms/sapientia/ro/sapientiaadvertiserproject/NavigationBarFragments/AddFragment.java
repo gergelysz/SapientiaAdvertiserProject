@@ -1,10 +1,9 @@
 package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.NavigationBarFragments;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,7 +12,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,14 +24,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
-import java.util.Random;
 import java.util.UUID;
 
 import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.AdsActivity;
@@ -53,12 +48,12 @@ public class AddFragment extends Fragment {
     private EditText editTextLocation;
     private ImageView imageView;
     private Uri filePath;
-    private Uri photoURI;
     private final int PICK_IMAGE_REQUEST = 71;
     private String title, shortDesc, longDesc, phoneNum, location, image = "";
 
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,7 +65,7 @@ public class AddFragment extends Fragment {
         //Initialize Views
         //Button btnUpload = view.findViewById(R.id.btnUpload);
         Button btnChoose = view.findViewById(R.id.btnChoose);
-        Button btnCamera=view.findViewById(R.id.btnCamera);
+        Button btnCamera = view.findViewById(R.id.btnCamera);
         Button buttonAdd = view.findViewById(R.id.button_addfragment_add);
 
         imageView = view.findViewById(R.id.imgView);
@@ -113,7 +108,7 @@ public class AddFragment extends Fragment {
         // onclick listener to uploading image
         btnChoose.setOnClickListener(v -> chooseImage());
 
-        btnCamera.setOnClickListener(v-> {takePhoto(); });
+        btnCamera.setOnClickListener(v -> takePhoto());
 
         return view;
     }
@@ -169,7 +164,7 @@ public class AddFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
-                filePath = data.getData();
+            filePath = data.getData();
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(Objects.requireNonNull(getActivity()).getApplicationContext().getContentResolver(), filePath);
@@ -180,20 +175,22 @@ public class AddFragment extends Fragment {
         }
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
+            assert extras != null;
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             imageView.setImageBitmap(imageBitmap);
 
 
-            }
+        }
         uploadImage();
     }
 
 
     static final int REQUEST_TAKE_PHOTO = 1;
-    public void takePhoto(){
+
+    public void takePhoto() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-       // takePictureIntent.setType("image/*");
-        if (takePictureIntent.resolveActivity(this.getActivity().getPackageManager()) != null) {
+        // takePictureIntent.setType("image/*");
+        if (takePictureIntent.resolveActivity(Objects.requireNonNull(this.getActivity()).getPackageManager()) != null) {
             File photoFile = null;
             try {
                 photoFile = createImageFile();
@@ -202,22 +199,23 @@ public class AddFragment extends Fragment {
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                photoURI = FileProvider.getUriForFile(this.getActivity(),
+                filePath = FileProvider.getUriForFile(this.getActivity(),
                         "com.example.android.fileprovider",
                         photoFile);
-                filePath=photoURI;
-               startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
         }
 
     }
 
     String mCurrentPhotoPath;
+
     private File createImageFile() throws IOException {
         // Create an image file name
+        @SuppressLint("SimpleDateFormat")
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = this.getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = Objects.requireNonNull(this.getActivity()).getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File imageFile = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
@@ -235,7 +233,7 @@ public class AddFragment extends Fragment {
         File f = new File(mCurrentPhotoPath);
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
-        this.getActivity().sendBroadcast(mediaScanIntent);
+        Objects.requireNonNull(this.getActivity()).sendBroadcast(mediaScanIntent);
     }
 
 }

@@ -76,8 +76,8 @@ public class RegistrationActivity extends AppCompatActivity {
         Button buttonGetCodeRegistration = findViewById(R.id.register_button_getcodebutton);
 
         buttonGetCodeRegistration.setOnClickListener(v -> {
+
             phoneNumber = editTextPhoneNum.getText().toString();
-            // registration number corrected
             phoneNumber = "+40" + phoneNumber;
             firstName = editTextFirstName.getText().toString();
             lastName = editTextLastName.getText().toString();
@@ -90,11 +90,6 @@ public class RegistrationActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(phoneNumber)) {
                 Toast.makeText(RegistrationActivity.this, "Kérem adja meg a telefonszámát!", Toast.LENGTH_SHORT).show();
             } else {
-//                    loadingBar.setTitle("Sapientia Advertiser");
-//                    loadingBar.setMessage("Kérem várjon, a telefonszámát ellenőrizzük...");
-//                    loadingBar.setCanceledOnTouchOutside(false);
-//                    loadingBar.show();
-
                 /*
                  *   Csatlakozás az adatbázis 'users' nevű collection-jára,
                  *   azon belül egy lekérdezés, amelyben keresünk még ugyanolyan
@@ -132,8 +127,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
                     }
                 });
-
-
             }
         });
 
@@ -163,11 +156,9 @@ public class RegistrationActivity extends AppCompatActivity {
 
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
-//                loadingBar.dismiss();
                 progressBar.setVisibility(View.GONE);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-                // New
                 dbPhoneNumbers = db.collection("users");
                 User newUser = new User(
                         firstName,
@@ -185,7 +176,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
-//                loadingBar.dismiss();
                 progressBar.setVisibility(View.GONE);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 Toast.makeText(RegistrationActivity.this, "Sikertelen regisztrálás!", Toast.LENGTH_SHORT).show();
@@ -196,8 +186,6 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onCodeSent(String verificationId,
                                    PhoneAuthProvider.ForceResendingToken token) {
-                // Save verification ID and resending token so we can use them later
-//                loadingBar.dismiss();
                 progressBar.setVisibility(View.GONE);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 mVerificationId = verificationId;

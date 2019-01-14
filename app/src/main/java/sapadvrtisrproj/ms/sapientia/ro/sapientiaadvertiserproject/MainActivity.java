@@ -2,8 +2,8 @@ package sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -24,8 +24,6 @@ import com.google.firebase.firestore.Query;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-
-import sapadvrtisrproj.ms.sapientia.ro.sapientiaadvertiserproject.Data.User;
 
 public class MainActivity extends AppCompatActivity {
 
