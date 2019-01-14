@@ -51,11 +51,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-
-        FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
 
         Button buttonGetCode = findViewById(R.id.login_getcodebutton);
         buttonLogin = findViewById(R.id.login_button);
@@ -75,13 +72,12 @@ public class MainActivity extends AppCompatActivity {
          *   Átirányítás a regisztrációs Activity-re, ha nincs
          *   még fiókja a felhasználónak.
          */
-        
+
         Button redirect = findViewById(R.id.login_redirect);
         redirect.setOnClickListener(v -> {
             Intent register = new Intent(MainActivity.this, RegistrationActivity.class);
             startActivity(register);
         });
-
 
         buttonGetCode.setOnClickListener(v -> {
             phoneNumber = "+40" + editTextLoginPhoneNumber.getText().toString();
