@@ -79,14 +79,16 @@
 
         <Button
             android:id="@+id/btnUpload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="119dp"
+            android:layout_height="47dp"
             android:layout_marginTop="12dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
             android:background="@color/darkergreen"
             android:text="@string/upload"
             android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/btnCamera"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/btnChoose"
             app:layout_constraintTop_toBottomOf="@+id/edittext_addfragment_location" />
 
 
@@ -94,13 +96,15 @@
             android:id="@+id/btnChoose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@color/darkergreen"
             android:text="@string/choose"
             android:textColor="@color/white"
-            app:layout_constraintLeft_toRightOf="@id/btnUpload"
+            app:layout_constraintBottom_toTopOf="@+id/imgView"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edittext_addfragment_location" />
+            app:layout_constraintTop_toBottomOf="@id/edittext_addfragment_location"
+            app:layout_constraintVertical_bias="0.428" />
 
         <ImageView
             android:id="@+id/imgView"
@@ -127,6 +131,20 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imgView" />
+
+        <Button
+            android:id="@+id/btnCamera"
+            android:layout_width="82dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="2dp"
+            android:text="KAMERA"
+            app:layout_constraintBottom_toTopOf="@+id/imgView"
+            app:layout_constraintEnd_toStartOf="@+id/btnChoose"
+            app:layout_constraintTop_toBottomOf="@+id/edittext_addfragment_location"
+            app:layout_constraintVertical_bias="0.23" />
 
 
     </android.support.constraint.ConstraintLayout>
