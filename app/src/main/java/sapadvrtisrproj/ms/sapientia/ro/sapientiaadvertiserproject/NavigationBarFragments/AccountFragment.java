@@ -49,8 +49,10 @@ public class AccountFragment extends Fragment {
     private FirebaseFirestore db;
     private StorageReference storageReference;
     private Uri uri;
+    private String pic = "";
 
-    public static final int GET_FROM_GALLERY = 1;
+    private final int PICK_IMAGE_REQUEST = 71;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     public static final String TAG = "AccountFragment";
 
     @Override
@@ -114,7 +116,7 @@ public class AccountFragment extends Fragment {
 
         changePicture.setOnClickListener(v -> {
             chooseImage();
-            uploadImage();
+//            uploadImage();
         });
 
         saveBtn.setOnClickListener(v -> {
@@ -123,7 +125,7 @@ public class AccountFragment extends Fragment {
             user.setPhoneNumber(editPhone.getText().toString());
             user.setAddress(editAddress.getText().toString());
             user.setEmail(editEmail.getText().toString());
-//                user.setImageURL();
+            user.setImageURL(pic);
 
             db.collection("users").document(userId).set(user).addOnSuccessListener(aVoid -> Toast.makeText(getActivity(), "Adatok sikeresen frissítve", Toast.LENGTH_SHORT).show());
 
@@ -133,42 +135,48 @@ public class AccountFragment extends Fragment {
         return view;
     }
 
+    private void chooseImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Válassz képet"), PICK_IMAGE_REQUEST);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == GET_FROM_GALLERY && resultCode == RESULT_OK && data != null && data.getData() != null) {
-
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             uri = data.getData();
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(Objects.requireNonNull(getActivity()).getApplicationContext().getContentResolver(), uri);
                 changePicture.setImageBitmap(bitmap);
-//                Log.d(TAG, "kep " + changePicture.toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    private void chooseImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), GET_FROM_GALLERY);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            changePicture.setImageBitmap(imageBitmap);
+        }
+        uploadImage();
     }
 
     private void uploadImage() {
+
         if (uri != null) {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("Uploading...");
+            progressDialog.setTitle("Feltöltés...");
             progressDialog.show();
 
             StorageReference ref = storageReference.child("imageURL" + UUID.randomUUID().toString());
-            ref.putFile(uri).addOnSuccessListener(taskSnapshot -> {
-                progressDialog.dismiss();
-                Toast.makeText(getActivity(), "Sikeresen feltöltve", Toast.LENGTH_SHORT).show();
-            })
+            ref.putFile(uri)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), "A kép sikeresen feltöltve", Toast.LENGTH_SHORT).show();
+                        ref.getDownloadUrl().addOnSuccessListener(uri -> pic = uri.toString());
+                    })
                     .addOnFailureListener(e -> {
                         progressDialog.dismiss();
                         Toast.makeText(getActivity(), "Feltöltés sikertelen: " + e.getMessage(), Toast.LENGTH_SHORT).show();
