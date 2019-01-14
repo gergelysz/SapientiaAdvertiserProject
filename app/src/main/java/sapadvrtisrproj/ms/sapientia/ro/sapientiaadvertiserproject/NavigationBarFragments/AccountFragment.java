@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -105,9 +106,7 @@ public class AccountFragment extends Fragment {
                     editAddress.setText(user.getAddress());
                 }
                 if (user.getImageURL() != null) {
-                    user.setImageURL(null);
-//                    Glide.with(view).load(user.getImageURL()).into(changePicture);
-                    Log.d(TAG, "kep lekerd " + user.getImageURL());
+                   Glide.with(view).load(user.getImageURL()).into(changePicture);
                 }
             }
         });

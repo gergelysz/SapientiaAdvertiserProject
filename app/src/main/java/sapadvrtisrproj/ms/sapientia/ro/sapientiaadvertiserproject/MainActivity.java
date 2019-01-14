@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
          *   Átirányítás a regisztrációs Activity-re, ha nincs
          *   még fiókja a felhasználónak.
          */
-
+        
         Button redirect = findViewById(R.id.login_redirect);
         redirect.setOnClickListener(v -> {
             Intent register = new Intent(MainActivity.this, RegistrationActivity.class);
