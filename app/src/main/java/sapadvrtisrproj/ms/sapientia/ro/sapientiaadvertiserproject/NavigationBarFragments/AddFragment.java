@@ -68,7 +68,7 @@ public class AddFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
 
         //Initialize Views
-        Button btnUpload = view.findViewById(R.id.btnUpload);
+        //Button btnUpload = view.findViewById(R.id.btnUpload);
         Button btnChoose = view.findViewById(R.id.btnChoose);
         Button btnCamera=view.findViewById(R.id.btnCamera);
         Button buttonAdd = view.findViewById(R.id.button_addfragment_add);
@@ -113,7 +113,7 @@ public class AddFragment extends Fragment {
         // onclick listener to uploading image
         btnChoose.setOnClickListener(v -> chooseImage());
 
-        btnUpload.setOnClickListener(v -> uploadImage());
+     //   btnUpload.setOnClickListener(v -> uploadImage());
 
         btnCamera.setOnClickListener(v->
                 {takePhoto();
@@ -174,7 +174,8 @@ public class AddFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
-            filePath = data.getData();
+                filePath = data.getData();
+
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(Objects.requireNonNull(getActivity()).getApplicationContext().getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
@@ -187,9 +188,11 @@ public class AddFragment extends Fragment {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             imageView.setImageBitmap(imageBitmap);
 
+
             }
+        uploadImage();
     }
-    
+
 
     static final int REQUEST_TAKE_PHOTO = 1;
     public void takePhoto(){
@@ -243,4 +246,16 @@ public class AddFragment extends Fragment {
         this.getActivity().sendBroadcast(mediaScanIntent);
     }
 
+
+    private Uri getImageUri(Context context, Bitmap inImage) {
+
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
+
+        return Uri.parse(path);
+
+    }
 }
