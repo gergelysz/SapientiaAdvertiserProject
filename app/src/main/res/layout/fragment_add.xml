@@ -19,6 +19,35 @@
         <!--android:layout_height="match_parent"-->
         <!--android:text="@string/hello_blank_fragment" />-->
 
+        <RelativeLayout
+            android:id="@+id/login_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/login_logo_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/sapientia_logo_white" />
+
+            <TextView
+                android:id="@+id/login_logo_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/login_logo_image"
+                android:fontFamily="@font/solo"
+                android:text="Töltsd fel\na hirdetésed"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:layout_toEndOf="@+id/login_logo_image" />
+
+        </RelativeLayout>
+
 
         <EditText
             android:id="@+id/edittext_addfragment_title"
@@ -27,6 +56,7 @@
             android:background="@color/darkergreen"
             android:hint="@string/cim"
             android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/login_logo"
             android:textColorHint="@color/white" />
 
         <EditText
@@ -90,8 +120,7 @@
             android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/imgView"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edittext_addfragment_location"
-            app:layout_constraintVertical_bias="0.428" />
+            app:layout_constraintTop_toBottomOf="@id/edittext_addfragment_location" />
 
         <ImageView
             android:id="@+id/imgView"
@@ -121,8 +150,8 @@
 
         <Button
             android:id="@+id/btnCamera"
-            android:layout_width="82dp"
-            android:layout_height="44dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
@@ -130,10 +159,8 @@
             android:text="KAMERA"
             android:textColor="@color/white"
             android:background="@color/darkergreen"
-            app:layout_constraintBottom_toTopOf="@+id/imgView"
-            app:layout_constraintEnd_toStartOf="@+id/btnChoose"
-            app:layout_constraintTop_toBottomOf="@+id/edittext_addfragment_location"
-            app:layout_constraintVertical_bias="0.23" />
+            app:layout_constraintTop_toBottomOf="@id/edittext_addfragment_location"
+            app:layout_constraintRight_toLeftOf="@id/btnChoose"/>
 
 
     </android.support.constraint.ConstraintLayout>

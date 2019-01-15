@@ -19,6 +19,8 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="cim">Cím</string>
+    <string name="vezeteknev">Vezetéknév</string>
+    <string name="keresztnev">Keresztnév</string>
     <string name="rovidleiras">Rövid leírás</string>
     <string name="hosszuleiras">Hosszú leírás</string>
     <string name="telefonszam">Telefonszám</string>
