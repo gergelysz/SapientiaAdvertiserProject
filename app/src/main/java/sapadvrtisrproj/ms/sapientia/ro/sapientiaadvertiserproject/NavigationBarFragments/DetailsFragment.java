@@ -34,7 +34,6 @@ public class DetailsFragment extends Fragment {
     private ImageButton deleteBtn;
     private ImageButton appearBtn;
     public ImageButton reportBtn;
-    //private List<Ad> adsList = new ArrayList<>();
     private AdsListAdapter adsListAdapter;
     private Ad adItem;
 
