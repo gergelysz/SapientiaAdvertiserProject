@@ -76,7 +76,7 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
 
                 }
             } catch (NullPointerException exc) {
-
+                Log.d(TAG, "User not found.");
             }
         });
         viewHolder.itemView.setOnClickListener(v -> {
@@ -113,7 +113,6 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
             imageAd = mView.findViewById(R.id.ad_image);
             reportBtn = mView.findViewById(R.id.reportBtn);
             usersAd = mView.findViewById(R.id.usersAd);
-            String userId = HomeFragmentLoadingNumber.getUserId();
 
             layout = mView.findViewById(R.id.itemListed);
 
