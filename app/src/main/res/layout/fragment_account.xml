@@ -51,7 +51,7 @@
         android:id="@+id/frag_input_fname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="First Name"
+        android:hint="@string/vezeteknev"
         app:layout_constraintTop_toBottomOf="@+id/view2">
 
         <EditText
@@ -68,7 +68,7 @@
         android:id="@+id/frag_input_lname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Last Name"
+        android:hint="@string/keresztnev"
         app:layout_constraintTop_toBottomOf="@id/frag_input_fname">
 
         <EditText
@@ -85,7 +85,7 @@
         android:id="@+id/frag_input_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
+        android:hint="@string/email"
         app:layout_constraintTop_toBottomOf="@id/frag_input_lname">
 
         <EditText
@@ -102,7 +102,7 @@
         android:id="@+id/frag_input_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Phone"
+        android:hint="@string/telefonszam"
         app:layout_constraintTop_toBottomOf="@+id/frag_input_email">
 
         <EditText
@@ -120,14 +120,14 @@
         android:id="@+id/frag_input_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Address"
+        android:hint="@string/cim"
         app:layout_constraintTop_toBottomOf="@+id/frag_input_phone">
 
         <EditText
             android:id="@+id/fragment_acc_edit_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Targu Mures, Str. Bolyai, nr. 42"
+            android:hint=""
             android:paddingBottom="16dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
