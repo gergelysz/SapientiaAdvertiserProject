@@ -125,21 +125,21 @@ public class DetailsFragment extends Fragment {
                         // -1 means that I only want to hide the ad
                         hideBtn.setVisibility(View.INVISIBLE);
                         appearBtn.setVisibility(View.VISIBLE);
-                        popUpCreate(v, "Do you want to hide the ad?", "-1");
+                        popUpCreate(v, "Do you want to hide the ad?", "-1", adItem);
 
                     });
 
                     deleteBtn.setOnClickListener(v -> {
                         // -2 means that I want to delete the ad
 
-                        popUpCreate(v, "Do you want to delete the ad?", "-2");
+                        popUpCreate(v, "Do you want to delete the ad?", "-2", adItem);
 
                     });
                     appearBtn.setOnClickListener(v -> {
                         hideBtn.setVisibility(View.VISIBLE);
                         appearBtn.setVisibility(View.INVISIBLE);
 
-                        popUpCreate(v, "Do you want to appear the ad?", "0");
+                        popUpCreate(v, "Do you want to appear the ad?", "0", adItem);
 
                     });
                 }
@@ -148,7 +148,7 @@ public class DetailsFragment extends Fragment {
         return view;
     }
 
-    private void popUpCreate(View v, String question, String hideOrDelete) {
+    private void popUpCreate(View v, String question, String hideOrDelete, Ad adItem) {
         new AlertDialog.Builder(v.getContext(), R.style.MyDialogTheme)
                 .setTitle("Title")
                 .setMessage(question)
