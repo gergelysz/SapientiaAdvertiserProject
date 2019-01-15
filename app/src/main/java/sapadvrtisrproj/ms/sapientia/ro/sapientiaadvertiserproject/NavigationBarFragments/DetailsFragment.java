@@ -34,6 +34,7 @@ public class DetailsFragment extends Fragment {
     private ImageButton hideBtn;
     private ImageButton deleteBtn;
     private ImageButton appearBtn;
+    public ImageButton reportBtn;
     //private List<Ad> adsList = new ArrayList<>();
     private AdsListAdapter adsListAdapter;
     private Ad adItem;
@@ -63,6 +64,7 @@ public class DetailsFragment extends Fragment {
         hideBtn = view.findViewById(R.id.hideBtn);
         deleteBtn = view.findViewById(R.id.deleteBtn);
         appearBtn = view.findViewById(R.id.appearBtn);
+        reportBtn = view.findViewById(R.id.reportBtn);
         ImageButton shareBtn = view.findViewById(R.id.shareBtn);
 
         Log.d(TAG, "details ad: " + adItem.getTitle());
@@ -121,6 +123,7 @@ public class DetailsFragment extends Fragment {
                         appearBtn.setVisibility(View.VISIBLE);
                     }
                     deleteBtn.setVisibility(View.VISIBLE);
+
                     hideBtn.setOnClickListener(v -> {
                         // -1 means that I only want to hide the ad
                         hideBtn.setVisibility(View.INVISIBLE);
@@ -135,6 +138,8 @@ public class DetailsFragment extends Fragment {
                         popUpCreate(v, "Do you want to delete the ad?", "-2", adItem);
 
                     });
+
+
                     appearBtn.setOnClickListener(v -> {
                         hideBtn.setVisibility(View.VISIBLE);
                         appearBtn.setVisibility(View.INVISIBLE);
@@ -144,6 +149,9 @@ public class DetailsFragment extends Fragment {
                     });
                 }
             }
+            reportBtn.setOnClickListener(v -> {
+                popUpCreate(v, "Do you want to report this ad?", "-3", adItem);
+            });
         });
         return view;
     }

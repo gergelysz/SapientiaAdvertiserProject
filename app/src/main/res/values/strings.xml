@@ -43,4 +43,5 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="jelent_s">Jelentés</string>
+    <string name="todo">TODO</string>
 </resources>

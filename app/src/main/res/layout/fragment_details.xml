@@ -106,7 +106,7 @@
 
     <ImageButton
         android:id="@+id/shareBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="34dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/detail_LongDesc"
         android:layout_alignParentStart="true"
@@ -127,29 +127,43 @@
 
     <ImageButton
         android:id="@+id/hideBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="219dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/detail_LongDesc"
         android:layout_toStartOf="@+id/deleteBtn"
         android:layout_toLeftOf="@+id/deleteBtn"
-        android:layout_toEndOf="@+id/shareBtn"
-        android:layout_toRightOf="@+id/shareBtn"
         android:background="@color/darkgreen"
         android:src="@drawable/ic_visible"
         android:visibility="invisible" />
 
     <ImageButton
         android:id="@+id/appearBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="218dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/detail_LongDesc"
         android:layout_toStartOf="@+id/deleteBtn"
         android:layout_toLeftOf="@+id/deleteBtn"
-        android:layout_toEndOf="@+id/shareBtn"
-        android:layout_toRightOf="@+id/shareBtn"
         android:background="@color/darkgreen"
         android:src="@drawable/ic_invisible"
         android:visibility="invisible" />
+
+    <ImageButton
+        android:id="@+id/reportBtn"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/detail_LongDesc"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="-29dp"
+        android:layout_toStartOf="@+id/appearBtn"
+        android:layout_toLeftOf="@+id/appearBtn"
+        android:layout_toEndOf="@+id/shareBtn"
+        android:layout_toRightOf="@+id/shareBtn"
+        android:background="@color/darkgreen"
+        app:srcCompat="@android:drawable/ic_menu_report_image"
+        android:contentDescription="@string/todo" />
 
 
 </RelativeLayout>

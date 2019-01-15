@@ -72,7 +72,6 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
                     viewHolder.layout.setBackgroundColor(Color.WHITE);
                     viewHolder.title.setTextColor(Color.parseColor("#003300"));
                     viewHolder.shortDesc.setTextColor(Color.parseColor("#003300"));
-                    viewHolder.reportBtn.setVisibility(View.INVISIBLE);
 
                 }
             } catch (NullPointerException exc) {
@@ -102,7 +101,6 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
         public TextView shortDesc;
         public ImageView imageAd;
         public TextView usersAd;
-        public ImageButton reportBtn;
         public RelativeLayout layout;
 
         public ViewHolder(@NonNull View itemView) {
@@ -111,35 +109,15 @@ public class AdsListAdapter extends RecyclerView.Adapter<AdsListAdapter.ViewHold
             title = mView.findViewById(R.id.ad_title);
             shortDesc = mView.findViewById(R.id.ad_shortDesc);
             imageAd = mView.findViewById(R.id.ad_image);
-            reportBtn = mView.findViewById(R.id.reportBtn);
             usersAd = mView.findViewById(R.id.usersAd);
             String userId = HomeFragmentLoadingNumber.getUserId();
-
             layout = mView.findViewById(R.id.itemListed);
 
 
-            reportBtn.setOnClickListener(v -> popUpCreate(v, "Do you want to report this ad?", "-3"));
+
         }
 
-        private void popUpCreate(View v, String question, String hideOrDelete) {
-            db = FirebaseFirestore.getInstance();
-            DocumentReference adItem = db.collection("ads").document(adsList.get(itemNumber - 1).getId());
-            new AlertDialog.Builder(v.getContext(), R.style.MyDialogTheme)
-                    .setTitle("Title")
-                    .setMessage(question)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
-                        if (adItem.getId() != null) {
-                            db.collection("ads").document(adItem.getId()).update("visibilityRight", hideOrDelete)
 
-                                    .addOnSuccessListener(aVoid -> {
-
-                                    });
-                        }
-                    })
-                    .setNegativeButton(android.R.string.no, null).show()
-                    .show();
-        }
     }
 
 
