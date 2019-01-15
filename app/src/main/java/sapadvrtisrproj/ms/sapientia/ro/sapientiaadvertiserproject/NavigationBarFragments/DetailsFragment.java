@@ -122,7 +122,6 @@ public class DetailsFragment extends Fragment {
                         appearBtn.setVisibility(View.VISIBLE);
                     }
                     deleteBtn.setVisibility(View.VISIBLE);
-
                     hideBtn.setOnClickListener(v -> {
                         // -1 means that I only want to hide the ad
                         hideBtn.setVisibility(View.INVISIBLE);
@@ -137,8 +136,6 @@ public class DetailsFragment extends Fragment {
                         popUpCreate(v, "Do you want to delete the ad?", "-2", adItem);
 
                     });
-
-
                     appearBtn.setOnClickListener(v -> {
                         hideBtn.setVisibility(View.VISIBLE);
                         appearBtn.setVisibility(View.INVISIBLE);
@@ -165,7 +162,7 @@ public class DetailsFragment extends Fragment {
                         db.collection("ads").document(adItem.getId()).update("visibilityRight", hideOrDelete)
 
                                 .addOnSuccessListener(aVoid -> {
-
+                                    Log.d(TAG, "Visibility updated!");
                                 });
                     }
                     Intent intent = new Intent(getActivity(), AdsActivity.class);
