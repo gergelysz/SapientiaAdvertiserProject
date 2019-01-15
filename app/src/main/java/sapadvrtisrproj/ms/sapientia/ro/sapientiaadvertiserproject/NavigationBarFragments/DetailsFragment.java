@@ -37,7 +37,6 @@ public class DetailsFragment extends Fragment {
     //private List<Ad> adsList = new ArrayList<>();
     private AdsListAdapter adsListAdapter;
     private Ad adItem;
-    private String userId = "";
 
     public DetailsFragment() {
 
@@ -72,20 +71,34 @@ public class DetailsFragment extends Fragment {
 
         detailTextTitle.setText(adItem.getTitle());
         Log.d(TAG, "after setTitle");
-        detailTextShortDesc.setText(adItem.getShortDesc());
+        if (!adItem.getShortDesc().equals("")) {
+            detailTextShortDesc.setText(String.format("Rövid leírás: %s", adItem.getShortDesc()));
+        }
+        else
+        {
+            detailTextShortDesc.setText("Rövid leírás: nincs megadva");
+        }
         detailTextLongDesc.setText(adItem.getLongDesc());
-        detailTextLocation.setText(adItem.getLocation());
-        detailTextPhoneNumber.setText(adItem.getPhoneNumber());
-        visitors_number.setText(adItem.getVisitedNumber());
+        if (!adItem.getLocation().equals("")){
+            detailTextLocation.setText(String.format("Helyszín: %s", adItem.getLocation()));
+        }
+        else
+        {
+            detailTextLocation.setText("Helyszín: nincs megadva");
+        }
+        if (!adItem.getPhoneNumber().equals("")) {
+            detailTextPhoneNumber.setText(String.format("Telefonszám: %s", adItem.getPhoneNumber()));
+        }
+        else{
+            detailTextPhoneNumber.setText("Telefonszám: nincs megadva");
+        }
+        visitors_number.setText(String.format("Megtintési szám: %s", adItem.getVisitedNumber()));
         Glide.with(view).load(adItem.getImage()).into(imageView);
         Log.d(TAG, "after set");
 
         AdsActivity ref = (AdsActivity) DetailsFragment.this.getActivity();
-        userId = "";
-        assert ref != null;
-        userId += ref.getUserId();
-        UserHelper userHelper = new UserHelper(userId);
-        userId = userHelper.getUserId();
+        String userId=getUserId(ref);
+
         /*
         facebook share funcionality
         */
@@ -174,6 +187,15 @@ public class DetailsFragment extends Fragment {
             mIntentFacebookBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(mStringURL));
             startActivity(mIntentFacebookBrowser);
         }
+    }
+
+    private String getUserId(AdsActivity ref){
+        String userId = "";
+        assert ref != null;
+        userId += ref.getUserId();
+        UserHelper userHelper = new UserHelper(userId);
+        userId = userHelper.getUserId();
+        return userId;
     }
 
 

@@ -28,7 +28,6 @@ public class HomeFragment extends Fragment {
     private FirebaseFirestore db;
     private List<Ad> adsList = new ArrayList<>();
     private AdsListAdapter adsListAdapter;
-    private String userId;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -42,11 +41,6 @@ public class HomeFragment extends Fragment {
 
         adsListAdapter = new AdsListAdapter(adsList, data -> {
             Log.d(TAG, "before detail");
-            //FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-          /*  int visitors = Integer.parseInt(data.getVisitedNumber());
-            ++visitors;
-            data.setVisitedNumber(String.valueOf(visitors));
-            mDatabase.getReference().child("ads").child(data.getId()).setValue(data);*/
             AdsActivity ref = (AdsActivity) HomeFragment.this.getActivity();
             DetailsFragment detail = new DetailsFragment(data);
             Log.d(TAG, "after detail");
@@ -68,11 +62,7 @@ public class HomeFragment extends Fragment {
 
 
         AdsActivity ref = (AdsActivity) HomeFragment.this.getActivity();
-        userId = "";
-        assert ref != null;
-        userId += ref.getUserId();
-        UserHelper userHelper = new UserHelper(userId);
-        userId = userHelper.getUserId();
+        String userId=getUserId(ref);
         RecyclerView recyclerView = view.findViewById(R.id.home_list_ads);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -94,8 +84,7 @@ public class HomeFragment extends Fragment {
                 // if we didn't set up anything for the visibility right, it means that it is available
                 // if we set up 0, it means that it is available
                 if (ad.getVisibilityRight() == null || ad.getVisibilityRight().equals("0")) {
-                    adsList.add(ad);
-                    adsListAdapter.notifyDataSetChanged();
+                    adToList(ad);
                 } else {
                     // if visibility right is 0, it means that it is available just for that user, which created that ad
                     if (ad.getVisibilityRight().equals("-1")) {
@@ -103,14 +92,17 @@ public class HomeFragment extends Fragment {
                             try {
                                 // if the ad's user id is equal with user which is logged in, it means that the user can see the ad
                                 if (ad.getUserId().equals(userId)) {
-                                    adsList.add(ad);
-                                    adsListAdapter.notifyDataSetChanged();
+                                    adToList(ad);
+                                }
+                                else{
+                                    if (ad.getUserId()==null){
+                                        adToList(ad);
+                                    }
                                 }
                             } catch (NullPointerException exc) {
                                 // if we get a null exception error, it means that at userId in database we didn't set up anything
                                 // I implemented that in that case the user can see the ad, but we can modify this
-                                adsList.add(ad);
-                                adsListAdapter.notifyDataSetChanged();
+                                adToList(ad);
                             }
                         }
                     }
@@ -125,4 +117,17 @@ public class HomeFragment extends Fragment {
 
     }
 
+    private void adToList(Ad ad){
+        adsList.add(ad);
+        adsListAdapter.notifyDataSetChanged();
+    }
+
+    private String getUserId(AdsActivity ref){
+        String userId = "";
+        assert ref != null;
+        userId += ref.getUserId();
+        UserHelper userHelper = new UserHelper(userId);
+        userId = userHelper.getUserId();
+        return userId;
+    }
 }
